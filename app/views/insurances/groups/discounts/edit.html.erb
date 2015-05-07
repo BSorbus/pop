@@ -1,0 +1,44 @@
+<br>
+
+<ol class="breadcrumb">
+  <li><%= link_to @discount.group.insurance.company.short, company_path(@discount.group.insurance.company_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@discount.group.insurance.company.short}",
+                      :"data-content" => "#{@discount.group.insurance.company.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @discount.group.insurance.number, insurance_path(@discount.group.insurance_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@discount.group.insurance.number}",
+                      :"data-content" => "#{@discount.group.insurance.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @discount.group.fullname, insurance_group_path(@discount.group.insurance_id, @discount.group_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@discount.group.fullname}",
+                      :"data-content" => "#{@discount.group.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li class="active"><%= @discount.fullname %></li>
+</ol> <!-- /breadcrumb -->
+
+<!-- Dane -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-discount">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <span class="glyphicon glyphicon-random">  <%= @discount.fullname %></span>    
+        </div>
+      </div>
+        <div class="panel-body">
+          <div class="col-sm-1">
+            <h1><span class="glyphicon glyphicon-edit"></span></h1> 
+          </div> <!--/col-sm-1-->
+
+          <div class="col-sm-11">
+            <%= render 'form' %>
+          </div> <!--/col-sm-11 col-sm-offset-1-->
+    
+        </div>
+    </div> <!-- /panel -->
+  </div> <!-- /col-sm-12-->
+</div> <!-- /row -->
+

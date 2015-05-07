@@ -1,0 +1,187 @@
+<%= form_for [@insurance, @group], :html => { :role => 'form group' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @group.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @group.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="row">
+
+        <div class="form-group col-sm-3">
+          <br><%= f.label :quotation, class: "control-label" %><br>
+          <h5><%= @group.quotation_name %></h5>
+        </div>
+
+        <div class="form-group col-sm-3">
+          <br><%= f.label :tariff_fixed, class: "control-label" %><br>
+          <h5><%= @group.tariff_fixed_name %></h5>
+        </div>        
+
+        <div class="form-group col-sm-3">
+          <br><%= f.label :full_range, class: "control-label" %><br>
+          <h5><%= @group.full_range_name %></h5>
+        </div>
+
+        <div class="form-group col-sm-3">
+          <br><%= f.label :risk_group, class: "control-label" %><br>
+          <h5><%= @group.risk_group %></h5>
+        </div>
+
+      </div>  <!-- /row -->
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-4">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :assurance, class: 'control-label' %>
+          <h5><%= with_delimiter_and_separator(@group.assurance) %></h5>
+        </div>
+        <div class="form-group col-sm-7">
+          <%= f.label :assurance_component, class: "control-label" %><br>
+          <h5><%= with_delimiter_and_separator(@group.assurance_component) %></h5>
+        </div>         
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <%= f.label :death_100_percent, class: "control-label" %><br>
+          <h5><%= @group.death_100_percent? ? 'Tak' : 'Nie' %></h5>
+        </div>               
+      </div>
+
+    </div> <!-- /col-sm-4 -->
+
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :treatment, class: 'control-label' %>
+          <h5><%= with_delimiter_and_separator(@group.treatment) %></h5>
+        </div>
+        <div class="form-group col-sm-7">
+          <%= f.label :treatment_component, class: "control-label" %><br>
+          <h5><%= with_delimiter_and_separator(@group.treatment_component) %></h5>
+        </div>        
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :hospital, class: 'control-label' %>
+          <h5><%= with_delimiter_and_separator(@group.hospital) %></h5>
+        </div>
+        <div class="form-group col-sm-7">
+          <%= f.label :hospital_component, class: "control-label" %><br>
+          <h5><%= with_delimiter_and_separator(@group.hospital_component) %></h5>
+        </div>         
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :ambulatory, class: 'control-label' %>
+          <h5><%= with_delimiter_and_separator(@group.ambulatory) %></h5>
+        </div>
+        <div class="form-group col-sm-7">
+          <%= f.label :ambulatory_component, class: "control-label" %><br>
+          <h5><%= with_delimiter_and_separator(@group.ambulatory_component) %></h5>
+        </div>         
+      </div>
+
+    </div> <!-- /col-sm-4 -->
+
+    <div class="col-sm-4">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :infarct, class: 'control-label' %>
+          <h5><%= with_delimiter_and_separator(@group.infarct) %></h5>
+        </div>
+        <div class="form-group col-sm-7">
+          <%= f.label :infarct_component, class: "control-label" %><br>
+          <h5><%= with_delimiter_and_separator(@group.infarct_component) %></h5>
+        </div>         
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :inability, class: 'control-label' %>
+          <h5><%= with_delimiter_and_separator(@group.inability) %></h5>
+        </div>
+        <div class="form-group col-sm-7">
+          <%= f.label :inability_component, class: "control-label" %><br>
+          <h5><%= with_delimiter_and_separator(@group.inability_component) %></h5>
+        </div>         
+      </div>
+
+    </div> <!-- /col-sm-4 -->
+  </div> <!-- /row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="row">
+
+        <div class="form-group col-sm-4">
+          <h4><%= f.label :sum_component, class: 'control-label' %></h4>
+          <h4><%= with_delimiter_and_separator(@group.sum_component) %></h4>
+        </div>
+        <div class="form-group col-sm-4">
+          <h4><%= f.label :sum_after_monthly, class: 'control-label' %></h4>
+          <h4><%= with_delimiter_and_separator(@group.sum_after_monthly) %></h4>
+        </div>        
+        <div class="form-group col-sm-4">
+          <h4><%= f.label :sum_after_monthly, 'Składka roczna', class: 'control-label' %></h4>
+          <h4><%= with_delimiter_and_separator(@group.sum_after_year) %></h4>
+        </div>         
+
+      </div>  <!-- /row -->
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+
+  <% if input_disabled %>
+    <!-- for "Show" -->
+    <%= link_to t('Delete', default: t("helpers.links.destroy")), insurance_group_path(@insurance, @group),
+                        method: :delete,
+                        data: { confirm: t('helpers.links.confirm_destroy', data: @group.fullname) }, 
+                        :class => "btn btn-danger glyphicon glyphicon-trash" %>
+    <%= link_to t('Edit', default: t("helpers.links.edit")), edit_insurance_group_path(@insurance, @group), 
+                        :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+
+    <%= link_to t('Duplicate', default: t("helpers.links.duplicate")), duplicate_insurance_group_path(@insurance, @group), 
+                        method: :get,
+                        data: { confirm: "Are you sure duplicate \"#{@group.fullname}\"?" }, 
+                        :class => "btn btn-default glyphicon glyphicon-duplicate" %>
+
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+
+
+  
+<% end %>

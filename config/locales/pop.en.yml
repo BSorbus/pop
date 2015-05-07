@@ -1,0 +1,66 @@
+en:
+  activerecord:
+    models:
+      user: 'User'
+      comapany: 'Company'
+    messages:
+      successfull:
+        created: '"%{data}" was successfully created.'
+        updated: '"%{data}" was successfully updated.'
+        destroyed: '"%{data}" was successfully destroyed.'
+  help_block_text:
+    region:
+      show:
+      form:
+        short: 'Unique short name, displayed in the tables, references, links'
+        img_carousel: 'The image displayed on the home page. Best when it is the 1500x600 pixels'
+        comment_carousel: 'Text displayed on the home page'
+        img_index: 'The image displayed on the table. Best when it is the 240x160 pixels'
+        activity: 'Check if you want to be visible for all users'
+      index:
+    element:
+      form:
+        img_index: 'The image displayed on the table. Best when it is the 240x160 pixels'
+        activity: 'Check if you want to be visible for all users'
+    item:
+      form:
+        number: 'Best numbered by the grouped in the regions and elements. (example: KU-012-015 -> Kujawy, Element-012, Item-015)'
+        description: 'Precise information about this item (what it is, and the size, length, color, ....)'
+        note: 'Annotations such as "in the repair to ...." or "faulty buckle"'
+        img_index: 'Image/picture of the subject (not required)'
+        activity: 'Check if you want to be visible for all users'
+    user:
+      show:
+        info_item: 'Items:'
+        info_reservation: 'Reservations:'
+        info_other: 'Other:'
+      edit_password:
+        need_current_password: 'We need your current password to confirm your changes'
+  button_text:
+    item:
+      form:
+        button_special_edit: 'Edit additional parameters'
+  placeholder_text:
+    company:
+      show:
+      form:
+        short: 'eg.: ARTEX'
+        name: 'eg.: Artex-Software Sp z o.o.'
+      index:
+    element:
+      form:
+        name: 'np. KU - Buty damskie'
+        description: 'np. Skórzane trzewiki, sznurowane do pół łydki'
+    item:
+      form:
+        number: 'np. KU-012-015'
+        description: 'np. KU Buty damskie, rozmiar 38'
+  flash:
+    actions:
+      create:
+        notice: "%{resource_name} was successfully created."
+      update:
+        notice: "%{resource_name} was successfully updated."
+      destroy:
+        notice: "%{resource_name} was successfully destroyed."
+        alert: "%{resource_name} could not be destroyed."

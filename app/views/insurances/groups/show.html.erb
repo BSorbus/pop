@@ -1,0 +1,123 @@
+<br>
+
+<ol class="breadcrumb">
+  <li><%= link_to @group.insurance.company.short, company_path(@group.insurance.company_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@insurance.company.short}",
+                      :"data-content" => "#{@insurance.company.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @group.insurance.number, insurance_path(@group.insurance_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@insurance.number}",
+                      :"data-content" => "#{@insurance.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li class="active"><%= @group.fullname %></li>
+</ol> <!-- /breadcrumb -->
+
+<div class="panel-group" id="myaccordion">
+
+  <!-- Dane -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-group">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion" href="#collapse_data" >
+              <span class="glyphicon glyphicon-th-large">  <%= @group.fullname %></span>    
+              <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+            </a>
+          </div>
+        </div>
+        <div id="collapse_data" class="panel-collapse collapse in"> <!-- id="collapse_1" -->
+          <div class="panel-body">
+            <div class="col-sm-11 col-sm-offset-1">
+
+              <%= render 'form_show', input_disabled: true %>
+              
+            </div> <!--/col-sm-11 col-sm-offset-1-->
+          </div>
+        </div> <!-- /id="collapse_1" -->
+      </div> <!-- /panel -->
+    </div> <!-- /col-sm-12-->
+  </div> <!-- /row -->
+
+
+  <%if @group.quotation != 'B' %> <!-- jeśli kwotacja różna od specjalnej -->
+    <!-- Zwyżki/Zniżki -->
+    <div class="row">
+      <div class="col-sm-11 col-sm-offset-1">
+        <div class="panel panel-discount">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion" href="#collapse_discounts" >
+                <span class="glyphicon glyphicon-random"> Zwyżki i Zniżki </span>    
+                <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+              </a>
+            </div>
+          </div>
+          <div id="collapse_discounts" class="panel-collapse collapse"> <!-- id="collapse_individuals" -->
+            <div class="panel-body">
+              <div class="col-sm-12">
+
+                <%= render 'insurances/groups/discounts/index' %>
+
+              </div> <!--/class="col-sm-11 col-sm-offset-1" -->
+            </div> <!-- /panel-body -->
+          </div> <!-- /id="collapse_discounts" -->
+        </div> <!-- /panel -->
+      </div> <!-- /col-sm-11 col-sm-offset-1 -->
+    </div> <!-- /row -->
+  <% end %><!-- /jeśli kwotacja różna od specjalnej -->
+
+  <!-- Osoby -->
+  <div class="row">
+    <div class="col-sm-11 col-sm-offset-1">
+      <div class="panel panel-coverage">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion" href="#collapse_group_coverages" >
+              <span class="glyphicon glyphicon-calendar"> Ochrona (Osoby ubezpieczone) </span>    
+              <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+            </a>
+          </div>
+        </div>
+        <div id="collapse_group_coverages" class="panel-collapse collapse"> <!-- id="collapse_individuals" -->
+          <div class="panel-body">
+            <div class="col-sm-12">
+
+              <%= render 'insurances/groups/coverages' %>
+
+            </div> <!--/class="col-sm-11 col-sm-offset-1" -->
+          </div> <!-- /panel-body -->
+        </div> <!-- /id="collapse_rotation_coverages" -->
+      </div> <!-- /panel -->
+    </div> <!-- /col-sm-11 col-sm-offset-1 -->
+  </div> <!-- /row -->
+
+
+  <!-- Wydruki -->
+  <div class="row">
+    <div class="col-sm-11 col-sm-offset-1">
+      <div class="panel panel-scan-and-print">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion" href="#collapse_scan_and_print" >
+              <span class="glyphicon glyphicon-print"> Wydruki</span>    
+              <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+            </a>
+          </div>
+        </div>
+        <div id="collapse_scan_and_print" class="panel-collapse collapse"> <!-- id="collapse_scan_and_print" -->
+          <div class="panel-body">
+            <div class="col-sm-12">
+
+              <%= render 'scan_and_print' %>
+
+            </div> <!--/class="col-sm-12" -->
+          </div> <!-- /panel-body -->
+        </div> <!-- /id="collapse_scan_and_print" -->
+      </div> <!-- /panel -->
+    </div> <!-- /col-sm-11 col-sm-offset-1 -->
+  </div> <!-- /row -->
+
+</div> <!-- /class="panel-group" id="myaccordion" -->

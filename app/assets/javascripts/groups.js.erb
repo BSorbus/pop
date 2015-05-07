@@ -1,0 +1,235 @@
+$(document).ready(function() {
+  var oInsuranceGroupstable = $('#insurance-groups').DataTable({
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    deferRender: true,
+    ajax: { 
+      url: $('#insurance-groups').data('source'),
+      type: "POST"
+    },
+    pagingType: "full_numbers",
+    lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Wszystkie"]],
+    //paging: false,
+    //searching: false,
+    //info: false,
+    columns: [
+      { "targets": [0],
+        "title": "ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [1],
+        "title": "INSURANCE_ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false },
+      { "targets": [2],
+        "title": "Nr" }, 
+      { "targets": [3],
+        "title": "Kwotacja" }, 
+      { "targets": [4],
+        "title": "System świadczeń" }, 
+      { "targets": [5],
+        "title": "Zakres" }, 
+      { "targets": [6],
+        "title": "Grupa ryzyka" },
+      { "targets": [7],
+        type: "number",
+        "title": "Świadczenie" }, 
+      { "targets": [8],
+        "title": "Leczenie" }, 
+      { "targets": [9],
+        "title": "Zasiłek ambulat." }, 
+      { "targets": [10],
+        "title": "Szpital" }, 
+      { "targets": [11],
+        "title": "Zawał" }, 
+      { "targets": [12],
+        "title": "Niezdolność" }, 
+      { "targets": [13],
+        "title": "Śmierć 100%" }, 
+      { "targets": [14],
+        "title": "Miesięczna za osobę" }
+    ],
+    order: [[ 2, "asc" ]],
+    language: {
+      decimal:        ",",
+      thousands:      " ",
+      //processing: "<img src='/assets/spinner.gif'>",
+      processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+      lengthMenu:     "Pokaż _MENU_ pozycji",
+      info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+      infoEmpty:      "Pozycji 0 z 0 dostępnych",
+      infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+      infoPostFix:    "",
+      search:         "Szukaj&nbsp;:",
+      loadingRecords: "Wczytywanie...",
+      zeroRecords:    "Nie znaleziono pasujących pozycji",
+      emptyTable:     "Brak danych",
+      paginate: {
+        first:      "<<",
+        previous:   "<",
+        next:       ">",
+        last:       ">>"
+      },
+      aria: {
+        sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+        sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+      }
+    }
+  });
+ 
+  $('#insurance-groups tbody').on('click', 'tr', function () {
+    $(this).toggleClass('selected');
+    var rowDataId = oInsuranceGroupstable.row( this ).data()[0];
+    var rowDataParentId = oInsuranceGroupstable.row( this ).data()[1];
+    var newurl = window.location.protocol + '//' + window.location.host + '/insurances/' + rowDataParentId + '/groups/' + rowDataId;
+    window.location.href = newurl;
+  });
+
+
+
+  $('#insurance-groups-numbering-and-refresh').click(function() {
+    $.ajax({
+      url: $(this).attr('ajax-path'),
+      type: 'PATCH',
+      async: false
+    });
+    oInsuranceGroupstable.ajax.reload();
+    oInsuranceGroupstable.order([2, 'asc']);
+    oInsuranceGroupstable.draw();
+  });
+
+
+
+  if ($("#standard_select").length > 0) {
+    if($('#standard_select').is(':checked')) {
+      displayStandardGroupFields();
+      }
+    $('#standard_select').click(function() {
+      if($('#standard_select').is(':checked')) { 
+        displayStandardGroupFields(); 
+      }
+    });
+  }
+
+  if ($("#special_select").length > 0) {
+    if($('#special_select').is(':checked')) {
+      displaySpecialGroupFields();
+    }
+    $('#special_select').click(function() {
+      if($('#special_select').is(':checked')) { 
+        displaySpecialGroupFields(); 
+      }
+    });
+  }     
+
+  if ($("#no_standard_select").length > 0) {
+    if($('#no_standard_select').is(':checked')) {
+      displayNoStandardGroupFields();
+      }
+    $('#no_standard_select').click(function() {
+      if($('#no_standard_select').is(':checked')) { 
+        displayNoStandardGroupFields(); 
+        //alert('Kwotacja NIESTANDARDOWA wymaga uzyskania zgody Centrali')
+      }
+    });
+  }
+
+});
+
+function displayStandardGroupFields() {
+  document.getElementById('group_radio_tariff_fixed').style.display="";
+  document.getElementById('group_radio_full_range').style.display="";
+
+  document.getElementById('group_assurance_component').style.display="none";
+  document.getElementById('group_treatment_component').style.display="none";
+  document.getElementById('group_ambulatory_component').style.display="none";
+  document.getElementById('group_hospital_component').style.display="none";
+  document.getElementById('group_infarct_component').style.display="none";
+  document.getElementById('group_inability_component').style.display="none";
+
+  document.getElementById('group_ambulatory').style.display="none";
+  document.getElementById('group_inability').style.display="";
+}
+
+function displaySpecialGroupFields() {
+  document.getElementById('group_radio_tariff_fixed').style.display="none";
+  document.getElementById('group_radio_full_range').style.display="none";
+
+  document.getElementById('group_assurance_component').style.display="none";
+  document.getElementById('group_treatment_component').style.display="none";
+  document.getElementById('group_ambulatory_component').style.display="none";
+  document.getElementById('group_hospital_component').style.display="none";
+  document.getElementById('group_infarct_component').style.display="none";
+  document.getElementById('group_inability_component').style.display="none";
+
+  document.getElementById('group_ambulatory').style.display="none";
+  document.getElementById('group_inability').style.display="none";
+}
+
+function displayNoStandardGroupFields() {
+  document.getElementById('group_radio_tariff_fixed').style.display="";
+  document.getElementById('group_radio_full_range').style.display="";
+
+  document.getElementById('group_assurance_component').style.display="";
+  document.getElementById('group_treatment_component').style.display="";
+  document.getElementById('group_ambulatory_component').style.display="";
+  document.getElementById('group_hospital_component').style.display="";
+  document.getElementById('group_infarct_component').style.display="";
+  document.getElementById('group_inability_component').style.display="";
+
+  document.getElementById('group_ambulatory').style.display="";
+  document.getElementById('group_inability').style.display="";
+}
+
+
+// OK #1
+//$(document).click(function() {
+
+//  if ($("#show_or_hide_fields:checked").length > 0) {
+//    alert( 'length > 0'); 
+  
+//    var valradio = $("#show_or_hide_fields:checked").val();
+
+    //alert( valradio );
+
+//      if (valradio == 'A') {
+//        alert( 'A' );
+//      }
+//      else if (valradio == 'B') {
+//        alert( 'B' );
+//      }
+//      else {
+//        alert( valradio );
+//      }
+//  }
+//});
+
+
+
+// OK # 2
+//$(document).ready(function() {
+//  $('#standard_select').click(function() {
+//    if($('#standard_select').is(':checked')) { 
+//      displayStandardGroupFields(); 
+//    }
+//  });
+//
+//  $('#special_select').click(function() {
+//    if($('#special_select').is(':checked')) { 
+//      displaySpecialGroupFields() 
+//    }
+//  });
+//});
+
+// OK # 3
+//$(document).ready(function() {
+//  $("#standard_select").click(function(event) {
+//    displayStandardGroupFields(); 
+//  });
+//  $("#special_select").click(function(event) {
+//    displaySpecialGroupFields();
+//  });
+//});

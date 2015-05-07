@@ -1,0 +1,25 @@
+<div class="col-sm-12">
+  <table id="group-coverages" class="hover cell-border" data-source="<%= datatables_index_group_coverages_path(group_id: @group.id, format: :json) %>">
+    <thead>
+      <tr>
+        <th> 0 ID </th>
+        <th> 1 Rotation</th>
+        <th> 2 Insured</th>
+        <th> 3 Payer</th>
+        <th> 4 Note</th>
+        <th> 5 Akcje</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+<div class="col-sm-12">
+
+  <%= link_to t('New', default: t("helpers.links.new")), 
+                new_coverage_path(group_id: @group.id, back_url: insurance_group_path(@group.insurance.id, @group.id)), 
+                        :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+</div> <!--/col-sm-12 -->

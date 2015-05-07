@@ -1,0 +1,27 @@
+<div class="col-sm-12">
+  <table id="company-insurances" class="hover cell-border" data-source="<%= datatables_index_company_insurances_path(company_id: @company.id, format: :json) %>">
+    <thead>
+      <tr>
+        <th> 0 ID </th>
+        <th> 1 number </th>
+        <th> 2 concluded </th>
+        <th> 3 valid_from </th>
+        <th> 4 applies_to </th>
+        <th> 5 pay </th>
+        <th> 6 discounts_lock </th>
+        <th> 7 note </th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+
+<div class="col-sm-12">
+
+  <%= link_to t('New', default: t("helpers.links.new")), new_insurance_path(company_id: @company.id), 
+                        :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+</div> <!--/col-sm-12 -->

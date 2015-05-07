@@ -1,0 +1,65 @@
+<%= form_for [@insurance, @group, @discount], :html => { :role => 'form discount' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @discount.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @discount.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="row">
+        <div class="control-group col-sm-5">
+          <%= f.label :category, :class => 'control-label' %>
+          <%= f.select :category, 
+                    options_for_select([['IL - Zniżka grupowa', 'IL'],
+                                        ['IP - Zniżka z tytułu wykupienia min 3 świadczeń dodatkowych', 'IP'],
+                                        ['OK - Zwyżka z tytułu płatności ratalnej', 'OK'], 
+                                        ['IN - Zniżka dodatkowa', 'IN'], 
+                                        ['BK - Zniżka z tytułu bezszkodowej kontynuacji', 'BK'], 
+                                        ['GR - Zniżka z tytułu posiadania polisy 647 lub 750', 'GR']], 
+                    selected: @discount.category), { include_blank: false }, class: 'form-control', disabled: input_disabled %>
+        </div>
+      </div>  <!-- /row -->
+
+      <div class="row">
+        <br>
+        <div class="form-group col-sm-8">
+          <%= f.label :description, class: 'control-label' %>
+          <%= f.text_field :description, class: 'form-control', disabled: input_disabled %>
+        </div>
+
+        <div class="form-group col-sm-2">
+          <%= f.label :discount_increase, class: 'control-label' %>
+          <%= f.text_field :discount_increase, class: 'form-control', disabled: input_disabled %>
+        </div>
+      </div>  <!-- /row -->
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+
+  <% if input_disabled %>
+    <!-- for "Show" -->
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), insurance_group_path(@insurance, @group), :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+  
+<% end %>
+

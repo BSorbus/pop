@@ -1,0 +1,328 @@
+$(document).ready(function() {
+  var oRotationCoveragesTable = $('#rotation-coverages').DataTable({
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    deferRender: true,
+    ajax: { 
+      url: $('#rotation-coverages').data('source'),
+      type: "POST"
+    },
+    pagingType: "full_numbers",
+    lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Wszystkie"]],
+    //paging: false,
+    //searching: false,
+    //info: false,
+    columns: [
+      { "targets": [0],
+        "title": "ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [1],
+        "title": "Grupa" }, 
+      { "targets": [2],
+        "title": "Ubezpieczony",
+        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[2] != oData[3]) {
+            $(nTd).css('background-color', '#FFFFE0'); //LightYellow  #FFFFE0
+          }
+        }
+      }, 
+      { "targets": [3],
+        "title": "Płatnik",
+        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[3] != oData[2]) {
+            $(nTd).css('background-color', '#FFFACD'); //LemonChiffon   #FFFACD
+          }
+        }
+      }, 
+      { "targets": [4],
+        "title": "Uwagi" }, 
+      { "targets": [5],
+        "title": "Akcje",
+        "searchable": false,
+        "sortable": false } 
+    ],
+    order: [[ 1, "asc" ]],
+    language: {
+      decimal:        ",",
+      thousands:      " ",
+      //processing: "<img src='/assets/spinner.gif'>",
+      processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+      lengthMenu:     "Pokaż _MENU_ pozycji",
+      info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+      infoEmpty:      "Pozycji 0 z 0 dostępnych",
+      infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+      infoPostFix:    "",
+      search:         "Szukaj&nbsp;:",
+      loadingRecords: "Wczytywanie...",
+      zeroRecords:    "Nie znaleziono pasujących pozycji",
+      emptyTable:     "Brak danych",
+      paginate: {
+        first:      "<<",
+        previous:   "<",
+        next:       ">",
+        last:       ">>"
+      },
+      aria: {
+        sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+        sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+      }
+    }
+  });
+ 
+  
+
+  var oGroupCoveragesTable = $('#group-coverages').DataTable({
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    deferRender: true,
+    ajax: { 
+      url: $('#group-coverages').data('source'),
+      type: "POST"
+    },
+    pagingType: "full_numbers",
+    lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Wszystkie"]],
+    //paging: false,
+    //searching: false,
+    //info: false,
+    columns: [
+      { "targets": [0],
+        "title": "ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [1],
+        "title": "Rotacja"}, 
+      { "targets": [2],
+        "title": "Ubezpieczony",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[2] != oData[3]) {
+            $(nTd).css('background-color', '#FFFFE0'); //LightYellow  #FFFFE0
+          }
+        }
+      }, 
+      { "targets": [3],
+        "title": "Płatnik",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[3] != oData[2]) {
+            $(nTd).css('background-color', '#FFFACD'); //LemonChiffon   #FFFACD
+          }
+        }
+      }, 
+      { "targets": [4],
+        "title": "Uwagi" }, 
+      { "targets": [5],
+        "title": "Akcje",
+        "searchable": false,
+        "sortable": false } 
+    ],
+    order: [[ 1, "desc" ]],
+    language: {
+      decimal:        ",",
+      thousands:      " ",
+      //processing: "<img src='/assets/spinner.gif'>",
+      processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+      lengthMenu:     "Pokaż _MENU_ pozycji",
+      info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+      infoEmpty:      "Pozycji 0 z 0 dostępnych",
+      infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+      infoPostFix:    "",
+      search:         "Szukaj&nbsp;:",
+      loadingRecords: "Wczytywanie...",
+      zeroRecords:    "Nie znaleziono pasujących pozycji",
+      emptyTable:     "Brak danych",
+      paginate: {
+        first:      "<<",
+        previous:   "<",
+        next:       ">",
+        last:       ">>"
+      },
+      aria: {
+        sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+        sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+      }
+    }
+  });
+
+
+
+  var oInsuredCoveragesTable = $('#insured-coverages').DataTable({
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    deferRender: true,
+    ajax: { 
+      url: $('#insured-coverages').data('source'),
+      type: "POST"
+    },
+    pagingType: "full_numbers",
+    lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Wszystkie"]],
+    //paging: false,
+    //searching: false,
+    //info: false,
+    columns: [
+      { "targets": [0],
+        "title": "ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [1],
+        "title": "Polisa"}, 
+      { "targets": [2],
+        "title": "Rotacja"}, 
+      { "targets": [3],
+        "title": "Grupa" }, 
+      { "targets": [4],
+        "title": "Ubezpieczony",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[4] != oData[5]) {
+            $(nTd).css('background-color', '#FFFFE0'); //LightYellow  #FFFFE0
+          }
+        }
+      }, 
+      { "targets": [5],
+        "title": "Płatnik",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[5] != oData[4]) {
+            $(nTd).css('background-color', '#FFFACD'); //LemonChiffon   #FFFACD
+          }
+        }
+      }, 
+      { "targets": [6],
+        "title": "Uwagi" }, 
+      { "targets": [7],
+        "title": "Akcje",
+        "searchable": false,
+        "sortable": false } 
+    ],
+    order: [[ 2, "desc" ]],
+    language: {
+      decimal:        ",",
+      thousands:      " ",
+      //processing: "<img src='/assets/spinner.gif'>",
+      processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+      lengthMenu:     "Pokaż _MENU_ pozycji",
+      info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+      infoEmpty:      "Pozycji 0 z 0 dostępnych",
+      infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+      infoPostFix:    "",
+      search:         "Szukaj&nbsp;:",
+      loadingRecords: "Wczytywanie...",
+      zeroRecords:    "Nie znaleziono pasujących pozycji",
+      emptyTable:     "Brak danych",
+      paginate: {
+        first:      "<<",
+        previous:   "<",
+        next:       ">",
+        last:       ">>"
+      },
+      aria: {
+        sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+        sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+      }
+    }
+  });
+
+
+
+  var oPayerCoveragesTable = $('#payer-coverages').DataTable({
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    deferRender: true,
+    ajax: { 
+      url: $('#payer-coverages').data('source'),
+      type: "POST"
+    },
+    pagingType: "full_numbers",
+    lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Wszystkie"]],
+    //paging: false,
+    //searching: false,
+    //info: false,
+    columns: [
+      { "targets": [0],
+        "title": "ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [1],
+        "title": "Polisa"}, 
+      { "targets": [2],
+        "title": "Rotacja"}, 
+      { "targets": [3],
+        "title": "Grupa" }, 
+      { "targets": [4],
+        "title": "Ubezpieczony",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[4] != oData[5]) {
+            $(nTd).css('background-color', '#FFFFE0'); //LightYellow  #FFFFE0
+          }
+        }
+      }, 
+      { "targets": [5],
+        "title": "Płatnik",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[5] != oData[4]) {
+            $(nTd).css('background-color', '#FFFACD'); //LemonChiffon   #FFFACD
+          }
+        }
+      }, 
+      { "targets": [6],
+        "title": "Uwagi" }, 
+      { "targets": [7],
+        "title": "Akcje",
+        "searchable": false,
+        "sortable": false } 
+    ],
+    order: [[ 2, "desc" ]],
+    language: {
+      decimal:        ",",
+      thousands:      " ",
+      //processing: "<img src='/assets/spinner.gif'>",
+      processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+      lengthMenu:     "Pokaż _MENU_ pozycji",
+      info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+      infoEmpty:      "Pozycji 0 z 0 dostępnych",
+      infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+      infoPostFix:    "",
+      search:         "Szukaj&nbsp;:",
+      loadingRecords: "Wczytywanie...",
+      zeroRecords:    "Nie znaleziono pasujących pozycji",
+      emptyTable:     "Brak danych",
+      paginate: {
+        first:      "<<",
+        previous:   "<",
+        next:       ">",
+        last:       ">>"
+      },
+      aria: {
+        sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+        sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+      }
+    }
+  });
+ 
+ 
+ 
+
+});
+

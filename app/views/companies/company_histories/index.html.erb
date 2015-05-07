@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Company Histories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>Short</th>
+      <th>Name</th>
+      <th>Address city</th>
+      <th>Address street</th>
+      <th>Address house</th>
+      <th>Address number</th>
+      <th>Address postal code</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Nip</th>
+      <th>Regon</th>
+      <th>Pesel</th>
+      <th>Informal group</th>
+      <th>Note</th>
+      <th>User</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @company_histories.each do |company_history| %>
+      <tr>
+        <td><%= company_history.company %></td>
+        <td><%= company_history.short %></td>
+        <td><%= company_history.name %></td>
+        <td><%= company_history.address_city %></td>
+        <td><%= company_history.address_street %></td>
+        <td><%= company_history.address_house %></td>
+        <td><%= company_history.address_number %></td>
+        <td><%= company_history.address_postal_code %></td>
+        <td><%= company_history.phone %></td>
+        <td><%= company_history.email %></td>
+        <td><%= company_history.nip %></td>
+        <td><%= company_history.regon %></td>
+        <td><%= company_history.pesel %></td>
+        <td><%= company_history.informal_group %></td>
+        <td><%= company_history.note %></td>
+        <td><%= company_history.user_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

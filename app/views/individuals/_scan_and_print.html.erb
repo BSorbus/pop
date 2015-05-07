@@ -1,0 +1,49 @@
+<div class="col-sm-12">
+  <div class="row">  <!--row -->
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-10">
+      <blockquote>
+        <h5>Wydruki generowane w tym widoku ograniczone są tylko do pozycji <strong><%=@individual.fullname %></strong>.</h5>
+      </blockquote>
+    </div> <!-- /.col-sm-12 -->
+  </div> <!-- /.row -->
+
+  <hr>
+
+  <% has_coverages = Coverage.where(insured_id: @individual.id).any? %>
+
+  <div class="row">  <!--dla Ubezpieczonego -->
+    <div class="col-sm-2">
+      <p class="lead">dla Ubezpieczonego</p>
+    </div><!-- /.col-sm-2 -->
+
+    <% if has_coverages %>
+      <div class="col-sm-2" >
+        <div class="folded"><h3><%= @individual.lastfirstname %></h3></div>
+        <%= link_to image_tag("certifications_insureds.png", :class => "img-thumbnail" ), 
+              pdf_certifications_insureds_individual_path(@individual, :format => "pdf"), 
+              :target => "_blank" %>  
+
+        <h5>Certyfikat ubezpieczonego</h5>
+        <h5><span class="text-muted">- ostatnia rotacja w ostatniej polisie</span></h5>
+      </div><!-- /.col-sm-2 -->
+
+      <div class="col-sm-2" >
+        <div class="folded"><h3><%= @individual.lastfirstname %></h3></div>
+        <%= link_to image_tag("dispositions_insureds.png", :class => "img-thumbnail" ), 
+              pdf_dispositions_insureds_individual_path(@individual, :format => "pdf"), 
+              :target => "_blank" %>  
+
+        <h5>Dyspozycja ubezpieczonego</h5>
+        <h5><span class="text-muted">- ostatnia rotacja w ostatniej polisie</span></h5>
+      </div><!-- /.col-sm-2 -->
+    <% else %>
+      <div class="col-sm-10" >
+        <h4 class="text-center"><span class="text-muted">Osoba nie jest ubezpieczona!</span></h4>
+      </div><!-- /.col-sm-12 -->
+    <% end %>
+
+  </div class="row">  <!--/dla Ubezpieczonego -->
+
+</div> <!--/col-sm-12 -->

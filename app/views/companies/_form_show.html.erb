@@ -1,0 +1,170 @@
+<%= form_for [@company], :html => { :role => 'form company' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @company.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @company.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+
+        <div class="form-group col-sm-2">
+          <%= f.label :short, class: 'control-label' %>
+          <h5><%= @company.short %></h5>
+          <h5><div class="text-success history collapse" id="history[short]"> </div></h5>
+        </div>
+
+        <div class="form-group col-sm-8">
+          <%= f.label :name, class: 'control-label' %>
+          <h5><%= @company.name %></h5>
+          <h5><div class="text-success history collapse" id="history[name]"> </div></h5>
+        </div>
+
+        <div class="form-group col-sm-2">
+          <br><%= f.label :informal_group, class: "control-label" %><br>
+          <%= f.radio_button(:informal_group, false, disabled: input_disabled) %>
+          <%= f.label(:informal_group_false, "Nie" ) %>
+          <%= f.radio_button(:informal_group, true, disabled: input_disabled) %>
+          <%= f.label(:informal_group_true, "Tak" ) %>
+        </div>
+
+      </div>  <!-- /row -->
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-2">
+          <%= f.label :address_postal_code, class: 'control-label' %>
+          <h5><%= @company.address_postal_code %></h5>
+          <h5><div class="text-success history collapse" id="history[address_postal_code]"> </div></h5>
+        </div>
+
+        <div class="form-group col-sm-8">
+          <%= f.label :address_city, class: 'control-label' %>
+          <h5><%= @company.address_city %></h5>
+          <h5><div class="text-success history collapse" id="history[address_city]"> </div></h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-8">
+          <%= f.label :address_street, class: 'control-label' %>
+          <h5><%= @company.address_street %></h5>
+          <h5><div class="text-success history collapse" id="history[address_street]"> </div></h5>
+        </div>
+        <div class="form-group col-sm-2">
+          <%= f.label :address_house, class: 'control-label' %>
+          <h5><%= @company.address_house %></h5>
+          <h5><div class="text-success history collapse" id="history[address_house]"> </div></h5>
+       </div>
+        <div class="form-group col-sm-2">
+          <%= f.label :address_number, class: 'control-label' %>
+          <h5><%= @company.address_number %></h5>
+          <h5><div class="text-success history collapse" id="history[address_number]"> </div></h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :nip, class: 'control-label' %>
+          <h5><%= @company.nip %></h5>
+          <h5><div class="text-success history collapse" id="history[nip]"> </div></h5>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :regon, class: 'control-label' %>
+          <h5><%= @company.regon %></h5>
+          <h5><div class="text-success history collapse" id="history[regon]"> </div></h5>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :pesel, class: 'control-label' %>
+          <h5><%= @company.pesel %></h5>
+          <h5><div class="text-success history collapse" id="history[pesel]"> </div></h5>
+        </div>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :phone, class: 'control-label' %>
+          <h5><%= @company.phone %></h5>
+          <h5><div class="text-success history collapse" id="history[phone]"> </div></h5>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :email, class: 'control-label' %>
+          <h5><%= @company.email %></h5>
+          <h5><div class="text-success history collapse" id="history[email]"> </div></h5>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <%= f.label :note, class: 'control-label' %>
+        <h5><%= @company.note %></h5>
+        <h5><div class="text-success history collapse" id="history[note]"> </div></h5>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+  </div> <!-- /row -->
+
+  <hr>
+
+
+  <% if input_disabled %>
+  <div class="row">
+    <!-- for "Show" -->
+    <div class="col-sm-9 pull-left">
+      <%= link_to t('Delete', default: t("helpers.links.destroy")), company_path(@company),
+                          method: :delete,
+                          data: { confirm: t('helpers.links.confirm_destroy', data: @company.short) }, 
+                          :class => "btn btn-danger glyphicon glyphicon-trash" %>
+      <%= link_to t('Edit', default: t("helpers.links.edit")), edit_company_path(@company), 
+                          :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+
+      <button class="btn btn-default glyphicon glyphicon-saved pull-right" type="button" data-toggle="collapse" data-target=".history" aria-expanded="false" id="button_show_history"> Historia
+      </button>
+    </div>
+
+
+    <div class="col-sm-3">
+      <%= form_for :trip, url: {action: "show"}, html: {method: "get"} do |ff| %>
+        <div class="control-group">
+          <%= ff.select( :his_id, 
+                @company.company_histories.order(updated_at: :desc)
+                .collect {|p| [ p.updated_at.strftime("%Y-%m-%d %H:%M:%S"), 
+                                p.attributes, :selected => nil ]  },
+                { include_blank: true, multiple: false, :selected => nil }, class: 'form-control history collapse', id: 'company_histories_list' ) %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
+
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+  
+<% end %>

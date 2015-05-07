@@ -1,0 +1,35 @@
+<h3><span class="glyphicon glyphicon-home" aria-hidden="true"> 
+  <%= t('pages.companies') %>
+  </span>
+</h3>
+
+
+<div class="col-sm-12">
+  <table id="companies" class="hover cell-border" data-source="<%= datatables_index_companies_path(format: :json) %>">
+    <thead>
+      <tr>
+        <th> 0 ID </th>
+        <th> 1 short </th>
+        <th> 2 name </th>
+        <th> 3 address_city </th>
+        <th> 4 address_street </th>
+        <th> 5 address_house </th>
+        <th> 6 address_number </th>
+        <th> 7 nip </th>
+        <th> 8 regon </th>
+        <th> 9 pesel </th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+
+<div class="col-sm-12">
+
+  <%= link_to t('New', default: t("helpers.links.new")), new_company_path, 
+                        :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+</div> <!--/col-sm-12 -->

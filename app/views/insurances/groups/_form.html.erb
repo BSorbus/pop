@@ -1,0 +1,203 @@
+<%= form_for [@insurance, @group], :html => { :role => 'form group' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% duplicate_group ||= nil  
+     #if duplicate_group is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @group.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @group.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= hidden_field_tag :duplicate_group, duplicate_group %>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="row">
+
+        <div class="form-group col-sm-4">
+          <br><%= f.label :quotation, class: "control-label" %><br>
+          <%= f.radio_button(:quotation, 'A', disabled: input_disabled, id: "standard_select") %>
+          <%= f.label(:quotation_A, "Standardowa" ) %>
+          <%= f.radio_button(:quotation, 'B', disabled: input_disabled, id: "special_select") %>
+          <%= f.label(:quotation_B, "Specjalna" ) %>
+          <%= f.radio_button(:quotation, 'C', disabled: input_disabled, id: "no_standard_select") %>
+          <%= f.label(:quotation_C, "Niestandardowa" ) %>
+        </div>
+
+        <div class="form-group col-sm-3">
+          <div  id="group_radio_tariff_fixed" >
+            <br><%= f.label :tariff_fixed, class: "control-label" %><br>
+            <%= f.radio_button(:tariff_fixed, false, disabled: input_disabled) %>
+            <%= f.label(:tariff_fixed_f, "Proporcjonalnych" ) %>
+            <%= f.radio_button(:tariff_fixed, true,  disabled: input_disabled) %>
+            <%= f.label(:gtariff_fixed_t, "Stałych" ) %>
+          </div>
+        </div>        
+
+        <div class="form-group col-sm-3">
+          <div  id="group_radio_full_range" >
+            <br><%= f.label :full_range, class: "control-label" %><br>
+            <%= f.radio_button(:full_range, false, disabled: input_disabled) %>
+            <%= f.label(:full_range_f, "Ograniczony" ) %>
+            <%= f.radio_button(:full_range, true, disabled: input_disabled) %>
+            <%= f.label(:full_range_t, "Pełny" ) %>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-2">
+          <br><%= f.label :risk_group, class: "control-label" %><br>
+          <%= f.radio_button(:risk_group, 'A', disabled: input_disabled) %>
+          <%= f.label(:risk_group_A, "A" ) %>
+          <%= f.radio_button(:risk_group, 'B', disabled: input_disabled) %>
+          <%= f.label(:risk_group_B, "B" ) %>
+          <%= f.radio_button(:risk_group, 'D', disabled: input_disabled) %>
+          <%= f.label(:risk_group_D, "D" ) %>
+        </div>
+
+      </div>  <!-- /row -->
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-4">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :assurance, class: 'control-label' %>
+          <%= f.text_field :assurance, class: 'form-control', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-7">
+          <div id="group_assurance_component" >
+            <%= f.label :assurance_component, class: "control-label" %><br>
+            <%= f.text_field :assurance_component, class: 'form-control', disabled: input_disabled %>
+          </div>         
+        </div>         
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-5">
+          <%= f.label :death_100_percent, class: "control-label" %><br>
+          <%= f.radio_button(:death_100_percent, false, disabled: input_disabled) %>
+          <%= f.label(:death_100_percent_f, "Nie" ) %>
+          <%= f.radio_button(:death_100_percent, true, disabled: input_disabled) %>
+          <%= f.label(:death_100_percent_t, "Tak" ) %>
+        </div>               
+      </div>
+
+    </div> <!-- /col-sm-4 -->
+
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :treatment, class: 'control-label' %>
+          <%= f.text_field :treatment, class: 'form-control', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-7">
+          <div id="group_treatment_component" >
+            <%= f.label :treatment_component, class: "control-label" %><br>
+            <%= f.text_field :treatment_component, class: 'form-control', disabled: input_disabled %>
+          </div>
+        </div>        
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :hospital, class: 'control-label' %>
+          <%= f.text_field :hospital, class: 'form-control', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-7">
+          <div id="group_hospital_component" >
+            <%= f.label :hospital_component, class: "control-label" %><br>
+            <%= f.text_field :hospital_component, class: 'form-control', disabled: input_disabled %>
+          </div>
+        </div>         
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <div id="group_ambulatory" >
+            <%= f.label :ambulatory, class: 'control-label' %>
+            <%= f.text_field :ambulatory, class: 'form-control', disabled: input_disabled %>
+          </div>
+        </div>
+        <div class="form-group col-sm-7">
+          <div id="group_ambulatory_component" >
+            <%= f.label :ambulatory_component, class: "control-label" %><br>
+            <%= f.text_field :ambulatory_component, class: 'form-control', disabled: input_disabled %>
+          </div>
+        </div>         
+      </div>
+
+    </div> <!-- /col-sm-4 -->
+
+    <div class="col-sm-4">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :infarct, class: 'control-label' %>
+          <%= f.text_field :infarct, class: 'form-control', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-7">
+          <div id="group_infarct_component" >
+            <%= f.label :infarct_component, class: "control-label" %><br>
+            <%= f.text_field :infarct_component, class: 'form-control', disabled: input_disabled %>
+          </div>
+        </div>         
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <div id="group_inability" >
+            <%= f.label :inability, class: 'control-label' %>
+            <%= f.text_field :inability, class: 'form-control', disabled: input_disabled %>
+          </div>
+        </div>
+        <div class="form-group col-sm-7">
+          <div id="group_inability_component" >
+            <%= f.label :inability_component, class: "control-label" %><br>
+            <%= f.text_field :inability_component, class: 'form-control', disabled: input_disabled %>
+          </div>
+        </div>         
+      </div>
+
+    </div> <!-- /col-sm-4 -->
+
+  </div> <!-- /row -->
+
+  <hr>
+
+
+  <% if input_disabled %>
+    <!-- for "Show" -->
+    <%= link_to t('Delete', default: t("helpers.links.destroy")), insurance_group_path(@insurance, @group),
+                        method: :delete,
+                        data: { confirm: t('helpers.links.confirm_destroy', data: @group.fullname) }, 
+                        :class => "btn btn-danger glyphicon glyphicon-trash" %>
+    <%= link_to t('Edit', default: t("helpers.links.edit")), edit_insurance_group_path(@insurance, @group), 
+                        :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+
+  
+<% end %>
+

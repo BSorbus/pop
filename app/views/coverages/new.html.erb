@@ -1,0 +1,42 @@
+<br>
+
+<ol class="breadcrumb">
+  <li><%= link_to @coverage.rotation.insurance.company.short, company_path(@coverage.rotation.insurance.company_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@coverage.rotation.insurance.company.short}",
+                      :"data-content" => "#{@coverage.rotation.insurance.company.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @coverage.rotation.insurance.number, insurance_path(@coverage.rotation.insurance_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@coverage.rotation.insurance.number}",
+                      :"data-content" => "#{@coverage.rotation.insurance.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @coverage.rotation.fullname, 
+    insurance_rotation_path(@coverage.rotation.insurance_id, @coverage.rotation_id) %></a></li>
+  <li class="active">New Coverage</li>
+</ol> <!-- /breadcrumb -->
+
+<!-- Dane -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-coverage">
+      <div class="panel-heading">
+        <div class="panel-title">
+	        <span class="glyphicon glyphicon-calenar">  New Coverage</span>    
+        </div>
+      </div>
+        <div class="panel-body">
+          <div class="col-sm-1">
+	        	<h1><span class="glyphicon glyphicon-plus"></span></h1> 
+          </div> <!--/col-sm-1-->
+
+          <div class="col-sm-11">
+            <%#= render 'form' %>
+            <%= render 'form', back_url: back_url %><!--param from controller-->
+          </div> <!--/col-sm-11 col-sm-offset-1-->
+    
+        </div>
+    </div> <!-- /panel -->
+  </div> <!-- /col-sm-12-->
+</div> <!-- /row -->
+

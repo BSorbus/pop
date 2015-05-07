@@ -1,0 +1,48 @@
+<br>
+
+<ol class="breadcrumb">
+  <li><%= link_to @group.insurance.company.fullname, company_path(@group.insurance.company_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@group.insurance.company.short}",
+                      :"data-content" => "#{@group.insurance.company.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @group.insurance.number, insurance_path(@group.insurance_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@group.insurance.number}",
+                      :"data-content" => "#{@group.insurance.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li class="active">New Group</li>
+</ol> <!-- /breadcrumb -->
+
+<% duplicate_group ||= nil  
+   #if duplicate_group is not passed to the partial it doesn't crash. 
+   # We default it to false 
+%>
+
+<!-- Dane -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-group">
+      <div class="panel-heading">
+        <div class="panel-title">
+	        <span class="glyphicon glyphicon-th-large">  New Group for <%= @insurance.fullname %></span>    
+        </div>
+      </div>
+        <div class="panel-body">
+          <div class="col-sm-1">
+	        	<h1><span class="glyphicon glyphicon-plus"></span></h1> 
+          </div> <!--/col-sm-1-->
+
+          <div class="col-sm-11">
+            <% if duplicate_group.nil? %>
+              <%= render 'form' %>
+            <% else %>
+              <%= render 'form', duplicate_group: duplicate_group %><!--param from controller-->
+            <% end %>
+          </div> <!--/col-sm-11 col-sm-offset-1-->
+    
+        </div>
+    </div> <!-- /panel -->
+  </div> <!-- /col-sm-12-->
+</div> <!-- /row -->
+

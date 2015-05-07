@@ -1,0 +1,36 @@
+<div class="col-sm-12">
+  <table id="insurance-group-discounts" class="hover cell-border">
+    <thead>
+      <tr>
+        <th class="col-sm-1"><%= Discount.human_attribute_name(:category) %></th>
+        <th class="col-sm-9"><%= Discount.human_attribute_name(:description) %></th>
+        <th class="col-sm-1"><%= Discount.human_attribute_name(:discount_increase) %></th>
+        <th class="col-sm-1"><%=t 'discount.actions', :default => t("helpers.actions") %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @group.discounts.each do |discount| %>
+        <tr>
+          <td><%= discount.category %></td>
+          <td><%= discount.description %></td>
+          <td><%= number_to_percentage(discount.discount_increase, precision: 2, separator: ',', format: "%n %") %></td>
+          <td>
+            <%= link_to ' ', edit_insurance_group_discount_path(discount.group.insurance, discount.group, discount), :class => "glyphicon glyphicon-edit", title: t('tooltip.edit'), rel: 'tooltip' %>
+            <%= link_to ' ', insurance_group_discount_path(discount.group.insurance, discount.group, discount.id),
+                            method: :delete,
+                            data: { confirm: t('helpers.links.confirm_destroy', data: discount.fullname) }, 
+                            :class => "glyphicon glyphicon-trash", title: t('tooltip.destroy'), rel: 'tooltip' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+
+<div class="col-sm-12">
+
+  <%= link_to t('New', default: t("helpers.links.new")), new_insurance_group_discount_path(@insurance, @group), 
+                        :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+</div> <!--/col-sm-12 -->

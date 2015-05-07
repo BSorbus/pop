@@ -1,0 +1,166 @@
+pl:
+  #tłumaczenia nazw pól w _form: f.label i obsłudze błędów
+  #stosując f.label :name, a nie f.label t(col_title.region.name), po wystąpieniu błędu etykieta też w bootstrapie jest"czerwona"
+  link_to: 
+    companies: "Firmy"
+    individuals: "Osoby"
+    insurances: "Polisy NNW"
+    users: "Użytkownicy"
+  activerecord:
+    models:
+      user: 'Użytkownik'
+      company: 'Firma'
+      individual: 'Osoba'
+      insurance: 'Polisa'
+      rotation: 'Rotacja'
+      group: 'Grupa'
+      coverage: 'Ochrona'
+    messages:
+      successfull:
+        created: 'Wpis: "%{data}" został pomyślnie utworzony.'
+        updated: 'Wpis: "%{data}" został pomyślnie zaktualizowany.'
+        destroyed: 'Wpis: "%{data}" został pomyślnie usunięty.'
+        numbering: 'Pomyślnie wykonano numerowanie grup dla polisy "%{data}".'
+        add_to_user: '"%{child}" został pomyślnie przypisany użytkownikowi "%{parent}".'
+        remove_from_user: 'Przypisanie "%{child}" do użytkownika "%{parent}" zostało pomyślnie usunięte.'
+        add_reservation: '"%{child}" został pomyślnie zarezerwowany dla użytkownika "%{parent}".'
+        remove_reservation: 'Rezerwacja "%{child}" dla użytkownika "%{parent}" została pomyślnie usunięta.'
+      error:
+        destroyed: 'Wystąpił błąd w czasie usuwania wpisu "%{data}".'
+        numbering: 'Wystąpił błąd w czasie numerowania grup dla polisy "%{data}".'
+      notice:
+        group_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o zwyżkach/zniżkach.'
+        rotation_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o osobach ubezpieczonych/płatnikach.'
+        no_insured: 'Osoba nie jest ubezpieczona w żadnej polisie.'
+    attributes:
+      company:
+        short: 'Skrót'
+        name: 'Nazwa'
+        address_city: 'Miejscowość'
+        address_street: 'Ulica'
+        address_house: 'Dom'
+        address_number: 'Lokal'
+        address_postal_code: 'Kod'
+        phone: 'Telefon'
+        email: 'Email'
+        nip: 'Nip'
+        regon: 'Regon'
+        pesel: 'Pesel'
+        informal_group: 'Gr nieformalna'
+        note: 'Uwagi'
+      individual:
+        first_name: 'Imię'
+        last_name: 'Nazwisko'
+        address_city: 'Miejscowość'
+        address_street: 'Ulica'
+        address_house: 'Dom'
+        address_number: 'Lokal'
+        address_postal_code: 'Kod'
+        pesel: 'Pesel'
+        birth_date: 'Data ur.'
+        profession: 'Zawód'
+        note: 'Uwagi'
+      insurance:
+        number: 'Numer'
+        concluded: 'Zawarta'
+        valid_from: 'Obowiązuje od'
+        applies_to: '...do'
+        pay: 'Składka'
+        discounts_lock: 'Blokada zniżek/zwyżek'
+        note: 'Uwagi'
+        company_id: 'Firma'
+      group:
+        number: 'Nr'
+        quotation: 'Kwotacja'
+        tariff_fixed: 'System świadczeń'
+        full_range: 'Zakres'
+        risk_group: 'Grupa ryzyka'
+        assurance: 'Świadczenie'
+        assurance_component: 'Świadczenie - skł podst'
+        treatment: 'Leczenie'
+        treatment_component: 'Leczenie - skł podst'
+        ambulatory: 'Zasiłek ambulatoryjny'
+        ambulatory_component: 'Zasiłek ambulatoryjny - skł podst'
+        hospital: 'Szpital'
+        hospital_component: 'Szpital - skł podst'
+        infarct: 'Zawał'
+        infarct_component: 'Zawał - skł podst'
+        inability: 'Niezdolność'
+        inability_component: 'Niezdolność - skł podst'
+        death_100_percent: 'Śmierć 100%'
+        insurance_id: 'Polisa'
+        sum_component: 'Składka podstawowa za osobę'
+        sum_after_discounts: 'Składka po zniżkach'
+        sum_after_increases: 'Składka po zniżkach i zwyżkach'
+        sum_after_monthly: 'Składka miesięczna'
+      rotation:
+        rotation_date: 'Data rotacji'
+        rotation_lock: 'Blokada'
+        date_file_send: 'Data wysłania pliku'
+        note: 'Uwagi'
+        insurance_id: 'Polisa'
+      discount:
+        category: 'Typ zniżki/zwyżki'
+        description: 'Opis'
+        discount_increase: 'Wartość'
+        group_id: 'Grupa'
+      coverage:
+        rotation_id: 'Rotacja'
+        group_id: 'Grupa'
+        insured_id: 'Ubezpieczony'
+        payer_id: 'Płatnik'
+        note: 'Uwagi'
+      user:
+        agent_number: 'Numer agenta'
+        name: 'Imię i Nazwisko'
+        address: 'Pełny adres'
+        email: 'Email'
+        password: 'Hasło'
+        password_confirmation: 'Potwórz hasło'
+        current_password: 'Aktualne hasło'
+        is_admin: 'Administrator'
+        address: 'Adres'
+  help_block_text:
+    suit:
+      show:
+        info_item: 'Elementy zestawu:'
+        info_other: 'Inne:'
+      form:
+        name: 'Nazwa zestawu, winna odzwierciedlać nazwę regionu i użytkownika'
+        img_index: 'Zdjęcie wyświetlane w tabelach. Najlepiej jeżeli jest w rozmiarze 240x300 pikseli'
+    user:
+      show:
+        info_item: 'Posiada:'
+        info_reservation: 'Rezerwuje:'
+        info_other: 'Inne:'
+      edit_password:
+        need_current_password: 'Potwierdź zmiany wprowadzając aktualne hasło'
+  button_text:
+    item:
+      form:
+        button_special_edit: 'Edycja dodatkowych parametrów'
+  tooltip:
+    show: 'Pokaż'
+    edit: 'Edycja'
+    destroy: 'Usuń'
+    new_assignation: "Przypisanie"
+    destroy_assignation: "Usuń przypisanie"
+    new_reservation: "Rezerwacja"
+    destroy_reservation: "Usuń rezerwację"
+    add_to_suit: "Dodaj do zestawu"
+    remove_from_suit: "Usuń z zestawu"
+  placeholder_text:
+    company:
+      show:
+      form:
+        short: 'np. ARTEX'
+        name: 'np. Artex-Software Sp z o.o.'
+      index:
+    element:
+      form:
+        name: 'np. KU - Buty damskie'
+        description: 'np. Skórzane trzewiki, sznurowane do pół łydki'
+    item:
+      form:
+        number: 'np. KU-012-015'
+        description: 'np. KU Buty damskie, rozmiar 38'

@@ -1,0 +1,10 @@
+#####  04A_insurances_h_18270.rb  #####
+... load from db/seeds/polisa_h_18270.csv... start...
+InsuranceHistory all: 726
+InsuranceHistory all where user=4: 726
+#####  END ...load from 04A_insurances_h_18270.rb  #####
+#####  04A_insurances_h_18270.rb  #####
+... load from db/seeds/polisa_h_18270.csv... start...
+InsuranceHistory all: 726
+InsuranceHistory all where user=4: 726
+#####  END ...load from 04A_insurances_h_18270.rb  #####

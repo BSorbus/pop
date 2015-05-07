@@ -1,0 +1,84 @@
+<%= form_for [@insurance, @rotation], :html => { :role => 'form insurance_rotation' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @rotation.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @rotation.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="row">
+        <div class="form-group col-sm-2">
+          <%= f.label :rotation_date, class: 'control-label' %>
+          <h5><%= @rotation.rotation_date %></h5>
+        </div>
+
+        <div class="form-group col-sm-2 col-sm-offset-8">
+          <br><%= f.label :rotation_lock, class: "control-label" %><br>
+          <%= f.radio_button(:rotation_lock, false, disabled: input_disabled) %>
+          <%= f.label(:rotation_lock_f, "Nie" ) %>
+          <%= f.radio_button(:rotation_lock, true, disabled: input_disabled) %>
+          <%= f.label(:rotation_lock_t, "Tak" ) %>
+        </div>
+      </div>  <!-- /row -->
+
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :date_file_send, class: 'control-label' %>
+          <h5><%= @rotation.date_file_send %></h5>
+        </div>
+      </div> <!-- /row -->
+
+    </div> <!-- /col-sm-6 -->
+
+
+    <div class="col-sm-6">
+
+      <div class="form-group">
+        <%= f.label :note, class: 'control-label' %>
+        <h5><%= @rotation.note %></h5>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+  </div> <!-- /row -->
+
+  <hr>
+
+  
+  <% if input_disabled %>
+    <!-- for "Show" -->
+    <%= link_to t('Delete', default: t("helpers.links.destroy")), insurance_rotation_path(@rotation.insurance_id, @rotation),
+                        method: :delete,
+                        data: { confirm: t('helpers.links.confirm_destroy', data: @rotation.fullname) }, 
+                        :class => "btn btn-danger glyphicon glyphicon-trash" %>
+    <%= link_to t('Edit', default: t("helpers.links.edit")), edit_insurance_rotation_path(@rotation.insurance_id, @rotation), 
+                        :class => "btn btn-primary glyphicon glyphicon-edit" %>
+
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+  
+<% end %>

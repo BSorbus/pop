@@ -1,0 +1,167 @@
+<div class="col-sm-12">
+  <div class="row">  <!--row -->
+    <div class="col-sm-2">
+      <div class="btn-group-vertical" id="btn-group-prnscope" data-toggle="buttons">
+        <label class="btn btn-default active" value="A">
+          <input type="radio" name="btns" id="option1" autocomplete="off"checked >Włączenia
+        </label>
+        <label class="btn btn-default" value="B">
+          <input type="radio" name="btns" id="option2" autocomplete="off" >Wszystko
+        </label>
+      </div>
+      <input type="hidden" name="prnscopevalue" id="prnscopevalue" value="A"/>
+
+    </div>
+
+    <div class="col-sm-10">
+      <blockquote>
+        <h5>Część wydruków może być generowana jako pełne zestawienie danych (<strong>"Wszystko"</strong>) lub z zakresem ograniczonym tylko do pozycji nowych/zmodyfikowanych względem wcześniejszej rotacji (<strong>"Włączenia"</strong>).<br> 
+        Wybierając przełącznikiem odpowiedni zakres skracasz również czas generowania raportu.</h5>
+      </blockquote>
+    </div>  <!-- /.col-sm-12 -->
+
+  </div>
+
+  <hr>
+
+  <div class="row">  <!--dla Centrali -->
+    <div class="col-sm-2">
+      <p class="lead">dla Centrali</p>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2">
+      <%= link_to image_tag("list_benefits_nnw1.png", :class => "img-thumbnail" ), 
+            pdf_list_benefits_nnw1_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Wykaz świadczeń NNW1</h5>
+      <h5><span class="text-muted"><%= "- wszystkie grupy, rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2">
+      <%= link_to image_tag("list_insureds_nnw2.png", :class => "img-thumbnail" ), 
+            pdf_list_insureds_nnw2_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Lista ubezpieczonych NNW2</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+
+    <div class="col-sm-3">
+      <%= link_to " Lista osób - Export do pliku", export_coverages_current_insurance_rotation_path(@insurance, @rotation, :format => "csv"), :class => "btn btn-primary glyphicon glyphicon-cloud-download" %>  
+
+      <h5><%= "NU_#{@insurance.number.last(12)}_#{@rotation.rotation_date.strftime("%Y%m%d").last(6)}.txt" %></h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+
+      <br>
+
+      <%= link_to " Włączenia i wyłączenia - Export do pliku", export_coverages_add_remove_insurance_rotation_path(@insurance, @rotation, :format => "csv"), :class => "btn btn-primary glyphicon glyphicon-cloud-download" %>  
+
+      <h5><%= "N_#{@insurance.number.last(12)}_#{@rotation.rotation_date.strftime("%Y%m%d").last(6)}.txt" %></h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-3 -->
+
+  </div class="row">  <!--/dla Centrali -->
+
+
+
+  <hr>
+
+  <div class="row">  <!--dla Agenta -->
+    <div class="col-sm-2">
+      <p class="lead">dla Agenta</p>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-3">
+      <%= link_to image_tag("list_insureds.png", :class => "img-thumbnail" ), 
+            pdf_list_insureds_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Lista ubezpieczonych</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2" id="checked-scope-prn">
+      <div class="folded"><h3>Włączenia</h3></div>
+      <%= link_to image_tag("declarations_accession1.png", :class => "img-thumbnail" ), 
+            pdf_declarations_accession1_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Deklaracje przystąpienia do ubezpieczenia NNW (wariant 1)</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2" id="checked-scope-prn">
+      <div class="folded"><h3>Włączenia</h3></div>
+      <%= link_to image_tag("declarations_accession2.png", :class => "img-thumbnail" ), 
+            pdf_declarations_accession2_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Deklaracje przystąpienia do ubezpieczenia NNW (wariant 2)</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+  </div class="row">  <!--/dla Agenta -->
+
+
+
+  <hr>
+
+  <div class="row">  <!--dla Firmy -->
+    <div class="col-sm-2">
+      <p class="lead">dla Firmy</p>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2">
+      <%= link_to image_tag("list_payers.png", :class => "img-thumbnail" ), 
+            pdf_list_payers_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Lista płatników</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2">
+      <%= link_to image_tag("declarations_payers.png", :class => "img-thumbnail" ), 
+            pdf_declarations_payers_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Oświadczenia płatników o potrącaniu składki</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+  </div class="row">  <!--/dla Firmy -->
+
+
+
+  <hr>
+
+  <div class="row">  <!--dla Ubezpieczonego -->
+    <div class="col-sm-2">
+      <p class="lead">dla Ubezpieczonego</p>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2" id="checked-scope-prn">
+      <div class="folded"><h3>Włączenia</h3></div>
+      <%= link_to image_tag("certifications_insureds.png", :class => "img-thumbnail" ), 
+            pdf_certifications_insureds_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Certyfikaty ubezpieczonych</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2" id="checked-scope-prn">
+      <div class="folded"><h3>Włączenia</h3></div>
+      <%= link_to image_tag("dispositions_insureds.png", :class => "img-thumbnail" ), 
+            pdf_dispositions_insureds_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Dyspozycje ubezpieczonych</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+  </div class="row">  <!--/dla Ubezpieczonego -->
+
+
+</div> <!--/col-sm-12 -->

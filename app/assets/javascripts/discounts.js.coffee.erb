@@ -1,0 +1,40 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://coffeescript.org/
+
+jQuery ->
+  $('#insurance-group-discounts').DataTable({
+    responsive: true
+    processing: true
+    serverSide: false
+    paging: false
+    searching: false
+    info: false
+    language: {
+        decimal:        ",",
+        thousands:      " ",
+#        processing:     "Przetwarzanie w toku...",
+#        processing:    "<img src='/assets/spinner.gif'>",
+        processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+        lengthMenu:     "Pokaż _MENU_ pozycji",
+        info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+        infoEmpty:      "Pozycji 0 z 0 dostępnych",
+        infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+        infoPostFix:    "",
+        search:         "Szukaj&nbsp;:",
+        loadingRecords: "Wczytywanie...",
+        zeroRecords:    "Nie znaleziono pasujących pozycji",
+        emptyTable:     "Brak danych",
+        paginate: {
+            first:      "<<",
+            previous:   "<",
+            next:       ">",
+            last:       ">>"
+        },
+        aria: {
+            sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+            sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+        }
+    }
+  });
+

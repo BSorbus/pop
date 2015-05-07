@@ -1,0 +1,117 @@
+<%= form_for [@individual], :html => { :role => 'form individual' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @individual.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @individual.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+
+        <div class="form-group col-sm-6">
+          <%= f.label :last_name, class: 'control-label' %>
+          <h5><%= @individual.last_name %></h5>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <%= f.label :first_name, class: 'control-label' %>
+          <h5><%= @individual.first_name %></h5>
+        </div>
+
+      </div>  <!-- /row -->
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-2">
+          <%= f.label :address_postal_code, class: 'control-label' %>
+          <h5><%= @individual.address_postal_code %></h5>
+        </div>
+
+        <div class="form-group col-sm-8">
+          <%= f.label :address_city, class: 'control-label' %>
+          <h5><%= @individual.address_city %></h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-8">
+          <%= f.label :address_street, class: 'control-label' %>
+          <h5><%= @individual.address_street %></h5>
+        </div>
+        <div class="form-group col-sm-2">
+          <%= f.label :address_house, class: 'control-label' %>
+          <h5><%= @individual.address_house %></h5>
+        </div>
+        <div class="form-group col-sm-2">
+          <%= f.label :address_number, class: 'control-label' %>
+          <h5><%= @individual.address_number %></h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :birth_date, class: 'control-label' %>
+          <h5><%= @individual.birth_date %></h5>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :pesel, class: 'control-label' %>
+          <h5><%= @individual.pesel %></h5>
+        </div>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-8">
+          <%= f.label :profession, class: 'control-label' %>
+          <h5><%= @individual.profession %></h5>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :note, class: 'control-label' %>
+        <h5><%= @individual.note %></h5>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+  </div> <!-- /row -->
+
+  <hr>
+
+
+  <% if input_disabled %>
+    <!-- for "Show" -->
+    <%= link_to t('Delete', default: t("helpers.links.destroy")), individual_path(@individual),
+                        method: :delete,
+                        data: { confirm: t('helpers.links.confirm_destroy', data: @individual.fullname) }, 
+                        :class => "btn btn-danger glyphicon glyphicon-trash" %>
+    <%= link_to t('Edit', default: t("helpers.links.edit")), edit_individual_path(@individual), 
+                        :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+  
+<% end %>

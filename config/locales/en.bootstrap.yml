@@ -1,0 +1,39 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  breadcrumbs:
+    application:
+      root: "Index"
+      title: "Costume"
+    pages:
+      pages: "Pages"
+      regions: "Regions"
+      elements: "Elements"
+      items: "Items"
+      suits: "Suits"
+      users: "Users"
+      sign_in: "Sign In"
+      sign_out: "Sign Out"
+      change_password: "Change Password"
+  helpers:
+    actions: "Actions"
+    links:
+      back: "Back"
+      cancel: "Cancel"
+      confirm: "Are you sure?"
+      destroy: "Delete"
+      new: "New"
+      edit: "Edit"
+      index: "Index"
+      numbering_groups: " Numeruj grupy"
+      new_reservation: "Reservation"
+      destroy_assignation: "Delete assignation"
+      new_assignation: "Assignation"
+      send_email: "Send email"
+    titles:
+      edit: "Edit %{model}"
+      save: "Save %{model}"
+      new: "New %{model}"
+      delete: "Delete %{model}"
+      change_your_password: "Change your password"

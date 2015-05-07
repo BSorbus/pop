@@ -1,0 +1,34 @@
+<h3><span class="glyphicon glyphicon-user" aria-hidden="true"> 
+  <%= t('pages.individuals') %>  
+  </span>
+</h3>
+
+
+<div class="col-sm-12">
+  <table id="individuals" class="hover cell-border" data-source="<%= datatables_index_individuals_path(format: :json) %>">
+    <thead>
+      <tr>
+        <th> 0 id</th>
+        <th> 1 <%= Individual.human_attribute_name(:last_name) %></th>
+        <th> 2 <%= Individual.human_attribute_name(:first_name) %></th>
+        <th> 3 </th>
+        <th> 4 address_street </th>
+        <th> 5 address_house </th>
+        <th> 6 address_number </th>
+        <th> 7 pesel </th>
+        <th> 8 data ur</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+
+<div class="col-sm-12">
+
+  <%= link_to t('New', default: t("helpers.links.new")), new_individual_path, 
+                        :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+</div> <!--/col-sm-12 -->

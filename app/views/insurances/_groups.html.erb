@@ -1,0 +1,51 @@
+<div class="col-sm-12">
+  <table id="insurance-groups" class="compact hover cell-border"  data-source="<%= datatables_index_insurance_groups_path(@insurance.id, format: :json) %>">
+    <thead>
+      <tr>
+        <th>0 id</th>
+        <th>1 insurance_id</th>
+        <th>2 Nr</th>
+        <th>3 Kwotacja</th>
+        <th>4 System świadczeń</th>
+        <th>5 Zakres</th>
+        <th>6 Grupa ryzyka</th>
+        <th>7 Świadczenie</th>
+        <th>8 Leczenie</th>
+        <th>9 Zasiłek ambulatoryjny</th>
+        <th>10 Szpital</th>
+        <th>11 Zawał</th>
+        <th>12 Niezdolność</th>
+        <th>13 Śmierć 100%</th>
+        <th>14 Mies. za osobę</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+
+<div class="col-sm-12">
+
+  <%= link_to t('New', default: t("helpers.links.new")), new_insurance_group_path(@insurance), 
+                        :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+
+<!--
+  Bezpośrednie wywoałnie metody z kontrolera
+-->
+  <%= link_to t('Numbering', default: t("helpers.links.numbering_groups")), numbering_groups_insurance_path(@insurance),
+                        method: :patch,
+                        data: { confirm: "Na pewno chcesz wykonać numerowanie grup dla polisy \"#{@insurance.number}\"?" }, 
+                        :class => "btn btn-default glyphicon glyphicon-sort-by-attributes" %>
+
+
+<!--
+  Wywołanie funkcji w JS, która nastepnie wywołuje metdode w kontrolerze
+  <button id="insurance-groups-numbering-and-refresh" ajax-path="<%= numbering_groups_insurance_path(@insurance) %>" class="btn btn-success glyphicon glyphicon-sort-by-attributes"><%= t('Numbering', default: t("helpers.links.numbering_groups")) %></button>
+
+-->
+
+
+</div> <!--/col-sm-12 -->

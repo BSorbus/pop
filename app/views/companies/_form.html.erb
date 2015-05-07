@@ -1,0 +1,133 @@
+<%= form_for [@company], :html => { :role => 'form comapny' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @company.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @company.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+
+        <div class="form-group col-sm-2">
+          <%= f.label :short, class: 'control-label' %>
+          <%= f.text_field :short, autofocus: true, class: 'form-control', placeholder: t('placeholder_text.company.form.short'), disabled: input_disabled %>
+        </div>
+
+        <div class="form-group col-sm-8">
+          <%= f.label :name, class: 'control-label' %>
+          <%= f.text_field :name, class: 'form-control', placeholder: t('placeholder_text.company.form.name'), disabled: input_disabled %>
+        </div>
+
+        <div class="form-group col-sm-2">
+          <br><%= f.label :informal_group, class: "control-label" %><br>
+          <%= f.radio_button(:informal_group, false, disabled: input_disabled) %>
+          <%= f.label(:informal_group_false, "Nie" ) %>
+          <%= f.radio_button(:informal_group, true, disabled: input_disabled) %>
+          <%= f.label(:informal_group_true, "Tak" ) %>
+        </div>
+      </div>  <!-- /row -->
+
+      <hr>
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <div class="row">
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-2">
+          <%= f.label :address_postal_code, class: 'control-label' %>
+          <%= f.text_field :address_postal_code, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+
+        <div class="form-group col-sm-8">
+          <%= f.label :address_city, class: 'control-label' %>
+          <%= f.text_field :address_city, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-8">
+          <%= f.label :address_street, class: 'control-label' %>
+          <%= f.text_field :address_street, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-2">
+          <%= f.label :address_house, class: 'control-label' %>
+          <%= f.text_field :address_house, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-2">
+          <%= f.label :address_number, class: 'control-label' %>
+          <%= f.text_field :address_number, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :nip, class: 'control-label' %>
+          <%= f.text_field :nip, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :regon, class: 'control-label' %>
+          <%= f.text_field :regon, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :pesel, class: 'control-label' %>
+          <%= f.text_field :pesel, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :phone, class: 'control-label' %>
+          <%= f.text_field :phone, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-4">
+          <%= f.label :email, class: 'control-label' %>
+          <%= f.text_field :email, class: 'form-control input-sm', disabled: input_disabled %>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <%= f.label :note, class: 'control-label' %>
+        <%= f.text_area :note, :rows => 4, :cols => 50, class: 'form-control input-sm', disabled: input_disabled %>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+  </div> <!-- /row -->
+
+  <hr>
+
+
+  <% if input_disabled %>
+    <!-- for "Show" -->
+    <%= link_to t('Delete', default: t("helpers.links.destroy")), company_path(@company),
+                        method: :delete,
+                        data: { confirm: t('helpers.links.confirm_destroy', data: @company.short) }, 
+                        :class => "btn btn-danger glyphicon glyphicon-trash" %>
+    <%= link_to t('Edit', default: t("helpers.links.edit")), edit_company_path(@company), 
+                        :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+  
+<% end %>

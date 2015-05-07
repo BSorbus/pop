@@ -1,0 +1,34 @@
+<div class="col-sm-12">
+  <table id="insurance-rotations" class="compact hover cell-border" data-source="<%= datatables_index_insurance_rotations_path(@insurance.id, format: :json) %>">
+    <thead>
+      <tr>
+        <th>0 id</th>
+        <th>1 insurance_id</th>
+        <th>2 data rotacji </th>
+        <th>3 blokada </th>
+        <th>4 data wysłania pliku</th>
+        <th>5 uwagi</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+
+<div class="col-sm-12">
+
+  <% if @insurance.rotations.empty? %>
+    <%= link_to t('New', default: t("helpers.links.new")), new_insurance_rotation_path(@insurance), 
+                          :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+  <% else %>
+
+    <%= link_to t('Duplicate', default: t("helpers.links.duplicate_rotation")), duplicate_insurance_rotation_path(@insurance, @insurance.rotations.last), 
+                          method: :get,
+                          data: { confirm: "Czy chcesz dodać kolejną rotację?\nPoprzednia rotacja zostanie automatycznie zablokowana (jeżeli jeszcze nie jest)." }, 
+                          :class => "btn btn-primary glyphicon glyphicon-plus" %>
+  <% end %>
+
+</div> <!--/col-sm-12 -->
