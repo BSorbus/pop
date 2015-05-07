@@ -13,7 +13,7 @@
                       :"data-placement" => "bottom" %></a></li>
   <li><%= link_to @coverage.rotation.fullname, 
     insurance_rotation_path(@coverage.rotation.insurance_id, @coverage.rotation_id) %></a></li>
-  <li class="active">New Coverage</li>
+  <li class="active"><%= t(' New Coverage', default: t("pages.coverage_new")) %></li>
 </ol> <!-- /breadcrumb -->
 
 <!-- Dane -->
@@ -22,7 +22,7 @@
     <div class="panel panel-coverage">
       <div class="panel-heading">
         <div class="panel-title">
-	        <span class="glyphicon glyphicon-calenar">  New Coverage</span>    
+	        <span class="glyphicon glyphicon-calenar"><%= t(' New Coverage', default: t("pages.coverage_new")) %></span>    
         </div>
       </div>
         <div class="panel-body">

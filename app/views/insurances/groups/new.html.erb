@@ -11,7 +11,7 @@
                       :"title" => "#{@group.insurance.number}",
                       :"data-content" => "#{@group.insurance.for_popover_data}",
                       :"data-placement" => "bottom" %></a></li>
-  <li class="active">New Group</li>
+  <li class="active"><%= t(' New Group', default: t("pages.group_new")) %></li>
 </ol> <!-- /breadcrumb -->
 
 <% duplicate_group ||= nil  
@@ -25,7 +25,7 @@
     <div class="panel panel-group">
       <div class="panel-heading">
         <div class="panel-title">
-	        <span class="glyphicon glyphicon-th-large">  New Group for <%= @insurance.fullname %></span>    
+	        <span class="glyphicon glyphicon-th-large"><%= t(' New Group for', default: t("pages.group_new_for", data: @insurance.fullname)) %></span>    
         </div>
       </div>
         <div class="panel-body">

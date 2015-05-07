@@ -56,9 +56,9 @@ class Insurances::GroupsController < ApplicationController
     @insurance = load_insurance
     @group.insurance = @insurance
 
-    flash[:notice] = t('activerecord.messages.notice.group_duplicate', data: @for_duplicate.fullname)
     respond_to do |format|
-      format.html { render :new, locals: { duplicate_group: @for_duplicate.id} }  
+     flash.now[:notice] = t('activerecord.messages.notice.group_duplicate', data: @for_duplicate.fullname)
+     format.html { render :new, locals: { duplicate_group: @for_duplicate.id} }  
     end
   end
 

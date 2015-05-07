@@ -27,7 +27,7 @@
 
     <%= link_to t('Duplicate', default: t("helpers.links.duplicate_rotation")), duplicate_insurance_rotation_path(@insurance, @insurance.rotations.last), 
                           method: :get,
-                          data: { confirm: "Czy chcesz dodać kolejną rotację?\nPoprzednia rotacja zostanie automatycznie zablokowana (jeżeli jeszcze nie jest)." }, 
+                          data: { confirm: t('helpers.links.confirm_duplicate_rotation', data: @insurance.fullname) }, 
                           :class => "btn btn-primary glyphicon glyphicon-plus" %>
   <% end %>
 

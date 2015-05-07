@@ -173,7 +173,7 @@
 
     <%= link_to t('Duplicate', default: t("helpers.links.duplicate")), duplicate_insurance_group_path(@insurance, @group), 
                         method: :get,
-                        data: { confirm: "Are you sure duplicate \"#{@group.fullname}\"?" }, 
+                        data: { confirm: t('helpers.links.confirm_duplicate_group', data: @group.fullname) }, 
                         :class => "btn btn-default glyphicon glyphicon-duplicate" %>
 
   <% else %>

@@ -16,7 +16,7 @@
                       :"title" => "#{@discount.group.fullname}",
                       :"data-content" => "#{@discount.group.for_popover_data}",
                       :"data-placement" => "bottom" %></a></li>
-  <li class="active">New Discount</li>
+  <li class="active"><%= t(' New Discount', default: t("pages.discount_new")) %></li>
 </ol> <!-- /breadcrumb -->
 
 <!-- Dane -->
@@ -25,7 +25,7 @@
     <div class="panel panel-discount">
       <div class="panel-heading">
         <div class="panel-title">
-	        <span class="glyphicon glyphicon-th-large">  New Discount for <%= @group.fullname %></span>    
+	        <span class="glyphicon glyphicon-th-large"><%= t(' New Discount for', default: t("pages.discount_new_for", data: @group.fullname)) %></span>    
         </div>
       </div>
         <div class="panel-body">

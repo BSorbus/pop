@@ -214,8 +214,8 @@ class Insurances::RotationsController < ApplicationController
     @insurance = load_insurance
     @rotation.insurance = @insurance
 
-    flash[:notice] = t('activerecord.messages.notice.rotation_duplicate', data: @for_duplicate.fullname)
     respond_to do |format|
+      flash.now[:notice] = t('activerecord.messages.notice.rotation_duplicate', data: @for_duplicate.fullname)
       format.html { render :new, locals: { duplicate_rotation: @for_duplicate.id} }  
     end
   end

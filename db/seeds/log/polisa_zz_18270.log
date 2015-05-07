@@ -3,3 +3,8 @@
 Discounts all: 0
 Discounts all: 7395
 #####  END ...load from 06_discount_18270.rb  #####
+#####  06_discount_18270.rb  #####
+... load from db/seeds/polisa_zz_18270.csv... start...
+Discounts all: 0
+Discounts all: 7395
+#####  END ...load from 06_discount_18270.rb  #####

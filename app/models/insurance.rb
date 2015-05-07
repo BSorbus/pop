@@ -39,7 +39,7 @@ class Insurance < ActiveRecord::Base
   
 
   def fullname
-    "#{number}, z #{concluded}, ważna: #{valid_from} ... #{applies_to}"
+    "NNW #{number}, z #{concluded}"
   end
 
   def pay_name
