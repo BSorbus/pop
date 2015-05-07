@@ -21,10 +21,6 @@ pl:
         updated: 'Wpis: "%{data}" został pomyślnie zaktualizowany.'
         destroyed: 'Wpis: "%{data}" został pomyślnie usunięty.'
         numbering: 'Pomyślnie wykonano numerowanie grup dla polisy "%{data}".'
-        add_to_user: '"%{child}" został pomyślnie przypisany użytkownikowi "%{parent}".'
-        remove_from_user: 'Przypisanie "%{child}" do użytkownika "%{parent}" zostało pomyślnie usunięte.'
-        add_reservation: '"%{child}" został pomyślnie zarezerwowany dla użytkownika "%{parent}".'
-        remove_reservation: 'Rezerwacja "%{child}" dla użytkownika "%{parent}" została pomyślnie usunięta.'
       error:
         destroyed: 'Wystąpił błąd w czasie usuwania wpisu "%{data}".'
         numbering: 'Wystąpił błąd w czasie numerowania grup dla polisy "%{data}".'

@@ -1,13 +1,24 @@
 en:
+  link_to: 
+    companies: "Companies"
+    individuals: "Individuals"
+    insurances: "Insurances"
+    users: "Users"
   activerecord:
     models:
       user: 'User'
       comapany: 'Company'
+      individual: 'Individual'
+      insurance: 'Insurance'
+      rotation: 'Rotation'
+      group: 'Group'
+      coverage: 'Coverage'
     messages:
       successfull:
         created: '"%{data}" was successfully created.'
         updated: '"%{data}" was successfully updated.'
         destroyed: '"%{data}" was successfully destroyed.'
+        numbering: 'Numbering for "%{data} was successfully making.'
   help_block_text:
     region:
       show:
