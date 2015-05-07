@@ -14,6 +14,7 @@ class Insurance < ActiveRecord::Base
   has_many :discounts, through: :groups
   has_many :coverages, through: :groups
   has_many :coverages, through: :rotations
+  has_many :insurance_histories
 
   scope :by_concluded, -> { order(:concluded) }
   

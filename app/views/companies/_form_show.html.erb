@@ -129,38 +129,35 @@
 
   <hr>
 
-
   <% if input_disabled %>
-  <div class="row">
     <!-- for "Show" -->
-    <div class="col-sm-9 pull-left">
-      <%= link_to t('Delete', default: t("helpers.links.destroy")), company_path(@company),
-                          method: :delete,
-                          data: { confirm: t('helpers.links.confirm_destroy', data: @company.short) }, 
-                          :class => "btn btn-danger glyphicon glyphicon-trash" %>
-      <%= link_to t('Edit', default: t("helpers.links.edit")), edit_company_path(@company), 
-                          :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+    <div class="row">
 
-      <button class="btn btn-default glyphicon glyphicon-saved pull-right" type="button" data-toggle="collapse" data-target=".history" aria-expanded="false" id="button_show_history"> Historia
-      </button>
+      <div class="col-sm-9 pull-left">
+        <%= link_to t('Delete', default: t("helpers.links.destroy")), company_path(@company),
+                            method: :delete,
+                            data: { confirm: t('helpers.links.confirm_destroy', data: @company.short) }, 
+                            :class => "btn btn-danger glyphicon glyphicon-trash" %>
+        <%= link_to t('Edit', default: t("helpers.links.edit")), edit_company_path(@company), 
+                            :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+
+        <button class="btn btn-default glyphicon glyphicon-saved pull-right" type="button" data-toggle="collapse" data-target=".history" aria-expanded="false" id="button_show_history"> Historia
+        </button>
+      </div>
+
+      <div class="col-sm-3">
+        <%= form_for :trip, url: {action: "show"}, html: {method: "get"} do |ff| %>
+          <div class="control-group">
+            <%= ff.select( :his_id, 
+                  @company.company_histories.order(updated_at: :desc)
+                  .collect {|p| [ p.updated_at.strftime("%Y-%m-%d %H:%M:%S"), 
+                                  p.attributes, :selected => nil ]  },
+                  { include_blank: true, multiple: false, :selected => nil }, class: 'form-control history collapse', id: 'company_histories_list' ) %>
+          </div>
+        <% end %>
+      </div>
+
     </div>
-
-
-    <div class="col-sm-3">
-      <%= form_for :trip, url: {action: "show"}, html: {method: "get"} do |ff| %>
-        <div class="control-group">
-          <%= ff.select( :his_id, 
-                @company.company_histories.order(updated_at: :desc)
-                .collect {|p| [ p.updated_at.strftime("%Y-%m-%d %H:%M:%S"), 
-                                p.attributes, :selected => nil ]  },
-                { include_blank: true, multiple: false, :selected => nil }, class: 'form-control history collapse', id: 'company_histories_list' ) %>
-        </div>
-      <% end %>
-    </div>
-
-  </div>
-
-
   <% else %>
     <!-- form "New"/"Edit" -->
     <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
