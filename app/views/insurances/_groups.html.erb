@@ -37,7 +37,7 @@
 -->
   <%= link_to t('Numbering', default: t("helpers.links.numbering_groups")), numbering_groups_insurance_path(@insurance),
                         method: :patch,
-                        data: { confirm: "Na pewno chcesz wykonać numerowanie grup dla polisy \"#{@insurance.number}\"?" }, 
+                        data: { confirm: t('helpers.links.confirm_numbering_group', data: @insurance.number) }, 
                         :class => "btn btn-default glyphicon glyphicon-sort-by-attributes" %>
 
 

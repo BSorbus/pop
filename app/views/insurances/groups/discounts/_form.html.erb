@@ -17,7 +17,6 @@
     </div>
   <% end %>
 
-
   <div class="row">
     <div class="col-sm-12">
 
@@ -44,7 +43,8 @@
 
         <div class="form-group col-sm-2">
           <%= f.label :discount_increase, class: 'control-label' %>
-          <%= f.text_field :discount_increase, class: 'form-control', disabled: input_disabled %>
+          <%= f.text_field :discount_increase, class: 'form-control', placeholder: t('placeholder_text.discount.form.discount_increase'), disabled: input_disabled %>
+          <small class="help-block"><%= t('help_block_text.discount.form.discount_increase') %></small>
         </div>
       </div>  <!-- /row -->
     </div>  <!-- /col-sm-12 -->

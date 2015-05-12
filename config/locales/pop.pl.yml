@@ -21,9 +21,13 @@ pl:
         updated: 'Wpis: "%{data}" został pomyślnie zaktualizowany.'
         destroyed: 'Wpis: "%{data}" został pomyślnie usunięty.'
         numbering: 'Pomyślnie wykonano numerowanie grup dla polisy "%{data}".'
+        locking_rotation: 'Pomyślnie zablokowano rotację z dnia "%{data}".'
+        unlocking_rotation: 'Pomyślnie odblokowano rotację z dnia "%{data}".'
       error:
         destroyed: 'Wystąpił błąd w czasie usuwania wpisu "%{data}".'
         numbering: 'Wystąpił błąd w czasie numerowania grup dla polisy "%{data}".'
+        locking_rotation: 'Wystąpił błąd w czasie blokowania rotacji z dnia "%{data}".'
+        unlocking_rotation: 'Wystąpił błąd w czasie odblokowywania rotacji z dnia "%{data}".'
       notice:
         group_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o zwyżkach/zniżkach.'
         rotation_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o osobach ubezpieczonych/płatnikach.'
@@ -117,13 +121,9 @@ pl:
         is_admin: 'Administrator'
         address: 'Adres'
   help_block_text:
-    suit:
-      show:
-        info_item: 'Elementy zestawu:'
-        info_other: 'Inne:'
+    discount:
       form:
-        name: 'Nazwa zestawu, winna odzwierciedlać nazwę regionu i użytkownika'
-        img_index: 'Zdjęcie wyświetlane w tabelach. Najlepiej jeżeli jest w rozmiarze 240x300 pikseli'
+        discount_increase: 'Wartość dodatnia oznacza zwyżkę, a wartość ujemna zniżkę.'
     user:
       show:
         info_item: 'Posiada:'
@@ -152,11 +152,6 @@ pl:
         short: 'np. ARTEX'
         name: 'np. Artex-Software Sp z o.o.'
       index:
-    element:
+    discount:
       form:
-        name: 'np. KU - Buty damskie'
-        description: 'np. Skórzane trzewiki, sznurowane do pół łydki'
-    item:
-      form:
-        number: 'np. KU-012-015'
-        description: 'np. KU Buty damskie, rozmiar 38'
+        discount_increase: '+/-   -> zwyżka lub zniżka'

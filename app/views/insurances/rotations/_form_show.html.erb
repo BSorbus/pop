@@ -72,9 +72,21 @@
                         method: :delete,
                         data: { confirm: t('helpers.links.confirm_destroy', data: @rotation.fullname) }, 
                         :class => "btn btn-danger glyphicon glyphicon-trash" %>
+
     <%= link_to t('Edit', default: t("helpers.links.edit")), edit_insurance_rotation_path(@rotation.insurance_id, @rotation), 
                         :class => "btn btn-primary glyphicon glyphicon-edit" %>
 
+    <% if @rotation.rotation_lock %>
+      <%= link_to t('Unlock rotation', default: t("helpers.links.unlocking_rotation")), unlock_insurance_rotation_path(@rotation.insurance_id, @rotation),
+                          method: :patch,
+                          data: { confirm: t('helpers.links.confirm_unlocking_rotation', data: @rotation.rotation_date) }, 
+                          :class => "btn btn-default glyphicon glyphicon-unlock" %>
+    <% else %>
+      <%= link_to t('Lock rotation', default: t("helpers.links.locking_rotation")), lock_insurance_rotation_path(@rotation.insurance_id, @rotation),
+                          method: :patch,
+                          data: { confirm: t('helpers.links.confirm_locking_rotation', data: @rotation.rotation_date) }, 
+                          :class => "btn btn-default glyphicon glyphicon-lock" %>
+    <% end %>
   <% else %>
     <!-- form "New"/"Edit" -->
     <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>

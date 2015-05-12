@@ -2,6 +2,9 @@ class Rotation < ActiveRecord::Base
 
   validates :rotation_date, presence: true
   validates :insurance_id,  presence: true
+  validates :rotation_date,  presence: true
+  validate :next_rotation_date, on: :create
+
 
   belongs_to :insurance
   has_many :coverages, dependent: :destroy
@@ -11,13 +14,20 @@ class Rotation < ActiveRecord::Base
 
   before_destroy :rotation_has_coverages, prepend: true
 
+  def next_rotation_date
+    if insurance.rotations.where("rotation_date > :this_date", this_date: rotation_date).any? 
+      errors.add(:rotation_date, "Już jest zarejstrowana Rotacja z datą późniejszą" )
+      #errors[:base] << "Jest już zarejestrowana Rotacja z datą późniejszą"
+      false
+    end
+  end
+
   def rotation_has_coverages
     if coverages.any? 
       errors[:base] << "Nie można usunąć Rotacji, która jest użyta w Ochronie"
       false
     end
   end
-
 
   def coverages_add
     current_insurance_id = insurance.id
@@ -64,6 +74,34 @@ class Rotation < ActiveRecord::Base
     @for_lock_rotation = Rotation.find(duplicate_rotation_id)
     @for_lock_rotation.rotation_lock = true
     @for_lock_rotation.save!
+  end
+
+
+  def lock
+    if Rotation.where(insurance: insurance, rotation_lock: false).where("rotation_date < :this_rotation", this_rotation: rotation_date).any?
+      errors[:base] << "Nie można zablokować Rotacji jeżeli występuje wcześniejsza Rotacja bez blokady"
+      false
+    else
+      self.rotation_lock = true
+      self.save
+      true
+    end
+  end
+
+  def unlock
+    if Rotation.where(insurance: insurance, rotation_lock: false).where("id <> :this_rotation", this_rotation: id).any?
+      errors[:base] << "Nie można odblokowywać wielu Rotacji"
+      false
+    else
+      if Rotation.where(insurance: insurance, rotation_lock: true).where("rotation_date > :this_rotation", this_rotation: rotation_date).any?
+        errors[:base] << "Nie można odblokować Rotacji jeżeli występuje późniejsza Rotacja z nałożoną blokadą"
+        false
+      else
+        self.rotation_lock = false
+        self.save
+        true
+      end
+    end
   end
 
 end

@@ -21,6 +21,7 @@
 <div class="col-sm-12">
 
   <% if @insurance.rotations.empty? %>
+
     <%= link_to t('New', default: t("helpers.links.new")), new_insurance_rotation_path(@insurance), 
                           :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
   <% else %>

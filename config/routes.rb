@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       get 'duplicate', on: :member
       get 'export_coverages_current', on: :member
       get 'export_coverages_add_remove', on: :member
+      patch 'lock', on: :member
+      patch 'unlock', on: :member
       get 'pdf_list_benefits_nnw1', on: :member
       get 'pdf_list_insureds_nnw2', on: :member
       get 'pdf_list_insureds', on: :member

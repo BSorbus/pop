@@ -1,5 +1,6 @@
 <br>
 
+
 <ol class="breadcrumb">
   <li><%= link_to @rotation.insurance.company.fullname, company_path(@rotation.insurance.company_id), 
                       :"data-toggle" => "popover_info",
@@ -29,11 +30,7 @@
           </div> <!--/col-sm-1-->
 
           <div class="col-sm-11">
-            <% if duplicate_rotation.nil? %>
-              <%= render 'form' %>
-            <% else %>
-              <%= render 'form', duplicate_rotation: duplicate_rotation %><!--param from controller-->
-            <% end %>
+            <%= render 'form', duplicate_rotation: duplicate_rotation %><!--param from controller-->
           </div> <!--/col-sm-11 col-sm-offset-1-->
     
         </div>

@@ -5,11 +5,6 @@
      # We default it to false 
   %>
 
-  <% duplicate_rotation ||= nil  
-     #if duplicate_group is not passed to the partial it doesn't crash. 
-     # We default it to false 
-  %>
-
   <% if @rotation.errors.any? %>
     <div id="error_explanation" class="panel panel-danger">
       <div class="panel-body">
@@ -33,13 +28,7 @@
           <%= f.text_field :rotation_date, class: 'datepicker form-control', disabled: input_disabled %>
         </div>
 
-        <div class="form-group col-sm-2 col-sm-offset-8">
-          <br><%= f.label :rotation_lock, class: "control-label" %><br>
-          <%= f.radio_button(:rotation_lock, false, disabled: input_disabled) %>
-          <%= f.label(:rotation_lock_f, "Nie" ) %>
-          <%= f.radio_button(:rotation_lock, true, disabled: input_disabled) %>
-          <%= f.label(:rotation_lock_t, "Tak" ) %>
-        </div>
+
       </div>  <!-- /row -->
 
     </div>  <!-- /col-sm-12 -->

@@ -190,7 +190,7 @@ class Insurances::RotationsController < ApplicationController
     @rotation.insurance = @insurance
 
     respond_to do |format|
-      format.html
+      format.html { render :new, locals: { duplicate_rotation: nil} } 
     end
   end
 
@@ -203,7 +203,7 @@ class Insurances::RotationsController < ApplicationController
     #redirect_back_if_dont_can_edit_rotation and return
 
     respond_to do |format|
-      format.html
+      format.html 
     end
   end
 
@@ -211,6 +211,8 @@ class Insurances::RotationsController < ApplicationController
   def duplicate
     @for_duplicate = load_rotation
     @rotation = Rotation.new(@for_duplicate.attributes)
+    @rotation.rotation_lock = false
+    @rotation.rotation_date = Time.zone.today
     @insurance = load_insurance
     @rotation.insurance = @insurance
 
@@ -226,15 +228,14 @@ class Insurances::RotationsController < ApplicationController
     @insurance = load_insurance
     @rotation = Rotation.new(rotation_params)
     @rotation.insurance = @insurance
-
     respond_to do |format|
       if @rotation.save
-        @rotation.duplicate_coverages(params[:duplicate_rotation]) if !(params[:duplicate_rotation]).nil? # dodaj osoby jezeli wykonujesz duplikat
+        @rotation.duplicate_coverages(params[:duplicate_rotation]) if !(params[:duplicate_rotation]).blank? # dodaj osoby jezeli wykonujesz duplikat
 
         format.html { redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.created', data: @rotation.fullname) }
         format.json { render :show, status: :created, location: @rotation }
       else
-        format.html { render :new }
+        format.html { render :new, locals: { duplicate_rotation: params[:duplicate_rotation]} }
         format.json { render json: @rotation.errors, status: :unprocessable_entity }
       end
     end
@@ -311,6 +312,30 @@ class Insurances::RotationsController < ApplicationController
       format.csv { send_data @data.to_csv_add_remove(@data, @data_remove, date_end_previous_rotation), 
                    filename: "N_#{@insurance.number.last(12)}_#{@rotation.rotation_date.strftime("%Y%m%d").last(6)}.txt" }
     end
+  end
+
+  def lock
+    @rotation = load_rotation 
+    @insurance = load_insurance
+
+    if @rotation.lock
+      redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.locking_rotation', data: @rotation.rotation_date)
+    else 
+      flash.now[:error] = t('activerecord.messages.error.locking_rotation', data: @rotation.rotation_date)
+      render :show 
+    end         
+  end
+
+  def unlock
+    @rotation = load_rotation 
+    @insurance = load_insurance
+
+    if @rotation.unlock
+      redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.unlocking_rotation', data: @rotation.rotation_date)
+    else 
+      flash.now[:error] = t('activerecord.messages.error.unlocking_rotation', data: @rotation.rotation_date)
+      render :show 
+    end         
   end
 
   private

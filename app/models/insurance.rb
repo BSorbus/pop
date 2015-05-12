@@ -43,6 +43,30 @@ class Insurance < ActiveRecord::Base
     "NNW #{number}, z #{concluded}"
   end
 
+  def nu_filename
+    if self.nil?
+      "brak polisy"
+    else
+      if rotations.empty?
+        "NU_#{self.number.last(12)}_brak_rotacji.txt"
+      else
+        "NU_#{self.number.last(12)}_#{self.rotations.last.rotation_date.strftime("%Y%m%d").last(6)}.txt"
+      end
+    end
+  end
+
+  def n_filename
+    if self.nil?
+      "brak polisy"
+    else
+      if rotations.empty?
+        "N_#{self.number.last(12)}_brak_rotacji.txt"
+      else
+        "N_#{self.number.last(12)}_#{self.rotations.last.rotation_date.strftime("%Y%m%d").last(6)}.txt"
+      end
+    end
+  end
+
   def pay_name
     case pay
     when 'K'
