@@ -6,8 +6,20 @@ class Individual < ActiveRecord::Base
                     length: { in: 1..80 }
   validates :address_city, presence: true,
                     length: { in: 1..50 }
-  validates :pesel, length: { is: 11 }, 
+  validates :pesel, length: { is: 11 }, numericality: true, 
                     :uniqueness => { :scope => [:user_id] }, allow_blank: true
+  validates :birth_date, presence: true
+  validate :check_pesel_and_birth_date, unless: "pesel.blank?"
+
+  require 'pesel'
+
+  def check_pesel_and_birth_date
+    p = Pesel.new(pesel)
+    errors.add(:pesel, ' - Błędny numer') unless p.valid?
+    if p.valid? 
+       errors.add(:birth_date, " niezgodna z datą zakodowaną w numerze PESEL (#{p.birth_date})") unless p.birth_date == birth_date
+    end
+  end
 
   belongs_to :user
   has_many :insureds, foreign_key: :insured_id, class_name: "Coverage", dependent: :destroy 

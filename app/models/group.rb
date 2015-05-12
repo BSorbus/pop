@@ -24,18 +24,18 @@ class Group < ActiveRecord::Base
 
   def check_unique
     errors.add(:base, ' Grupa o takich parametrach już istnieje') if
-    Group.where( insurance: insurance_id, 
-                quotation: quotation,
-                tariff_fixed: tariff_fixed,
-                full_range: full_range,
-                risk_group: risk_group, 
-                assurance: assurance,
-                treatment: treatment,
-                ambulatory: ambulatory,
-                hospital: hospital,
-                infarct: infarct,
-                inability: inability,
-                death_100_percent: death_100_percent ).where.not(id: id).any?
+      Group.where( insurance: insurance_id, 
+                  quotation: quotation,
+                  tariff_fixed: tariff_fixed,
+                  full_range: full_range,
+                  risk_group: risk_group, 
+                  assurance: assurance,
+                  treatment: treatment,
+                  ambulatory: ambulatory,
+                  hospital: hospital,
+                  infarct: infarct,
+                  inability: inability,
+                  death_100_percent: death_100_percent ).where.not(id: id).any?
   end
 
   belongs_to :insurance

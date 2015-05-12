@@ -54,6 +54,7 @@ gem 'json'
 #gem 'omniauth-oauth2'
 #gem 'omniauth-google-oauth2'
 
+gem 'pesel'
 #gem 'rqrcode_png'
 #gem 'carrierwave'
 gem 'select2-rails'

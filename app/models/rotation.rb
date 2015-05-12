@@ -16,7 +16,7 @@ class Rotation < ActiveRecord::Base
 
   def next_rotation_date
     if insurance.rotations.where("rotation_date > :this_date", this_date: rotation_date).any? 
-      errors.add(:rotation_date, "Już jest zarejstrowana Rotacja z datą późniejszą" )
+      errors.add(:rotation_date, " - Już jest zarejstrowana Rotacja z datą późniejszą" )
       #errors[:base] << "Jest już zarejestrowana Rotacja z datą późniejszą"
       false
     end
