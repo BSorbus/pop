@@ -2,17 +2,17 @@ require 'csv'
 
 
 puts ""
-puts "#####  03A_individuals_h_18270.rb  #####"
+puts "#####  03A_individuals_h_00718.rb  #####"
 
 ############################################################################################
-puts "... load from db/seeds/osoba_h_18270.csv... start..." 
+puts "... load from db/seeds/osoba_h_00718.csv... start..." 
 
-File.open(File.join("db/seeds/log", 'osoba_h_18270.log'), 'a+') do |f|
-  f.puts "#####  03A_individuals_h_18270.rb  #####"
-  f.puts "... load from db/seeds/osoba_h_18270.csv... start..."
+File.open(File.join("db/seeds/log", 'osoba_h_00718.log'), 'a+') do |f|
+  f.puts "#####  03A_individuals_h_00718.rb  #####"
+  f.puts "... load from db/seeds/osoba_h_00718.csv... start..."
 end 
 
-CSV.foreach("db/seeds/osoba_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8", 
+CSV.foreach("db/seeds/osoba_h_00718.csv", { encoding: "WINDOWS-1250:UTF-8", 
                                     headers: true, 
                                     header_converters: :symbol, 
                                     col_sep: ';'}
@@ -21,7 +21,7 @@ CSV.foreach("db/seeds/osoba_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
   ## jezeli plik csv ma strukture zgodna, to wystarczy wywolac wiersz ponizej
   #individual.create(row.to_hash)
 
-  if IndividualHistory.where( individual_id: id_with_offset( row[:id_osoba], DB18270_OFFSET_OSOBA ),
+  if IndividualHistory.where( individual_id: id_with_offset( row[:id_osoba], DB00718_OFFSET_OSOBA ),
                               first_name:           row[:imie], 
                               last_name:            row[:nazwisko],
                               address_city:         row[:miejscowosc],
@@ -33,11 +33,11 @@ CSV.foreach("db/seeds/osoba_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
                               birth_date:           row[:data_ur],
                               profession:           row[:zawod],
                               note:                 row[:uwagi],
-                              user_id:              DB18270_USER_ID).any?
+                              user_id:              DB00718_USER_ID).any?
 
     puts "Taki wpis już jest"
     #zapisz błąd do pliku
-    File.open(File.join("db/seeds/log", 'osoba_h_18270.error'), 'a+') do |f|
+    File.open(File.join("db/seeds/log", 'osoba_h_00718.error'), 'a+') do |f|
       f.puts "DUPLIKAT - odrzucenie"
       f.puts "         id_osoba: #{row[:id_osoba]}"
       f.puts "         nazwisko: #{row[:nazwisko]}"
@@ -55,7 +55,7 @@ CSV.foreach("db/seeds/osoba_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
       f.puts ""
     end  
   else
-    @individual_h = IndividualHistory.create( individual_id:        id_with_offset( row[:id_osoba], DB18270_OFFSET_OSOBA ),
+    @individual_h = IndividualHistory.create( individual_id:        id_with_offset( row[:id_osoba], DB00718_OFFSET_OSOBA ),
                                               first_name:           row[:imie], 
                                               last_name:            row[:nazwisko],
                                               address_city:         row[:miejscowosc],
@@ -67,7 +67,7 @@ CSV.foreach("db/seeds/osoba_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
                                               birth_date:           row[:data_ur],
                                               profession:           row[:zawod],
                                               note:                 row[:uwagi],
-                                              user_id:              DB18270_USER_ID,
+                                              user_id:              DB00718_USER_ID,
                                               created_at:           row[:change_date],
                                               updated_at:           row[:change_date] )
 
@@ -88,7 +88,7 @@ CSV.foreach("db/seeds/osoba_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
       puts ""
 
       #zapisz błąd do pliku
-      File.open(File.join("db/seeds/log", 'osoba_h_18270.error'), 'a+') do |f|
+      File.open(File.join("db/seeds/log", 'osoba_h_00718.error'), 'a+') do |f|
         f.puts "ERROR(s)"
         f.puts "         id_osoba: #{row[:id_osoba]}"
         f.puts "         nazwisko: #{row[:nazwisko]}"
@@ -108,10 +108,10 @@ end
 
 puts "IndividualHistory all: #{IndividualHistory.all.size}"
 
-File.open(File.join("db/seeds/log", 'osoba_h_18270.log'), 'a+') do |f|
+File.open(File.join("db/seeds/log", 'osoba_h_00718.log'), 'a+') do |f|
   f.puts "IndividualHistory all: #{IndividualHistory.all.size}"
-  f.puts "IndividualHistory all where user=DB18270_USER_ID: #{IndividualHistory.all.where(user_id: DB18270_USER_ID).size}"
-  f.puts "#####  END ...load from 03A_individuals_h_18270.rb  #####"
+  f.puts "IndividualHistory all where user=DB00718_USER_ID: #{IndividualHistory.all.where(user_id: DB00718_USER_ID).size}"
+  f.puts "#####  END ...load from 03A_individuals_h_00718.rb  #####"
 end 
 ############################################################################################
 
@@ -144,5 +144,5 @@ connection.execute( "ALTER SEQUENCE individual_histories_id_seq RESTART WITH #{n
 
 @last_individual_h.destroy
 
-puts "#####  END OF 03A_individuals_h_18270.rb  #####"
+puts "#####  END OF 03A_individuals_h_00718.rb  #####"
 puts ""

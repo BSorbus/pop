@@ -1,22 +1,26 @@
 require 'csv'
 
+def company_created_at_first_rec(seek_id)
+  CompanyHistory.where(company_id: seek_id).order(:created_at).first.created_at
+end
+
 
 puts ""
-puts "#####  02_companies_00718.rb  #####"
+puts "#####  02B_companies_00718.rb  #####"
 
 ############################################################################################
 puts "... load from db/seeds/firma_00718.csv... start..."
 
 File.open(File.join("db/seeds/log", 'firma_00718.log'), 'a+') do |f|
-  f.puts "#####  02_companies_00718.rb  #####"
+  f.puts "#####  02B_companies_00718.rb  #####"
   f.puts "... load from db/seeds/firma_00718.csv... start..."
 end 
 
 CSV.foreach("db/seeds/firma_00718.csv", { encoding: "WINDOWS-1250:UTF-8", 
-                                    headers: true, 
-                                    header_converters: :symbol, 
-                                    col_sep: ';'}
-            ) do |row|
+                                          headers: true, 
+                                          header_converters: :symbol, 
+                                          col_sep: ';'}
+                  ) do |row|
 
   ## jezeli plik csv ma strukture zgodna, to wystarczy wywolac wiersz ponizej
   #Company.create(row.to_hash)
@@ -36,7 +40,9 @@ CSV.foreach("db/seeds/firma_00718.csv", { encoding: "WINDOWS-1250:UTF-8",
                                   pesel:                row[:pesel],
                                   informal_group:       row[:gr_nieformalna],
                                   note:                 row[:uwagi],
-                                  user_id:              DB00718_USER_ID )
+                                  user_id:              DB00718_USER_ID,
+                                  created_at:           company_created_at_first_rec(id_with_offset(row[:id_firma], DB00718_OFFSET_FIRMA)),
+                                  updated_at:           row[:change_date] )
 
   if @company.valid?
     # Jezeli OK, to wyświetl ID na ekranie
@@ -80,8 +86,8 @@ puts "Companies all: #{Company.all.size}"
 
 File.open(File.join("db/seeds/log", 'firma_00718.log'), 'a+') do |f|
   f.puts "Companies all: #{Company.all.size}"
-  f.puts "Companies all where user=3: #{Company.all.where(user: 3).size}"
-  f.puts "#####  END ...load from 02_companies_00718.rb  #####"
+  f.puts "Companies all where user=DB00718_USER_ID: #{Company.all.where(user: DB00718_USER_ID).size}"
+  f.puts "#####  END ...load from 02B_companies_00718.rb  #####"
 end 
 ############################################################################################
 
@@ -115,5 +121,5 @@ connection.execute( "ALTER SEQUENCE companies_id_seq RESTART WITH #{next_id} ;" 
 
 @last_company.destroy
 
-puts "#####  END OF 02_companies_00718.rb  #####"
+puts "#####  END OF 02B_companies_00718.rb  #####"
 puts ""

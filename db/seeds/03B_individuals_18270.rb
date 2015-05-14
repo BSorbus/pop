@@ -78,7 +78,7 @@ puts "Individuals all: #{Individual.all.size}"
 
 File.open(File.join("db/seeds/log", 'osoba_18270.log'), 'a+') do |f|
   f.puts "Individuals all: #{Individual.all.size}"
-  f.puts "Individuals all where user=4: #{Individual.all.where(user: 4).size}"
+  f.puts "Individuals all where user=DB18270_USER_ID: #{Individual.all.where(user: DB18270_USER_ID).size}"
   f.puts "#####  END ...load from 03B_individuals_18270.rb  #####"
 end 
 ############################################################################################

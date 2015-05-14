@@ -22,7 +22,6 @@ class ListInsuredsPdf < Prawn::Document
     @coverages = Coverage.joins(:rotation, :insured, :group).by_rotation(@rotation.id).references(:rotation, :insured, :group)
       .order("individuals.last_name, individuals.last_name, individuals.address_city").all
 
-    length_coverages = @coverages.length
 
     display_data_table
 

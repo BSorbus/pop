@@ -2,17 +2,17 @@ require 'csv'
 
 
 puts ""
-puts "#####  04A_insurances_h_18270.rb  #####"
+puts "#####  04A_insurances_h_00718.rb  #####"
 
 ############################################################################################
-puts "... load from db/seeds/polisa_h_18270.csv... start..."
+puts "... load from db/seeds/polisa_h_00718.csv... start..."
 
-File.open(File.join("db/seeds/log", 'polisa_h_18270.log'), 'a+') do |f|
-  f.puts "#####  04A_insurances_h_18270.rb  #####"
-  f.puts "... load from db/seeds/polisa_h_18270.csv... start..."
+File.open(File.join("db/seeds/log", 'polisa_h_00718.log'), 'a+') do |f|
+  f.puts "#####  04A_insurances_h_00718.rb  #####"
+  f.puts "... load from db/seeds/polisa_h_00718.csv... start..."
 end 
 
-CSV.foreach("db/seeds/polisa_h_18270.csv", {  encoding: "WINDOWS-1250:UTF-8", 
+CSV.foreach("db/seeds/polisa_h_00718.csv", {  encoding: "WINDOWS-1250:UTF-8", 
                                             headers: true, 
                                             header_converters: :symbol, 
                                             col_sep: ';'}
@@ -21,7 +21,7 @@ CSV.foreach("db/seeds/polisa_h_18270.csv", {  encoding: "WINDOWS-1250:UTF-8",
   ## jezeli plik csv ma strukture zgodna, to wystarczy wywolac wiersz ponizej
   #insurance.create(row.to_hash)
 
-  if InsuranceHistory.where(  insurance_id: id_with_offset( row[:id_polisa], DB18270_OFFSET_POLISA ),
+  if InsuranceHistory.where(  insurance_id: id_with_offset( row[:id_polisa], DB00718_OFFSET_POLISA ),
                               number:               row[:numer], 
                               concluded:            row[:data_zawarcia],
                               valid_from:           row[:data_zawarcia_od],
@@ -29,11 +29,11 @@ CSV.foreach("db/seeds/polisa_h_18270.csv", {  encoding: "WINDOWS-1250:UTF-8",
                               pay:                  row[:skladka],
                               discounts_lock:       row[:blokada_zwyz_zniz],
                               note:                 row[:uwagi],
-                              company_id:           id_with_offset( row[:id_firma], DB18270_OFFSET_FIRMA ),
-                              user_id:              DB18270_USER_ID ).any?  
+                              company_id:           id_with_offset( row[:id_firma], DB00718_OFFSET_FIRMA ),
+                              user_id:              DB00718_USER_ID ).any?  
     puts "Taki wpis już jest"
     #zapisz błąd do pliku
-    File.open(File.join("db/seeds/log", 'polisa_h_18270.error'), 'a+') do |f|
+    File.open(File.join("db/seeds/log", 'polisa_h_00718.error'), 'a+') do |f|
       f.puts "DUPLIKAT - odrzucenie"
       f.puts "        id_polisa: #{row[:id_polisa]}"
       f.puts "            numer: #{row[:numer]}"
@@ -48,7 +48,7 @@ CSV.foreach("db/seeds/polisa_h_18270.csv", {  encoding: "WINDOWS-1250:UTF-8",
       f.puts ""
     end 
   else 
-    @insurance_h = InsuranceHistory.create( insurance_id:         id_with_offset( row[:id_polisa], DB18270_OFFSET_POLISA ),
+    @insurance_h = InsuranceHistory.create( insurance_id:         id_with_offset( row[:id_polisa], DB00718_OFFSET_POLISA ),
                                             number:               row[:numer], 
                                             concluded:            row[:data_zawarcia],
                                             valid_from:           row[:data_zawarcia_od],
@@ -56,8 +56,8 @@ CSV.foreach("db/seeds/polisa_h_18270.csv", {  encoding: "WINDOWS-1250:UTF-8",
                                             pay:                  row[:skladka],
                                             discounts_lock:       row[:blokada_zwyz_zniz],
                                             note:                 row[:uwagi],
-                                            company_id:           id_with_offset( row[:id_firma], DB18270_OFFSET_FIRMA ),
-                                            user_id:              DB18270_USER_ID,
+                                            company_id:           id_with_offset( row[:id_firma], DB00718_OFFSET_FIRMA ),
+                                            user_id:              DB00718_USER_ID,
                                             created_at:           row[:change_date],
                                             updated_at:           row[:change_date] )
 
@@ -75,7 +75,7 @@ CSV.foreach("db/seeds/polisa_h_18270.csv", {  encoding: "WINDOWS-1250:UTF-8",
       puts ""
 
       #zapisz błąd do pliku
-      File.open(File.join("db/seeds/log", 'polisa_h_18270.error'), 'a+') do |f|
+      File.open(File.join("db/seeds/log", 'polisa_h_00718.error'), 'a+') do |f|
         f.puts "ERROR(s)"
         f.puts "        id_polisa: #{row[:id_polisa]}"
         f.puts "            numer: #{row[:numer]}"
@@ -92,10 +92,10 @@ end
 
 puts "InsuranceHistory all: #{InsuranceHistory.all.size}"
 
-File.open(File.join("db/seeds/log", 'polisa_h_18270.log'), 'a+') do |f|
+File.open(File.join("db/seeds/log", 'polisa_h_00718.log'), 'a+') do |f|
   f.puts "InsuranceHistory all: #{InsuranceHistory.all.size}"
-  f.puts "InsuranceHistory all where user=DB18270_USER_ID: #{InsuranceHistory.all.where(user_id: DB18270_USER_ID).size}"
-  f.puts "#####  END ...load from 04A_insurances_h_18270.rb  #####"
+  f.puts "InsuranceHistory all where user=DB00718_USER_ID: #{InsuranceHistory.all.where(user_id: DB00718_USER_ID).size}"
+  f.puts "#####  END ...load from 04A_insurances_h_00718.rb  #####"
 end 
 ############################################################################################
 
@@ -125,6 +125,6 @@ connection.execute( "ALTER SEQUENCE insurance_histories_id_seq RESTART WITH #{ne
 
 @last_insurance.destroy
 
-puts "#####  END OF 04A_insurances_h_18270.rb  #####"
+puts "#####  END OF 04A_insurances_h_00718.rb  #####"
 puts ""
 

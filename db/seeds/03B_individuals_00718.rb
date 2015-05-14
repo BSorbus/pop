@@ -1,14 +1,18 @@
 require 'csv'
 
+def individual_created_at_first_rec(seek_id)
+  IndividualHistory.where(individual_id: seek_id).order(:created_at).first.created_at
+end
+
 
 puts ""
-puts "#####  03_individuals_00718.rb  #####"
+puts "#####  03B_individuals_00718.rb  #####"
 
 ############################################################################################
 puts "... load from db/seeds/osoba_00718.csv... start..." 
 
 File.open(File.join("db/seeds/log", 'osoba_00718.log'), 'a+') do |f|
-  f.puts "#####  03_individuals_00718.rb  #####"
+  f.puts "#####  03B_individuals_00718.rb  #####"
   f.puts "... load from db/seeds/osoba_00718.csv... start..."
 end 
 
@@ -33,7 +37,9 @@ CSV.foreach("db/seeds/osoba_00718.csv", { encoding: "WINDOWS-1250:UTF-8",
                                   birth_date:           row[:data_ur],
                                   profession:           row[:zawod],
                                   note:                 row[:uwagi],
-                                  user_id:              DB00718_USER_ID )
+                                  user_id:              DB00718_USER_ID,
+                                  created_at:           individual_created_at_first_rec( id_with_offset( row[:id_osoba], DB00718_OFFSET_OSOBA ) ),
+                                  updated_at:           row[:change_date] )
 
   if @individual.valid?
     puts row[:id_osoba]
@@ -72,8 +78,8 @@ puts "Individuals all: #{Individual.all.size}"
 
 File.open(File.join("db/seeds/log", 'osoba_00718.log'), 'a+') do |f|
   f.puts "Individuals all: #{Individual.all.size}"
-  f.puts "Individuals all where user=3: #{Individual.all.where(user: 3).size}"
-  f.puts "#####  END ...load from 03_individuals_00718.rb  #####"
+  f.puts "Individuals all where user=DB00718_USER_ID: #{Individual.all.where(user: DB00718_USER_ID).size}"
+  f.puts "#####  END ...load from 03B_individuals_00718.rb  #####"
 end 
 ############################################################################################
 
@@ -105,5 +111,5 @@ connection.execute( "ALTER SEQUENCE individuals_id_seq RESTART WITH #{next_id} ;
 
 @last_individual.destroy
 
-puts "#####  END OF 03_individuals_00718.rb  #####"
+puts "#####  END OF 03B_individuals_00718.rb  #####"
 puts ""

@@ -8,10 +8,12 @@ class CertificationsInsuredsPdf < Prawn::Document
     super(:page_size => "A4", :page_layout => :portrait)
     #super()
     @coverages = coverages
-    @rotation = @coverages.first.rotation
-    @insurance = @rotation.insurance
-    @company = @rotation.insurance.company
-    @user = @rotation.insurance.user
+    if !@coverages.empty?
+      @rotation = @coverages.first.rotation
+      @insurance = @rotation.insurance
+      @company = @rotation.insurance.company
+      @user = @rotation.insurance.user
+    end
     @view = view
 
     font_families.update("DejaVu Sans" => {

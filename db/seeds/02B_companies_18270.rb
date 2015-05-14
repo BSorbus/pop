@@ -86,7 +86,7 @@ puts "Companies all: #{Company.all.size}"
 
 File.open(File.join("db/seeds/log", 'firma_18270.log'), 'a+') do |f|
   f.puts "Companies all: #{Company.all.size}"
-  f.puts "Companies all where user=4: #{Company.all.where(user: 4).size}"
+  f.puts "Companies all where user=DB18270_USER_ID: #{Company.all.where(user: DB18270_USER_ID).size}"
   f.puts "#####  END ...load from 02B_companies_18270.rb  #####"
 end 
 ############################################################################################

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       patch 'unlock', on: :member
       get 'pdf_list_benefits_nnw1', on: :member
       get 'pdf_list_insureds_nnw2', on: :member
+      get 'pdf_groups_with_insureds_add', on: :member
+      get 'pdf_groups_with_insureds_remove', on: :member
       get 'pdf_list_insureds', on: :member
       get 'pdf_declarations_accession1', on: :member
       get 'pdf_declarations_accession2', on: :member
@@ -33,6 +35,8 @@ Rails.application.routes.draw do
     patch 'numbering_groups', on: :member
     get 'pdf_list_benefits_nnw1', on: :member
     get 'pdf_list_insureds_nnw2', on: :member
+    get 'pdf_groups_with_insureds_add', on: :member
+    get 'pdf_groups_with_insureds_remove', on: :member
     get 'pdf_list_insureds', on: :member
     get 'pdf_declarations_accession1', on: :member
     get 'pdf_declarations_accession2', on: :member

@@ -69,7 +69,7 @@ puts "insurances all: #{Insurance.all.size}"
 
 File.open(File.join("db/seeds/log", 'polisa_18270.log'), 'a+') do |f|
   f.puts "Insurances all: #{Insurance.all.size}"
-  f.puts "Insurances all where user=4: #{Insurance.all.where(user: 4).size}"
+  f.puts "Insurances all where user=DB18270_USER_ID: #{Insurance.all.where(user: DB18270_USER_ID).size}"
   f.puts "#####  END ...load from 04B_insurances_18270.rb  #####"
 end 
 ############################################################################################

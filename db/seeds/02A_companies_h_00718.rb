@@ -2,17 +2,17 @@ require 'csv'
 
 
 puts ""
-puts "#####  02A_companies_h_18270.rb  #####"
+puts "#####  02A_companies_h_00718.rb  #####"
 
 ############################################################################################
-puts "... load from db/seeds/firma_h_18270.csv... start..."
+puts "... load from db/seeds/firma_h_00718.csv... start..."
 
-File.open(File.join("db/seeds/log", 'firma_h_18270.log'), 'a+') do |f|
-  f.puts "#####  02A_companies_h_18270.rb  #####"
-  f.puts "... load from db/seeds/firma_h_18270.csv... start..."
+File.open(File.join("db/seeds/log", 'firma_h_00718.log'), 'a+') do |f|
+  f.puts "#####  02A_companies_h_00718.rb  #####"
+  f.puts "... load from db/seeds/firma_h_00718.csv... start..."
 end 
 
-CSV.foreach("db/seeds/firma_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8", 
+CSV.foreach("db/seeds/firma_h_00718.csv", { encoding: "WINDOWS-1250:UTF-8", 
                                     headers: true, 
                                     header_converters: :symbol, 
                                     col_sep: ';'}
@@ -21,7 +21,7 @@ CSV.foreach("db/seeds/firma_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
   ## jezeli plik csv ma strukture zgodna, to wystarczy wywolac wiersz ponizej
   #Company.create(row.to_hash)
 
-  if CompanyHistory.where(company_id: id_with_offset(row[:id_firma], DB18270_OFFSET_FIRMA),
+  if CompanyHistory.where(company_id: id_with_offset(row[:id_firma], DB00718_OFFSET_FIRMA),
                           short:                row[:skrot],
                           name:                 row[:nazwa],
                           address_city:         row[:miejscowosc],
@@ -36,10 +36,10 @@ CSV.foreach("db/seeds/firma_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
                           pesel:                row[:pesel],
                           informal_group:       row[:gr_nieformalna],
                           note:                 row[:uwagi],
-                          user_id:              DB18270_USER_ID ).any?  
+                          user_id:              DB00718_USER_ID ).any?  
     puts "Taki wpis już jest"
     #zapisz błąd do pliku
-    File.open(File.join("db/seeds/log", 'firma_h_18270.error'), 'a+') do |f|
+    File.open(File.join("db/seeds/log", 'firma_h_00718.error'), 'a+') do |f|
       f.puts "DUPLIKAT - odrzucenie"
       f.puts "         id_firma: #{row[:id_firma]}"
       f.puts "            skrot: #{row[:skrot]}"
@@ -60,7 +60,7 @@ CSV.foreach("db/seeds/firma_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
       f.puts ""
     end 
   else 
-    @company_h = CompanyHistory.create( company_id:           id_with_offset( row[:id_firma], DB18270_OFFSET_FIRMA ), 
+    @company_h = CompanyHistory.create( company_id:           id_with_offset( row[:id_firma], DB00718_OFFSET_FIRMA ), 
                                         short:                row[:skrot], 
                                         name:                 row[:nazwa],
                                         address_city:         row[:miejscowosc],
@@ -75,7 +75,7 @@ CSV.foreach("db/seeds/firma_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
                                         pesel:                row[:pesel],
                                         informal_group:       row[:gr_nieformalna],
                                         note:                 row[:uwagi],
-                                        user_id:              DB18270_USER_ID,
+                                        user_id:              DB00718_USER_ID,
                                         created_at:           row[:change_date],
                                         updated_at:           row[:change_date] )
 
@@ -99,7 +99,7 @@ CSV.foreach("db/seeds/firma_h_18270.csv", { encoding: "WINDOWS-1250:UTF-8",
       puts ""
 
       #zapisz błąd do pliku
-      File.open(File.join("db/seeds/log", 'firma_h_18270.error'), 'a+') do |f|
+      File.open(File.join("db/seeds/log", 'firma_h_00718.error'), 'a+') do |f|
         f.puts "ERROR(s)"
         f.puts "         id_firma: #{row[:id_firma]}"
         f.puts "            skrot: #{row[:skrot]}"
@@ -121,10 +121,10 @@ end
 
 puts "CompanyHistory all: #{CompanyHistory.all.size}"
 
-File.open(File.join("db/seeds/log", 'firma_h_18270.log'), 'a+') do |f|
+File.open(File.join("db/seeds/log", 'firma_h_00718.log'), 'a+') do |f|
   f.puts "CompanyHistory all: #{CompanyHistory.all.size}"
-  f.puts "CompanyHistory all where user=DB18270_USER_ID: #{CompanyHistory.all.where(user_id: DB18270_USER_ID).size}"
-  f.puts "#####  END ...load from 02A_companies_18270.rb  #####"
+  f.puts "CompanyHistory all where user=DB00718_USER_ID: #{CompanyHistory.all.where(user_id: DB00718_USER_ID).size}"
+  f.puts "#####  END ...load from 02A_companies_00718.rb  #####"
 end 
 ############################################################################################
 
@@ -159,5 +159,5 @@ connection.execute( "ALTER SEQUENCE company_histories_id_seq RESTART WITH #{next
 
 @last_company_h.destroy
 
-puts "#####  END OF 02A_companies_h_18270.rb  #####"
+puts "#####  END OF 02A_companies_h_00718.rb  #####"
 puts ""

@@ -39,7 +39,10 @@ class InsuranceRotationsDatatable < AjaxDatatablesRails::Base
         record.id, 
         record.insurance_id, 
         record.rotation_date, 
-        record.rotation_lock? ? 'Tak' : 'Nie', 
+        #record.rotation_lock? ? 'Tak' : 'Nie', 
+        #record.rotation_lock? ? '<div class="glyphicon glyphicon-lock"></div>' : ' ', 
+        #record.rotation_lock? ? '<div style="text-align: center"><img src="/assets/my file.png" /> </div>' : ' ', 
+        record.rotation_lock? ? '<div style="text-align: center"><div class="glyphicon glyphicon-lock"></div></div>' : ' ', 
         record.date_file_send,
         record.note      
       ]

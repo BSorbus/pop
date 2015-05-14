@@ -1,14 +1,18 @@
 require 'csv'
 
+def insurance_created_at_first_rec(seek_id)
+  InsuranceHistory.where(insurance_id: seek_id).order(:created_at).first.created_at
+end
+
 
 puts ""
-puts "#####  o4_insurances_00718.rb  #####"
+puts "#####  04B_insurances_00718.rb  #####"
 
 ############################################################################################
 puts "... load from db/seeds/polisa_00718.csv... start..."
 
 File.open(File.join("db/seeds/log", 'polisa_00718.log'), 'a+') do |f|
-  f.puts "#####  04_insurances_00718.rb  #####"
+  f.puts "#####  04B_insurances_00718.rb  #####"
   f.puts "... load from db/seeds/polisa_00718.csv... start..."
 end 
 
@@ -30,7 +34,9 @@ CSV.foreach("db/seeds/polisa_00718.csv", {  encoding: "WINDOWS-1250:UTF-8",
                                   discounts_lock:       row[:blokada_zwyz_zniz],
                                   note:                 row[:uwagi],
                                   company_id:           id_with_offset( row[:id_firma], DB00718_OFFSET_FIRMA ),
-                                  user_id:              DB00718_USER_ID )
+                                  user_id:              DB00718_USER_ID,
+                                  created_at:           insurance_created_at_first_rec(id_with_offset(row[:id_polisa], DB00718_OFFSET_POLISA)),
+                                  updated_at:           row[:change_date] )
 
   if @insurance.valid?
     puts row[:id_polisa]
@@ -63,8 +69,8 @@ puts "insurances all: #{Insurance.all.size}"
 
 File.open(File.join("db/seeds/log", 'polisa_00718.log'), 'a+') do |f|
   f.puts "Insurances all: #{Insurance.all.size}"
-  f.puts "Insurances all where user=3: #{Insurance.all.where(user: 3).size}"
-  f.puts "#####  END ...load from 04_insurances_00718.rb  #####"
+  f.puts "Insurances all where user=DB00718_USER_ID: #{Insurance.all.where(user: DB00718_USER_ID).size}"
+  f.puts "#####  END ...load from 04B_insurances_00718.rb  #####"
 end 
 ############################################################################################
 
@@ -93,6 +99,6 @@ connection.execute( "ALTER SEQUENCE insurances_id_seq RESTART WITH #{next_id} ;"
 
 @last_insurance.destroy
 
-puts "#####  END OF o4_insurances_00718.rb  #####"
+puts "#####  END OF 04B_insurances_00718.rb  #####"
 puts ""
 

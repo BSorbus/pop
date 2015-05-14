@@ -1,16 +1,19 @@
 require 'csv'
 
+def rotation_created_at_first_rec(seek_id)
+  RotationHistory.where(rotation_id: seek_id).order(:created_at).first.created_at
+end
+
 
 puts ""
-puts "#####  07_rotation_00718.rb  #####"
+puts "#####  07B_rotation_00718.rb  #####"
 
 ############################################################################################
 puts "... load from db/seeds/polisa_rotacja_00718.csv... start..."
 
 File.open(File.join("db/seeds/log", 'polisa_rotacja_00718.log'), 'a+') do |f|
-  f.puts "#####  07_rotation_00718.rb  #####"
+  f.puts "#####  07B_rotation_00718.rb  #####"
   f.puts "... load from db/seeds/polisa_rotacja_00718.csv... start..."
-  f.puts "Rotations all: #{Rotation.all.size}"
 end 
 
 CSV.foreach("db/seeds/polisa_rotacja_00718.csv", {  encoding: "WINDOWS-1250:UTF-8", 
@@ -22,12 +25,14 @@ CSV.foreach("db/seeds/polisa_rotacja_00718.csv", {  encoding: "WINDOWS-1250:UTF-
   ## jezeli plik csv ma strukture zgodna, to wystarczy wywolac wiersz ponizej
   #rotation.create(row.to_hash)
 
-  @rotation = Rotation.create(   id:                   id_with_offset( row[:id_polisa_rotacja], DB00718_OFFSET_POLISA_ROTACJA ), 
+  @rotation = Rotation.create(    id:                   id_with_offset( row[:id_polisa_rotacja], DB00718_OFFSET_POLISA_ROTACJA ), 
                                   rotation_date:        row[:data_rotacji],
                                   rotation_lock:        row[:blokada],
                                   date_file_send:       nil,
                                   note:                 row[:uwagi],
-                                  insurance_id:         id_with_offset( row[:polisa], DB00718_OFFSET_POLISA ))
+                                  insurance_id:         id_with_offset( row[:polisa], DB00718_OFFSET_POLISA ),
+                                  created_at:           rotation_created_at_first_rec( id_with_offset( row[:id_polisa_rotacja], DB00718_OFFSET_POLISA_ROTACJA ) ),
+                                  updated_at:           row[:change_date] )
 
   if @rotation.valid?
     puts row[:id_polisa_rotacja]
@@ -60,7 +65,7 @@ puts "rotations all: #{Rotation.all.size}"
 
 File.open(File.join("db/seeds/log", 'polisa_rotacja_00718.log'), 'a+') do |f|
   f.puts "Rotations all: #{Rotation.all.size}"
-  f.puts "#####  END ...load from 07_rotation_00718.rb  #####"
+  f.puts "#####  END ...load from 07B_rotation_00718.rb  #####"
 end 
 ############################################################################################
 
@@ -85,6 +90,6 @@ connection.execute( "ALTER SEQUENCE rotations_id_seq RESTART WITH #{next_id} ;" 
 
 @last_rotation.destroy
 
-puts "#####  END OF 07_rotation_00718.rb  #####"
+puts "#####  END OF 07B_rotation_00718.rb  #####"
 puts ""
 

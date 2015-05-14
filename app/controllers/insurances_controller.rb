@@ -57,6 +57,38 @@ class InsurancesController < ApplicationController
     end 
   end
 
+  # GET /insurances/:insurance_id/rotations/1/pdf_groups_with_insureds_add
+  def pdf_groups_with_insureds_add
+    @insurance = load_insurance
+    @rotation = @insurance.rotations.last
+
+    respond_to do |format|
+      format.pdf do
+        pdf = GroupsWithInsuredsPdf.new(@rotation, view_context, "A")
+        send_data pdf.render,
+        filename: "#{@insurance.number}_rotation_#{@rotation.rotation_date.strftime("%Y-%m-%d")}_groups_with_insureds_add.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
+  # GET /insurances/:insurance_id/rotations/1/pdf_groups_with_insureds_add
+  def pdf_groups_with_insureds_remove
+    @insurance = load_insurance
+    @rotation = @insurance.rotations.last
+
+    respond_to do |format|
+      format.pdf do
+        pdf = GroupsWithInsuredsPdf.new(@rotation, view_context, "R")
+        send_data pdf.render,
+        filename: "#{@insurance.number}_rotation_#{@rotation.rotation_date.strftime("%Y-%m-%d")}_groups_with_insureds_remove.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
   # dla agenta
   # GET /insurances/1/pdf_list_insureds
   def pdf_list_insureds
@@ -79,9 +111,16 @@ class InsurancesController < ApplicationController
     @insurance = load_insurance
     @rotation = @insurance.rotations.last
 
+    case params[:prnscope]
+    when 'A'  # tylko włączenia
+      @coverages = @rotation.coverages_add.joins(:rotation, :insured, :group).references(:rotation, :insured, :group).order("individuals.last_name, individuals.last_name, individuals.address_city").all
+    when 'B'  # wszystko
+      @coverages = Coverage.joins(:rotation, :insured, :group).by_rotation(@rotation.id).references(:rotation, :insured, :group).order("individuals.last_name, individuals.last_name, individuals.address_city").all
+    end 
+
     respond_to do |format|
       format.pdf do
-        pdf = DeclarationsAccession1Pdf.new(@rotation, view_context, params[:prnscope])
+        pdf = DeclarationsAccession1Pdf.new(@coverages, view_context)
         send_data pdf.render,
         filename: "#{@insurance.number}_rotation_#{@rotation.rotation_date.strftime("%Y-%m-%d")}_declarations_accession1.pdf",
         type: "application/pdf",
@@ -91,6 +130,7 @@ class InsurancesController < ApplicationController
   end
 
   def pdf_declarations_accession2
+    # zostawiam tak jako przyklad przekazywania parametru. Prawidlowo winno byc jak wyzej
     @insurance = load_insurance
     @rotation = @insurance.rotations.last
 

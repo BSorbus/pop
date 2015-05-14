@@ -10,10 +10,10 @@ class Discount < ActiveRecord::Base
   scope :by_plus_value, -> { where("discount_increase > 0") }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_save :discount_in_group_used_in_locked_rotation
-  #before_destroy :discount_in_group_used_in_locked_rotation
-  #after_save :touch_parent_group_after_commit
-  #after_destroy :touch_parent_group_after_commit
+  before_save :discount_in_group_used_in_locked_rotation
+  before_destroy :discount_in_group_used_in_locked_rotation
+  after_save :touch_parent_group_after_commit
+  after_destroy :touch_parent_group_after_commit
 
 
   def discount_in_group_used_in_locked_rotation

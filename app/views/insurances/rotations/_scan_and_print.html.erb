@@ -48,19 +48,39 @@
     </div><!-- /.col-sm-2 -->
 
 
-    <div class="col-sm-3">
-      <%= link_to " Lista osób - Export do pliku", export_coverages_current_insurance_rotation_path(@insurance, @rotation, :format => "csv"), :class => "btn btn-primary glyphicon glyphicon-cloud-download" %>  
+    <div class="col-sm-2">
+      <%= link_to " Lista osób", export_coverages_current_insurance_rotation_path(@insurance, @rotation, :format => "csv"), 
+                :class => "btn btn-primary glyphicon glyphicon-cloud-download" %>  
 
       <h5><%= "NU_#{@insurance.number.last(12)}_#{@rotation.rotation_date.strftime("%Y%m%d").last(6)}.txt" %></h5>
       <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
 
       <br>
 
-      <%= link_to " Włączenia i wyłączenia - Export do pliku", export_coverages_add_remove_insurance_rotation_path(@insurance, @rotation, :format => "csv"), :class => "btn btn-primary glyphicon glyphicon-cloud-download" %>  
+      <%= link_to " Włączenia i wyłączenia", export_coverages_add_remove_insurance_rotation_path(@insurance, @rotation, :format => "csv"), 
+                :class => "btn btn-primary glyphicon glyphicon-cloud-download" %>  
 
       <h5><%= "N_#{@insurance.number.last(12)}_#{@rotation.rotation_date.strftime("%Y%m%d").last(6)}.txt" %></h5>
       <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
     </div><!-- /.col-sm-3 -->
+
+    <div class="col-sm-2">
+      <%= link_to image_tag("list_insureds_nnw2.png", :class => "img-thumbnail" ), 
+            pdf_groups_with_insureds_add_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Lista grup - Włączenia</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
+
+    <div class="col-sm-2">
+      <%= link_to image_tag("list_insureds_nnw2.png", :class => "img-thumbnail" ), 
+            pdf_groups_with_insureds_remove_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
+            :target => "_blank" %>  
+
+      <h5>Lista grup - Wyłączenia</h5>
+      <h5><span class="text-muted"><%= "- rotacja #{@rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+    </div><!-- /.col-sm-2 -->
 
   </div class="row">  <!--/dla Centrali -->
 

@@ -1,16 +1,19 @@
 class DeclarationsAccession1Pdf < Prawn::Document
   include ApplicationHelper #funkcja with_delimiter_and_separator()
 
-  def initialize(rotation, view, scopeparam)
+  def initialize(coverages, view)
     # New document, A4 paper, landscaped
     # pdf = Prawn::Document.new(:page_size => "A4", :page_layout => :landscape)
     # wiec komentuje super() i ...
     super(:page_size => "A4", :page_layout => :portrait)
     #super()
-    @rotation = rotation
-    @insurance = rotation.insurance
-    @company = rotation.insurance.company
-    @user = rotation.insurance.user
+    @coverages = coverages
+    if !@coverages.empty?
+      @rotation = @coverages.first.rotation
+      @insurance = @rotation.insurance
+      @company = @rotation.insurance.company
+      @user = @rotation.insurance.user
+    end
     @view = view
 
     font_families.update("DejaVu Sans" => {
@@ -20,12 +23,6 @@ class DeclarationsAccession1Pdf < Prawn::Document
       :bold_italic => "#{Rails.root}/app/assets/fonts/DejaVuSans-BoldOblique.ttf"
     })
     font "DejaVu Sans", size: 10
-
-    if scopeparam == 'A' # tylko włączenia
-      @coverages = @rotation.coverages_add.joins(:rotation, :insured, :group).references(:rotation, :insured, :group).order("individuals.last_name, individuals.last_name, individuals.address_city").all
-    else
-      @coverages = Coverage.joins(:rotation, :insured, :group).by_rotation(@rotation.id).references(:rotation, :insured, :group).order("individuals.last_name, individuals.last_name, individuals.address_city").all
-    end
 
     count_coverages = @coverages.size
 

@@ -1,7 +1,8 @@
 class Insured < ActiveRecord::Base
   self.table_name = 'individuals'
  
-  has_many :coverages
+  #has_many :coverages zmiana 14.05.2015
+  has_many :coverages, foreign_key: :insured_id, class_name: "Coverage", dependent: :destroy 
 
   def fullname
     "#{last_name} #{first_name}, #{address_city}, #{pesel}"

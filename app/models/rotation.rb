@@ -17,7 +17,6 @@ class Rotation < ActiveRecord::Base
   def next_rotation_date
     if insurance.rotations.where("rotation_date > :this_date", this_date: rotation_date).any? 
       errors.add(:rotation_date, " - Już jest zarejstrowana Rotacja z datą późniejszą" )
-      #errors[:base] << "Jest już zarejestrowana Rotacja z datą późniejszą"
       false
     end
   end
@@ -33,11 +32,6 @@ class Rotation < ActiveRecord::Base
     current_insurance_id = insurance.id
     current_rotation_id = id
     @prior_rotation = Rotation.where("id < :r_id AND insurance_id = :i_id", r_id: current_rotation_id, i_id: current_insurance_id).order(:id).all
-    #if @prior_rotation.empty? 
-    #  prior_rotation_id = 0
-    #else
-    #  prior_rotation_id = @prior_rotation.last.id
-    #end 
     prior_rotation_id = @prior_rotation.empty? ?  0 : @prior_rotation.last.id
 
     @coverages_add = Coverage.where("(rotation_id = :c_r) AND ('I:'||insured_id||'G:'||group_id NOT IN (SELECT 'I:'||insured_id||'G:'||group_id FROM coverages WHERE rotation_id = :p_r))", c_r: current_rotation_id, p_r: prior_rotation_id).all
@@ -50,6 +44,16 @@ class Rotation < ActiveRecord::Base
     prior_rotation_id = @prior_rotation.empty? ? 0 : @prior_rotation.last.id
 
     @coverages_remove = Coverage.where("(rotation_id = :p_r) AND ('I:'||insured_id||'G:'||group_id NOT IN (SELECT 'I:'||insured_id||'G:'||group_id FROM coverages WHERE rotation_id = :c_r))", c_r: current_rotation_id, p_r: prior_rotation_id).all
+  end
+
+  def groups_for_coverages_add
+    #coverages_add = self.coverages_add.pluck(:group_id)
+    #@groups_for_coverages_add = Group.where(id: coverages_add )
+    @groups_for_coverages_add = Group.where(id: coverages_add.uniq.pluck(:group_id) )
+  end
+
+  def groups_for_coverages_remove
+    @groups_for_coverages_remove = Group.where(id: coverages_remove.uniq.pluck(:group_id) )
   end
 
   def fullname
