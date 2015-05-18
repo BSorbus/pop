@@ -57,7 +57,7 @@
 
       <br>
 
-      <%= link_to " Włączenia i wyłączenia", export_coverages_add_remove_insurance_rotation_path(@insurance, @rotation, :format => "csv"), 
+      <%= link_to " WYŁ i WŁ-ączenia", export_coverages_add_remove_insurance_rotation_path(@insurance, @rotation, :format => "csv"), 
                 :class => "btn btn-primary glyphicon glyphicon-cloud-download" %>  
 
       <h5><%= "N_#{@insurance.number.last(12)}_#{@rotation.rotation_date.strftime("%Y%m%d").last(6)}.txt" %></h5>
@@ -65,7 +65,7 @@
     </div><!-- /.col-sm-3 -->
 
     <div class="col-sm-2">
-      <%= link_to image_tag("list_insureds_nnw2.png", :class => "img-thumbnail" ), 
+      <%= link_to image_tag("groups_with_insureds_add.png", :class => "img-thumbnail" ), 
             pdf_groups_with_insureds_add_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
             :target => "_blank" %>  
 
@@ -74,7 +74,7 @@
     </div><!-- /.col-sm-2 -->
 
     <div class="col-sm-2">
-      <%= link_to image_tag("list_insureds_nnw2.png", :class => "img-thumbnail" ), 
+      <%= link_to image_tag("groups_with_insureds_remove.png", :class => "img-thumbnail" ), 
             pdf_groups_with_insureds_remove_insurance_rotation_path(@insurance, @rotation, :format => "pdf"), 
             :target => "_blank" %>  
 

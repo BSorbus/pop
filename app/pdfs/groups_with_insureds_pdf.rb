@@ -1,4 +1,5 @@
 class GroupsWithInsuredsPdf < Prawn::Document
+  include ApplicationHelper #funkcja with_delimiter_and_separator()
 
   def initialize(rotation, view, add_remove)
     # New document, A4 paper, landscaped
@@ -30,7 +31,14 @@ class GroupsWithInsuredsPdf < Prawn::Document
     })
     font "DejaVu Sans", size: 10
 
-    #display_data_table
+
+    bounding_box([0,660], :width => 525, :height => 545) do 
+      @groups.each do |group|
+        display_data_group(group, add_remove)
+      end
+    end
+
+
 
     repeat(:all, :dynamic => true) do
       logo
@@ -49,57 +57,83 @@ class GroupsWithInsuredsPdf < Prawn::Document
   end
 
   def header_left_corner(title_one, title_two)
-    draw_text "RAPORT O ROTACJI OSÓB UBEZPIECZONYCH POLISĄ GRUPOWEGO",  :at => [0, 775], size: 10, :style => :bold
-    draw_text "UBEZPIECZENIA NNW W FORMIE IMIENNEJ",                    :at => [0, 760], size: 10, :style => :bold
+    draw_text "RAPORT O ROTACJI OSÓB UBEZPIECZONYCH POLISĄ GRUPOWEGO",  :at => [0, 775], size: 10
+    draw_text "UBEZPIECZENIA NNW W FORMIE IMIENNEJ",                    :at => [0, 760], size: 10
     draw_text " - #{title_one} UBEZPIECZENIA",                          :at => [0, 745], size: 11, :style => :bold
-    draw_text "Nr polisy #{@insurance.number}",                         :at => [0, 719], size: 15, :style => :bold
+    draw_text "Nr polisy #{@insurance.number}",                         :at => [0, 725], size: 15, :style => :bold
 
     text_box "#{@user.name}" +
              " - #{@user.agent_number}" , size: 11, :style => :bold, 
-      :at => [290, 729], 
+      :at => [290, 735], 
       :width => 250, 
       :height => 25
+
+    draw_text "Ubezpieczający:",      :at => [  0, 705], size: 10
+    draw_text "#{@company.name}",     :at => [  85, 705], size: 10, :style => :bold
+
+    draw_text "Okres ubezpieczenia:", :at => [  0, 690], size: 9
+    draw_text "#{@insurance.valid_from.strftime("%d.%m.%Y")} - #{@insurance.applies_to.strftime("%d.%m.%Y")}",:at => [ 115, 690], size: 9, :style => :bold
+
+    draw_text "Do ww. umowy grupowego ubezpieczenia NNW z dniem                       zostają                        następujące osoby:", :at => [  0, 675], size: 9
+    draw_text "#{@rotation.rotation_date.strftime("%d.%m.%Y")}              #{title_two}", :at => [ 255, 675], size: 9, :style => :bold
   end
 
 
-  def display_data_table
-    bounding_box([0,700], :width => 525, :height => 585) do 
-      if table_data.empty?
-        text "No Events Found"
-      else
-        table( table_data,
-              :header => true,
-              :column_widths => [23, 132, 132, 60, 87, 36, 55],
-              #:row_colors => ["ffffff", "c2ced7"],
-              :cell_style => { size: 7, :border_width => 0.5 }
-            ) do
-          columns(0).align = :right
-          columns(5).align = :center
-          columns(6).align = :center
-          row(0).font_style = :bold 
-          row(0).align = :left 
-          #row(0).background_color = "#FF0000"
-        end             
-      end
-    end  
+  def display_data_group(group, add_remove)
+    table( table_group(group, add_remove),
+          :header => true,
+          #:column_widths => [525],
+          :cell_style => { size: 7, :border_width => 0.5 }
+        ) do
+      #columns(0).font_style = :bold
+    end
+    move_down 25             
   end
 
-  def table_data
+  def display_coverages_table(g, ar)
+    make_table( table_coverage_data(g, ar),
+          :header => true,
+          :column_widths => [23, 160, 160, 60, 122],
+          #:column_widths => [23, 132, 132, 60, 87, 36, 55],
+          #:row_colors => ["ffffff", "c2ced7"],
+          :cell_style => { size: 7, :border_width => 0.5 }
+        ) do
+      columns(0).align = :right
+      columns(5).align = :center
+      columns(6).align = :center
+      #row(0).font_style = :bold 
+      row(0).align = :left 
+      #row(0).background_color = "#FF0000"
+    end             
+  end
+
+  def table_group(g, ar)
+    table_group ||= [
+                      [{:content => "Nr Grupy: #{g.number}   Grupa ryzyka: #{g.risk_group}   Suma ubezpieczenia: #{with_delimiter_and_separator(g.assurance)}  Świadczenia dodatkowe: #{g.additional_for_pdf_in_new_line}", :colspan => 7, :width => 525, :font_style => :bold }],
+                   #   [ "B", "C", "D", "E", "F", "G"],
+                      [{:content => display_coverages_table(g, ar), :colspan => 7, :width => 525 }],
+                      [{:content => "Liczba osób po zmianach: #{g.coverages.where(rotation: @rotation).size}    Składka miesięczna za osobę wynosi: #{with_delimiter_and_separator(g.sum_after_monthly)}", :colspan => 7, :width => 525, :font_style => :bold }]
+                    ]  
+  end
+
+
+  def table_coverage_data(g, ar)
     @lp = 0
+    if ar == "A" # A-dd
+      @coverages = @rotation.coverages_add.includes(:insured).where(group: g).references(:insured).order('"individuals"."last_name", "individuals"."first_name", "individuals"."address_city"')
+    else
+      @coverages = @rotation.coverages_remove.includes(:insured).where(group: g).references(:insured).order('"individuals"."last_name", "individuals"."first_name", "individuals"."address_city"')
+    end
     table_data ||= [["Lp.",
                      "Nazwisko i imię",
                      "Adres",
                      "PESEL",
-                     "Charakter wykonywanej pracy",
-                     "Grupa ryzyka",
-                     "Grupa osób ubezp. Nr"]] + 
-                     @coverages.map { |p| [ next_lp, 
+                     "Charakter wykonywanej pracy"]] + 
+                      @coverages.map { |p| [ next_lp, 
                                             p.insured.last_first_name,
                                             p.insured.street_house_number + "\n" + p.insured.postal_code_city, 
                                             p.insured.pesel, 
-                                            p.insured.profession, 
-                                            p.group.risk_group,
-                                            p.group.number] }
+                                            p.insured.profession] }
   end
 
   def next_lp

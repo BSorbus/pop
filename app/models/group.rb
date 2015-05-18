@@ -86,11 +86,21 @@ class Group < ActiveRecord::Base
 
   def fullinfo_for_pdf
     info_result  = "SU:#{without_separator_and_zero(assurance)} "
-    info_result += "KL:#{without_separator_and_zero(treatment)} " if treatment > 0.00
+    info_result += "KL:#{without_separator_and_zero(treatment)} "   if treatment > 0.00
+    info_result += "ZA:#{without_separator_and_zero(ambulatory)} "  if ambulatory > 0.00
+    info_result += "ZSZ:#{without_separator_and_zero(hospital)} "   if hospital > 0.00
+    info_result += "ZS/UM:#{without_separator_and_zero(infarct)} "  if infarct > 0.00
+    info_result += "TNP:#{without_separator_and_zero(inability)}"   if inability > 0.00
+    return info_result
+  end
+
+  def additional_for_pdf_in_new_line
+    info_result  = ""
+    info_result += "KL:#{without_separator_and_zero(treatment)} "  if treatment > 0.00
     info_result += "ZA:#{without_separator_and_zero(ambulatory)} " if ambulatory > 0.00
-    info_result += "ZSZ:#{without_separator_and_zero(hospital)} " if hospital > 0.00
+    info_result += "ZSZ:#{without_separator_and_zero(hospital)} "  if hospital > 0.00
     info_result += "ZS/UM:#{without_separator_and_zero(infarct)} " if infarct > 0.00
-    info_result += "TNP:#{without_separator_and_zero(inability)}" if inability > 0.00
+    info_result += "TNP:#{without_separator_and_zero(inability)}"  if inability > 0.00
     return info_result
   end
 

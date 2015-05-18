@@ -47,7 +47,6 @@ Rails.application.routes.draw do
   end
 
   resources :companies do
-    resources :company_histories, only: [:index, :show], controller: 'companies/company_histories'
     post 'datatables_index', on: :collection
     get 'select_his', on: :collection
   end
