@@ -20,6 +20,8 @@
 //= require jquery-ui/datepicker
 //= require select2
 //= require select2_locale_pl
+//= require moment
+//= require fullcalendar
 //= require_tree .
 
 

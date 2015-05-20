@@ -54,9 +54,9 @@ gem 'json'
 #gem 'omniauth-oauth2'
 #gem 'omniauth-google-oauth2'
 
-gem 'pesel' #https://github.com/macuk/pesel
 #gem 'rqrcode_png'
 #gem 'carrierwave'
+
 gem 'select2-rails'
 gem 'kaminari'
 gem 'jquery-datatables-rails',  github: 'rweng/jquery-datatables-rails'
@@ -65,3 +65,7 @@ gem 'ajax-datatables-rails', git: 'git://github.com/antillas21/ajax-datatables-r
 gem 'prawn'
 gem 'prawn-table'
 gem 'rails_12factor', group: :production
+gem 'pesel' #https://github.com/macuk/pesel
+
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'

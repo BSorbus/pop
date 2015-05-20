@@ -272,6 +272,23 @@ class Insurances::RotationsController < ApplicationController
       if @rotation.save
         @rotation.duplicate_coverages(params[:duplicate_rotation]) if !(params[:duplicate_rotation]).blank? # dodaj osoby jezeli wykonujesz duplikat
 
+        # dodaj zdarzenie do kalendarza
+        Event.new(  title: "#{@insurance.company.short} \n #{@insurance.number}", 
+                    start: @rotation.rotation_date + 10.hours,
+                    :end => @rotation.rotation_date + 10.hours + 15.minutes,
+                    allday: true,
+                    url_action: insurance_rotation_path(@insurance, @rotation),
+                    user: current_user ).save
+
+        #@event = Event.new()
+        #@event.title = @insurance.number
+        #@event.start = @rotation.rotation_date + 10.hours
+        #@event.end = @rotation.rotation_date + 10.hours + 15.minutes
+        #@event.allday = true
+        #@event.url_action = insurance_rotation_path(@insurance, @rotation)
+        #@event.user = current_user
+        #@event.save
+
         format.html { redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.created', data: @rotation.fullname) }
         format.json { render :show, status: :created, location: @rotation }
       else
@@ -308,6 +325,8 @@ class Insurances::RotationsController < ApplicationController
     #redirect_back_if_dont_can_edit_rotation and return
 
     if @rotation.destroy
+      # usun zdarzenie z kalendarza
+      Event.delete_all(url_action: insurance_rotation_path(@insurance, @rotation))
       redirect_to insurance_path(@insurance), success: t('activerecord.messages.successfull.destroyed', data: @rotation.fullname)
     else 
       flash[:error] = t('activerecord.messages.error.destroyed', data: @rotation.fullname)

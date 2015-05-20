@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   end
 
 
-  root to: 'visitors#index'
+  resources :events
+  root to: 'events#index'
 
 end

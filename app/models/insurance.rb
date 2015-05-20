@@ -21,7 +21,7 @@ class Insurance < ActiveRecord::Base
   scope :by_user, ->(current_login_user_id) { where(user_id: current_login_user_id) }
   scope :by_company, ->(current_company_id) { where(company_id: current_company_id) }
 
-  before_destroy :insurance_has_rotations_or_groups, prepend: true
+  #before_destroy :insurance_has_rotations_or_groups, prepend: true
 
   def insurance_has_rotations_or_groups
     analize_value = true

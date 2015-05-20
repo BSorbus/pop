@@ -9,8 +9,8 @@ class Individual < ActiveRecord::Base
   validates :pesel, length: { is: 11 }, numericality: true, 
                     :uniqueness => { :scope => [:user_id] }, allow_blank: true
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  validates :birth_date, presence: true
-  validate :check_pesel_and_birth_date, unless: "pesel.blank?"
+  #validates :birth_date, presence: true
+  #validate :check_pesel_and_birth_date, unless: "pesel.blank?"
 
   require 'pesel'
 

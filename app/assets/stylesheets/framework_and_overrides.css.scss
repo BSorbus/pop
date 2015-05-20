@@ -5,6 +5,7 @@ $font-size-base: 14px;
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+@import "fullcalendar";
 
 //table.dataTable thead .sorting_asc { background: none }
 //table.dataTable thead .sorting_desc { background: none }
@@ -14,6 +15,7 @@ $font-size-base: 14px;
 .dataTable > thead > tr > th[class*="sort"]:after{
     content: "" !important;
 }
+
 
 body {
   background-color: #eee;

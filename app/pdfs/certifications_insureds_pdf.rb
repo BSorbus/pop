@@ -70,7 +70,7 @@ class CertificationsInsuredsPdf < Prawn::Document
       :height => 70
 
     text_box "#{@user.name}" + "\n" +
-             "- #{@user.agent_number}" , size: 9, :style => :bold, 
+             "Nr agenta #{@user.agent_number}" , size: 9, :style => :bold, 
       :at => [380, 697], 
       :width => 170, 
       :height => 70

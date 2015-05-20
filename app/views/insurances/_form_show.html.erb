@@ -69,10 +69,10 @@
         <div class="form-group col-sm-7">
 
           <br><%= f.label :pay, class: "control-label" %><br>
-          <%= f.radio_button(:pay, 'K', disabled: input_disabled) %>
-          <%= f.label(:pay_k, 'Kwartalna') %>
           <%= f.radio_button(:pay, 'M', disabled: input_disabled) %>
           <%= f.label(:pay_m, 'Miesięczna') %>
+          <%= f.radio_button(:pay, 'K', disabled: input_disabled) %>
+          <%= f.label(:pay_k, 'Kwartalna') %>
           <%= f.radio_button(:pay, 'P', disabled: input_disabled) %>
           <%= f.label(:pay_p, 'Półroczna') %>
           <%= f.radio_button(:pay, 'R', disabled: input_disabled) %>
