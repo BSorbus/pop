@@ -16,6 +16,7 @@ pl:
       group: 'Grupa'
       discount: 'Zniżka/Zwyżka'
       coverage: 'Ochrona'
+      event: 'Wydarzenie'
     messages:
       successfull:
         created: 'Wpis: "%{data}" został pomyślnie utworzony.'
@@ -111,6 +112,13 @@ pl:
         insured_id: 'Ubezpieczony'
         payer_id: 'Płatnik'
         note: 'Uwagi'
+      event:
+        title: 'Tytuł'
+        allday: 'Wydarzenie całodniowe'
+        start_date: 'Początek'
+        end_date: 'Koniec'
+        url_action: 'Url'
+        color: 'Kolor'
       user:
         agent_number: 'Numer agenta'
         name: 'Imię i Nazwisko'

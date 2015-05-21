@@ -21,6 +21,7 @@ pl:
     discount_new: ' Nowa Zniżka/Zwyżka'
     discount_new_for: ' Nowa Zniżka/Zwyżka dla: "%{data}"'
     coverage_new: " Nowa Ochrona"
+    event_new: " Nowe Wydarzenie"
     users: "Użytkownicy"
     sign_in: "Zaloguj się"
     sign_out: "Wyloguj się"

@@ -12,7 +12,8 @@ class Rotation < ActiveRecord::Base
   scope :by_insurance, ->(current_insurance_id) { where(insurance_id: current_insurance_id) }
   scope :by_rotation_date, -> { order(:rotation_date) }
 
-  #before_destroy :rotation_has_coverages, prepend: true
+  before_destroy :rotation_is_locked, prepend: true
+
 
   def next_rotation_date
     if insurance.rotations.where("rotation_date > :this_date", this_date: rotation_date).any? 
@@ -21,9 +22,9 @@ class Rotation < ActiveRecord::Base
     end
   end
 
-  def rotation_has_coverages
-    if coverages.any? 
-      errors[:base] << "Nie można usunąć Rotacji, która jest użyta w Ochronie"
+  def rotation_is_locked
+    if rotation_lock? 
+      errors[:base] << "Rotacja jest zablokowana!"
       false
     end
   end

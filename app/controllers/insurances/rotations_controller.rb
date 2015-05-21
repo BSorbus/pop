@@ -274,20 +274,12 @@ class Insurances::RotationsController < ApplicationController
 
         # dodaj zdarzenie do kalendarza
         Event.new(  title: "#{@insurance.company.short} \n #{@insurance.number}", 
-                    start: @rotation.rotation_date + 10.hours,
-                    :end => @rotation.rotation_date + 10.hours + 15.minutes,
                     allday: true,
+                    start_date: @rotation.rotation_date + 10.hours,
+                    end_date: @rotation.rotation_date + 10.hours + 15.minutes,
+                    color: '#f0ad4e', #@brand-warning
                     url_action: insurance_rotation_path(@insurance, @rotation),
                     user: current_user ).save
-
-        #@event = Event.new()
-        #@event.title = @insurance.number
-        #@event.start = @rotation.rotation_date + 10.hours
-        #@event.end = @rotation.rotation_date + 10.hours + 15.minutes
-        #@event.allday = true
-        #@event.url_action = insurance_rotation_path(@insurance, @rotation)
-        #@event.user = current_user
-        #@event.save
 
         format.html { redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.created', data: @rotation.fullname) }
         format.json { render :show, status: :created, location: @rotation }
@@ -306,6 +298,12 @@ class Insurances::RotationsController < ApplicationController
 
     respond_to do |format|
       if @rotation.update(rotation_params)
+        if @rotation.date_file_send.present?
+          @event = Event.find_by(url_action: insurance_rotation_path(@insurance, @rotation))
+          @event.color = '#5cb85c' if @event.present? #@brand-success
+          @event.save if @event.present?
+        end
+
         format.html { redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.updated', data: @rotation.fullname) }
         format.json { render :show, status: :ok, location: @rotation }
       else

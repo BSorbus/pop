@@ -1,8 +1,15 @@
-<div class="col-sm-12">
+<div class="container">
+	<div class="col-sm-10 clearfix">
+		<div id='calendar'></div>
+	</div>	
 
+	<div class="col-sm-2 clearfix">
 
-	<div id='calendar'></div>
+		<br>
+		<% if user_signed_in? %>
+		  <%= link_to t('New', default: t("helpers.links.new")), new_event_path, 
+	                        :class => 'btn btn-primary glyphicon glyphicon-plus ' %> 
 
-	<%= link_to 'New Event', new_event_path %>
-
+	  <% end %>
+	</div>	
 </div>	

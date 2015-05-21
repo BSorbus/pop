@@ -34,11 +34,10 @@ $(document).ready(function() {
 	    events: {
 			  url: '/events',
 			  type: 'GET',
-			  //rendering: 'background',
 			  error: function() {
 			      alert('there was an error while fetching events!');
 			  },
-			  //color: 'red'
+			  //textColor: 'white'
 		}
 
 	});
