@@ -28,14 +28,21 @@ $(function() {
 			isRTL: false,
 			showMonthAfterYear: false,
 			yearSuffix: '',
-			timeFormat: "HH:mm",
+			timeSuffix: '',
+	//showTimezone: false,
+	//timezone: "UTC +02:00",
+	altFieldTimeOnly: false,
+	altTimeFormat: 'HH:mm',
+	timeFormat: "HH:mm:ss",
+		controlType: 'select',
+		oneLine: true,
 	timeOnlyTitle: 'Выберите время',
-	timeText: 'Czas',
-	hourText: 'Godzina',
-	minuteText: 'Minut',
-	secondText: 'Sekundy',
-	currentText: 'Teraz',
-	closeText: 'Zamknij'
+			timeText: 'Czas',
+			hourText: 'Godzina',
+			minuteText: 'Minut',
+			secondText: 'Sekundy',
+			currentText: 'Teraz',
+			closeText: 'Zamknij'
 
     });
   });

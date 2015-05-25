@@ -54,7 +54,7 @@ class InsuranceRotationsDatatable < AjaxDatatablesRails::Base
     #Insurance.by_user(options[:only_for_current_user_id])
 
      #Rotation.all
-     Rotation.all.where(insurance_id: options[:only_for_current_insurance_id])
+     Rotation.where(insurance_id: options[:only_for_current_insurance_id]).all
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

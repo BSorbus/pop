@@ -77,8 +77,6 @@ class RotationCoveragesDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    # insert query here
-
     Coverage.joins(:rotation, :group).includes(:insured, :payer).by_rotation(options[:only_for_rotation_id]).references(:rotation, :group, :insured, :payer).all
     #Coverage.joins(:rotation, :group, :insured, :payer).where(rotation_id: options[:only_for_rotation_id]).references(:rotation, :group, :insured, :payer).all
 

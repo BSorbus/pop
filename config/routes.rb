@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     post 'datatables_index_company', on: :collection # for Company
     get 'export_coverages_current', on: :member
     get 'export_coverages_add_remove', on: :member
+    get 'duplicate', on: :member
     patch 'numbering_groups', on: :member
     get 'pdf_list_benefits_nnw1', on: :member
     get 'pdf_list_insureds_nnw2', on: :member

@@ -59,7 +59,7 @@ class CompanyInsurancesDatatable < AjaxDatatablesRails::Base
     #Insurance.by_user(options[:only_for_current_user_id])
 
     #Insurance.joins(:company).by_user(options[:only_for_current_user_id])
-     Insurance.all.where(company_id: options[:only_for_current_company_id])
+     Insurance.where(company_id: options[:only_for_current_company_id]).all
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

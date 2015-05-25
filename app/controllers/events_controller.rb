@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user! , only: [:new, :create, :edit, :update, :destroy]
-  before_action :redirect_back_if_no_admin_or_no_owner, only: [:edit, :update, :destroy]
+  before_action :redirect_back_if_no_admin_or_no_owner, only: [:show, :edit, :update, :destroy]
 
 
   # GET /events
@@ -11,6 +11,11 @@ class EventsController < ApplicationController
     else
       @events = Event.by_user([1, current_user]).all
     end
+    
+    respond_to do |format|
+      format.html
+      format.json
+    end    
   end
 
   # GET /events/1

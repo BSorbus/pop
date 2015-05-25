@@ -4,6 +4,7 @@ $(document).ready(function() {
     processing: true,
     serverSide: true,
     deferRender: true,
+    scrollX: true,
     ajax: { 
       url: $('#insurance-groups').data('source'),
       type: "POST"
@@ -25,7 +26,15 @@ $(document).ready(function() {
         "searchable": false,
         "sortable": false },
       { "targets": [2],
-        "title": "Nr" }, 
+        "title": "Nr",
+        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[15] == 0 ) {
+            $(nTd).css('background-color', '#FF4500'); //OrangeRed
+          }
+        }
+      }, 
       { "targets": [3],
         "title": "Kwotacja" }, 
       { "targets": [4],
@@ -50,7 +59,21 @@ $(document).ready(function() {
       { "targets": [13],
         "title": "Śmierć 100%" }, 
       { "targets": [14],
-        "title": "Miesięczna za osobę" }
+        "title": "Miesięczna za osobę" },
+      { "targets": [15],
+        "title": "Ochrona",
+        type: "number",
+        "searchable": false,
+        "sortable": false,
+        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[15] == 0 ) {
+            $(nTd).css('background-color', '#FF4500'); //OrangeRed
+          }
+        } },
+      { "targets": [16],
+        "title": "Utworzona" }
     ],
     order: [[ 2, "asc" ]],
     language: {

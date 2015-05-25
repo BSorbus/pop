@@ -46,9 +46,9 @@ class Group < ActiveRecord::Base
   scope :by_number, -> { order(:number) }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  before_save {self.number = insurance.groups.size + 1 if (self.number.nil? or self.number == 0) } 
-  before_save :used_in_locked_rotation 
-  before_destroy :group_has_coverages, prepend: true
+  #before_save {self.number = insurance.groups.size + 1 if (self.number.nil? or self.number == 0) } 
+  #before_save :used_in_locked_rotation 
+  #before_destroy :group_has_coverages, prepend: true
 
   def used_in_locked_rotation
     if group_used_in_locked_rotation 
@@ -148,20 +148,6 @@ class Group < ActiveRecord::Base
     else
       "insurance.pay - Error !"
     end   
-  end
-
-  def duplicate_discounts(duplicate_group_id)
-    for_group_id = self.id
-    for_duplicate_discounts = Discount.where(group_id: duplicate_group_id)
-    Discount.transaction do
-      for_duplicate_discounts.each do |discount|
-        new_discount = Discount.new(group_id: for_group_id,
-                                    category: discount.category,
-                                    description: discount.description,
-                                    discount_increase: discount.discount_increase)
-        new_discount.save
-      end if for_duplicate_discounts.size > 0
-    end
   end
 
   def insurance_death_val
@@ -354,6 +340,20 @@ class Group < ActiveRecord::Base
       self.sum_after_increases =  self.sum_after_increases + 
                                   self.sum_after_increases*(discount.discount_increase/100)
     end    
+  end
+
+  def duplicate_discounts(duplicate_group_id)
+    for_group_id = self.id
+    for_duplicate_discounts = Discount.where(group_id: duplicate_group_id)
+    Discount.transaction do
+      for_duplicate_discounts.each do |discount|
+        new_discount = Discount.new(group_id: for_group_id,
+                                    category: discount.category,
+                                    description: discount.description,
+                                    discount_increase: discount.discount_increase)
+        new_discount.save
+      end if for_duplicate_discounts.size > 0
+    end
   end
 
   include ApplicationHelper

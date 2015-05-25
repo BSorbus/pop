@@ -33,6 +33,7 @@ pl:
       cancel: "Wróć"
       confirm: "Are you sure?"
       confirm_destroy: 'Na pewno chcesz usunąć wpis: "%{data}"?'
+      confirm_duplicate_insurance: 'Czy chcesz dodać duplikat Polisy: "%{data}"? Wszystkie Grupy i dane o Ubezpieczonych w ostatniej Rotacji zostaną skopiowane do nowej pozycji.'
       confirm_duplicate_rotation: 'Czy chcesz dodać kolejną rotację do polisy: "%{data}"? Poprzednia rotacja zostanie automatycznie zablokowana (jeżeli jeszcze nie jest).'
       confirm_locking_rotation: 'Na pewno chcesz zablokować rotację z dnia: "%{data}"?'
       confirm_unlocking_rotation: 'Na pewno chcesz odblokować rotację z dnia: "%{data}"?'
@@ -47,6 +48,7 @@ pl:
       unlocking_rotation: " Odblokuj rotację"
       duplicate: " Duplikat"
       duplicate_rotation: " Kolejna rotacja"
+      duplicate_insurance: " Kontynuacja polisy"
       send_email: " Wyślij email"
     titles:
       edit: "Edycja %{model}"

@@ -268,18 +268,10 @@ class Insurances::RotationsController < ApplicationController
     @insurance = load_insurance
     @rotation = Rotation.new(rotation_params)
     @rotation.insurance = @insurance
+    
     respond_to do |format|
       if @rotation.save
         @rotation.duplicate_coverages(params[:duplicate_rotation]) if !(params[:duplicate_rotation]).blank? # dodaj osoby jezeli wykonujesz duplikat
-
-        # dodaj zdarzenie do kalendarza
-        Event.new(  title: "#{@insurance.company.short} \n #{@insurance.number}", 
-                    allday: true,
-                    start_date: @rotation.rotation_date + 10.hours,
-                    end_date: @rotation.rotation_date + 10.hours + 15.minutes,
-                    color: '#f0ad4e', #@brand-warning
-                    url_action: insurance_rotation_path(@insurance, @rotation),
-                    user: current_user ).save
 
         format.html { redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.created', data: @rotation.fullname) }
         format.json { render :show, status: :created, location: @rotation }
@@ -298,12 +290,6 @@ class Insurances::RotationsController < ApplicationController
 
     respond_to do |format|
       if @rotation.update(rotation_params)
-        if @rotation.date_file_send.present?
-          @event = Event.find_by(url_action: insurance_rotation_path(@insurance, @rotation))
-          @event.color = '#5cb85c' if @event.present? #@brand-success
-          @event.save if @event.present?
-        end
-
         format.html { redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.updated', data: @rotation.fullname) }
         format.json { render :show, status: :ok, location: @rotation }
       else
@@ -323,8 +309,6 @@ class Insurances::RotationsController < ApplicationController
     #redirect_back_if_dont_can_edit_rotation and return
 
     if @rotation.destroy
-      # usun zdarzenie z kalendarza
-      Event.delete_all(url_action: insurance_rotation_path(@insurance, @rotation))
       redirect_to insurance_path(@insurance), success: t('activerecord.messages.successfull.destroyed', data: @rotation.fullname)
     else 
       flash[:error] = t('activerecord.messages.error.destroyed', data: @rotation.fullname)

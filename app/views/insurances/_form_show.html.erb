@@ -21,13 +21,13 @@
     <div class="col-sm-12">
       <div class="row">
 
-        <div class="form-group col-sm-2">
+        <div class="form-group col-sm-3">
           <%= f.label :number, class: 'control-label' %>
           <h5><%= @insurance.number %></h5>
           <h5><div class="text-success history collapse" id="history[number]"> </div>
         </div>
 
-        <div class="control-group col-sm-10">
+        <div class="control-group col-sm-9">
           <%= f.label :company_id, class: "control-label" %><br>
           <h5><%= link_to @insurance.company.fullname, company_path(@insurance.company), 
                       :"data-toggle" => "popover_info",
@@ -116,6 +116,12 @@
                             :class => "btn btn-danger glyphicon glyphicon-trash" %>
         <%= link_to t('Edit', default: t("helpers.links.edit")), edit_insurance_path(@insurance), 
                             :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+
+
+         <%= link_to t('Duplicate', default: t("helpers.links.duplicate_insurance")), duplicate_insurance_path(@insurance), 
+                        method: :get,
+                        data: { confirm: t('helpers.links.confirm_duplicate_insurance', data: @insurance.number) }, 
+                        :class => "btn btn-default glyphicon glyphicon-duplicate" %>
 
         <button class="btn btn-default glyphicon glyphicon-saved pull-right" type="button" data-toggle="collapse" data-target=".history" aria-expanded="false" id="button_show_history"> Historia
         </button>

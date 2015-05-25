@@ -35,7 +35,7 @@ class Insurances::GroupsController < ApplicationController
     @group.insurance = @insurance
 
     respond_to do |format|
-      format.html
+      format.html { render :new, locals: { duplicate_group: nil} } 
     end
   end
 
@@ -69,7 +69,6 @@ class Insurances::GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.insurance = @insurance
 
-
     respond_to do |format|
       if @group.save
         @group.set_group_values if (@group.quotation != 'C') # Nie wyliczaj automatycznie składek dla kwotacji Niestandardowej
@@ -78,7 +77,7 @@ class Insurances::GroupsController < ApplicationController
         format.html { redirect_to insurance_group_path(@insurance, @group), success: t('activerecord.messages.successfull.created', data: @group.fullname) }
         format.json { render :show, status: :created, location: @group }
       else
-        format.html { render :new }
+        format.html { render :new, locals: { duplicate_group: params[:duplicate_group]} }
         format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end

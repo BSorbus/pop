@@ -24,6 +24,7 @@ class InsuranceGroupsDatatable < AjaxDatatablesRails::Base
                               Group.inability 
                               Group.death_100_percent 
                               Group.sum_after_monthly 
+                              Group.created_at
                              )
   end
 
@@ -68,7 +69,10 @@ class InsuranceGroupsDatatable < AjaxDatatablesRails::Base
         record.infarct,
         record.inability,
         record.death_100_percent? ? 'Tak' : 'Nie',
-        record.sum_after_monthly      
+        record.sum_after_monthly,      
+        record.coverages.where(rotation: record.insurance.rotations.last).size,
+        #Coverage.where(group: record, rotation: record.insurance.rotations.last).size,
+        record.created_at.strftime("%Y-%m-%d")      
       ]
     end
   end
@@ -78,7 +82,7 @@ class InsuranceGroupsDatatable < AjaxDatatablesRails::Base
     #Insurance.by_user(options[:only_for_current_user_id])
 
      #Group.all
-     Group.all.where(insurance_id: options[:only_for_current_insurance_id])
+     Group.where(insurance_id: options[:only_for_current_insurance_id]).all
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

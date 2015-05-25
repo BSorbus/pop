@@ -29,8 +29,9 @@ $(document).ready(function() {
 		dayNamesMin: ["N","Pn","Wt","Śr","Cz","Pt","So"],
 		firstDay: 1,
 		editable: false,
-		timeFormat: 'H:mm',
+		timeFormat: 'HH:mm',
 		axisFormat: 'H:mm',
+		timezone: "local",
 	    events: {
 			  url: '/events',
 			  type: 'GET',

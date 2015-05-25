@@ -1,6 +1,5 @@
 class Rotation < ActiveRecord::Base
 
-  validates :rotation_date, presence: true
   validates :insurance_id,  presence: true
   validates :rotation_date,  presence: true
   validate :next_rotation_date, on: :create
@@ -12,9 +11,26 @@ class Rotation < ActiveRecord::Base
   scope :by_insurance, ->(current_insurance_id) { where(insurance_id: current_insurance_id) }
   scope :by_rotation_date, -> { order(:rotation_date) }
 
+
   before_destroy :rotation_is_locked, prepend: true
+  # KONIECZNIE zostaw w czasie ładowania
+  after_save :push_event
+  after_destroy :clean_event
 
+  def push_event
+    event = Event.find_or_create_by( url_action: "/insurances/#{self.insurance.id}/rotations/#{self.id}", user: self.insurance.user )
+    event.title = "#{self.insurance.company.short} \n #{self.insurance.number}"
+    event.allday = true
+    event.start_date = self.rotation_date + 10.hours   
+    event.end_date = self.rotation_date + 10.hours + 15.minutes
+    event.color = self.rotation_lock? ? '#5cb85c' : '#f0ad4e' #@brand-success : #@brand-warning
+    event.save
+  end
 
+  def clean_event
+    Event.delete_all(url_action: "/insurances/#{self.insurance.id}/rotations/#{self.id}")
+  end
+  
   def next_rotation_date
     if insurance.rotations.where("rotation_date > :this_date", this_date: rotation_date).any? 
       errors.add(:rotation_date, " - Już jest zarejstrowana Rotacja z datą późniejszą" )

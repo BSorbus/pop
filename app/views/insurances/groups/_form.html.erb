@@ -5,11 +5,6 @@
      # We default it to false 
   %>
 
-  <% duplicate_group ||= nil  
-     #if duplicate_group is not passed to the partial it doesn't crash. 
-     # We default it to false 
-  %>
-
   <% if @group.errors.any? %>
     <div id="error_explanation" class="panel panel-danger">
       <div class="panel-body">

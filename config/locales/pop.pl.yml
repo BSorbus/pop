@@ -33,6 +33,7 @@ pl:
       notice:
         group_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o zwyżkach/zniżkach.'
         rotation_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o osobach ubezpieczonych/płatnikach.'
+        insurance_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o ubezpieczonych, płatnikach, grupach, zniżkach i rotacjach'
         no_insured: 'Osoba nie jest ubezpieczona w żadnej polisie.'
     attributes:
       company:

@@ -185,7 +185,7 @@ class AddTriggers < ActiveRecord::Migration
 
   def self.down
     ###### companies ######
-  	execute("DROP TRIGGER IF EXISTS tr_company_save_his ON campanies;")
+  	execute("DROP TRIGGER IF EXISTS tr_company_save_his ON companies;")
   	execute("DROP FUNCTION IF EXISTS company_save_his() CASCADE;")
     ###### ./companies ######
 

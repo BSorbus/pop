@@ -63,7 +63,7 @@ class CompanyDatatable < AjaxDatatablesRails::Base
 
   def get_raw_records
     # insert query here
-    Company.by_user(options[:only_for_current_user_id])
+    Company.by_user(options[:only_for_current_user_id]).all
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

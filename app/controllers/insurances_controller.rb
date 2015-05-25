@@ -244,7 +244,7 @@ class InsurancesController < ApplicationController
     @insurance.company = @company
 
     respond_to do |format|
-      format.html
+      format.html { render :new, locals: { duplicate_insurance: nil} } 
     end
   end
 
@@ -257,6 +257,22 @@ class InsurancesController < ApplicationController
     end
   end
 
+  # GET /insurances/1/edit
+  def duplicate
+    @for_duplicate = load_insurance
+    @insurance = Insurance.new(@for_duplicate.attributes)
+    @insurance.number = nil
+    @insurance.concluded = Time.zone.today
+    @insurance.valid_from = Time.zone.today
+    @insurance.applies_to = Time.zone.today + 1.year
+    @insurance.discounts_lock = false
+
+    respond_to do |format|
+     flash.now[:notice] = t('activerecord.messages.notice.insurance_duplicate', data: @for_duplicate.fullname)
+     format.html { render :new, locals: { duplicate_insurance: @for_duplicate.id} }  
+    end
+  end
+
   # POST /insurances
   # POST /insurances.json
   def create
@@ -265,10 +281,12 @@ class InsurancesController < ApplicationController
 
     respond_to do |format|
       if @insurance.save
+        @insurance.duplicate_all_data_from_last_rotation(params[:duplicate_insurance]) if !(params[:duplicate_insurance]).nil? # dodaj ostatnią rotację jezeli wykonujesz duplikat
+
         format.html { redirect_to @insurance, success: t('activerecord.messages.successfull.created', data: @insurance.number) }
         format.json { render :show, status: :created, location: @insurance }
       else
-        format.html { render :new }
+        format.html { render :new, locals: { duplicate_insurance: params[:duplicate_insurance]} }
         format.json { render json: @insurance.errors, status: :unprocessable_entity }
       end
     end
