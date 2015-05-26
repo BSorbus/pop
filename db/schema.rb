@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20150521195849) do
     t.date     "valid_from"
     t.date     "applies_to"
     t.string   "pay"
-    t.boolean  "discounts_lock"
+    t.boolean  "insurance_lock"
     t.text     "note"
     t.integer  "company_id"
     t.integer  "user_id"
@@ -204,7 +204,7 @@ ActiveRecord::Schema.define(version: 20150521195849) do
     t.date     "valid_from",                     null: false
     t.date     "applies_to"
     t.string   "pay",            default: "R",   null: false
-    t.boolean  "discounts_lock", default: false, null: false
+    t.boolean  "insurance_lock", default: false, null: false
     t.text     "note"
     t.integer  "company_id"
     t.integer  "user_id"

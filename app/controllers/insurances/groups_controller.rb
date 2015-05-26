@@ -72,7 +72,7 @@ class Insurances::GroupsController < ApplicationController
     respond_to do |format|
       if @group.save
         @group.set_group_values if (@group.quotation != 'C') # Nie wyliczaj automatycznie składek dla kwotacji Niestandardowej
-        @group.duplicate_discounts(params[:duplicate_group]) if !(params[:duplicate_group]).nil? # dodaj znizki jezeli wykonujesz duplikat
+        @group.duplicate_discounts(params[:duplicate_group]) if (params[:duplicate_group]).present? # dodaj znizki jezeli wykonujesz duplikat
         
         format.html { redirect_to insurance_group_path(@insurance, @group), success: t('activerecord.messages.successfull.created', data: @group.fullname) }
         format.json { render :show, status: :created, location: @group }

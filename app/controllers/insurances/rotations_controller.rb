@@ -271,7 +271,7 @@ class Insurances::RotationsController < ApplicationController
     
     respond_to do |format|
       if @rotation.save
-        @rotation.duplicate_coverages(params[:duplicate_rotation]) if !(params[:duplicate_rotation]).blank? # dodaj osoby jezeli wykonujesz duplikat
+        @rotation.duplicate_coverages(params[:duplicate_rotation]) if (params[:duplicate_rotation]).present? # dodaj osoby jezeli wykonujesz duplikat
 
         format.html { redirect_to insurance_rotation_path(@insurance, @rotation), success: t('activerecord.messages.successfull.created', data: @rotation.fullname) }
         format.json { render :show, status: :created, location: @rotation }

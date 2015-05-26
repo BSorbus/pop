@@ -6,7 +6,7 @@ class CreateInsurances < ActiveRecord::Migration
       t.date :valid_from,                         null: false
       t.date :applies_to
       t.string :pay,                              null: false, default: "R"
-      t.boolean :discounts_lock,                  null: false, default: false
+      t.boolean :insurance_lock,                  null: false, default: false
       t.text :note
       t.references :company, index: true
       t.references :user, index: true

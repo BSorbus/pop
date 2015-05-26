@@ -10,10 +10,10 @@ class Discount < ActiveRecord::Base
   scope :by_plus_value, -> { where("discount_increase > 0") }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_destroy :discount_in_group_used_in_locked_rotation
-  #after_destroy :touch_parent_group_after_commit
-  #before_save :discount_in_group_used_in_locked_rotation
-  #after_save :touch_parent_group_after_commit
+  before_destroy :discount_in_group_used_in_locked_rotation
+  after_destroy :touch_parent_group_after_commit
+  before_save :discount_in_group_used_in_locked_rotation
+  after_save :touch_parent_group_after_commit
 
 
   def discount_in_group_used_in_locked_rotation
@@ -23,9 +23,9 @@ class Discount < ActiveRecord::Base
     end   
   end
 
-  def insurance_has_discounts_lock
-    if group.insurance.discounts_lock? 
-      errors[:base] << "Polisa ma zablokowane operacje dodawania/usuwania/modyfikowania Zniżek"
+  def insurance_has_insurance_lock
+    if group.insurance.insurance_lock? 
+      errors[:base] << "Polisa jest zablokowana!"
       false
     end   
   end

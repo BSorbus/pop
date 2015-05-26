@@ -36,7 +36,9 @@ pl:
       confirm_duplicate_insurance: 'Czy chcesz dodać duplikat Polisy: "%{data}"? Wszystkie Grupy i dane o Ubezpieczonych w ostatniej Rotacji zostaną skopiowane do nowej pozycji.'
       confirm_duplicate_rotation: 'Czy chcesz dodać kolejną rotację do polisy: "%{data}"? Poprzednia rotacja zostanie automatycznie zablokowana (jeżeli jeszcze nie jest).'
       confirm_locking_rotation: 'Na pewno chcesz zablokować rotację z dnia: "%{data}"?'
+      confirm_locking_insurance: 'Na pewno chcesz zablokować polisę: "%{data}"?'
       confirm_unlocking_rotation: 'Na pewno chcesz odblokować rotację z dnia: "%{data}"?'
+      confirm_unlocking_insurance: 'Na pewno chcesz odblokować polisę: "%{data}"?'
       confirm_duplicate_group: 'Czy chcesz dodać duplikat Grupy: "%{data}"? Parametry grupy zostaną skopiowane do nowej pozycji.'
       confirm_numbering_group: 'Na pewno chcesz wykonać numerowanie grup dla polisy: "%{data}"?'
       destroy: " Usuń"
@@ -46,6 +48,8 @@ pl:
       numbering_groups: " Numeruj grupy"
       locking_rotation: " Zablokuj rotację"
       unlocking_rotation: " Odblokuj rotację"
+      locking_insurance: " Zablokuj polisę"
+      unlocking_insurance: " Odblokuj polisę"
       duplicate: " Duplikat"
       duplicate_rotation: " Kolejna rotacja"
       duplicate_insurance: " Kontynuacja polisy"

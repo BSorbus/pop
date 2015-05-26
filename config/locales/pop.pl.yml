@@ -25,11 +25,15 @@ pl:
         numbering: 'Pomyślnie wykonano numerowanie grup dla polisy "%{data}".'
         locking_rotation: 'Pomyślnie zablokowano rotację z dnia "%{data}".'
         unlocking_rotation: 'Pomyślnie odblokowano rotację z dnia "%{data}".'
+        locking_insurance: 'Pomyślnie zablokowano polisę "%{data}".'
+        unlocking_insurance: 'Pomyślnie odblokowano polisę "%{data}".'
       error:
         destroyed: 'Wystąpił błąd w czasie usuwania wpisu "%{data}".'
         numbering: 'Wystąpił błąd w czasie numerowania grup dla polisy "%{data}".'
         locking_rotation: 'Wystąpił błąd w czasie blokowania rotacji z dnia "%{data}".'
         unlocking_rotation: 'Wystąpił błąd w czasie odblokowywania rotacji z dnia "%{data}".'
+        locking_insurance: 'Wystąpił błąd w czasie blokowania polisy "%{data}".'
+        unlocking_insurance: 'Wystąpił błąd w czasie odblokowywania polisy "%{data}".'
       notice:
         group_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o zwyżkach/zniżkach.'
         rotation_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o osobach ubezpieczonych/płatnikach.'
@@ -69,7 +73,7 @@ pl:
         valid_from: 'Obowiązuje od'
         applies_to: '...do'
         pay: 'Składka'
-        discounts_lock: 'Blokada zniżek/zwyżek'
+        insurance_lock: 'Blokada'
         note: 'Uwagi'
         company_id: 'Firma'
       group:

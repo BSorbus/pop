@@ -8,33 +8,3 @@ IndividualHistory all where user=DB18270_USER_ID: 9206
 IndividualHistory all: 9300
 IndividualHistory all where user=DB18270_USER_ID: 9206
 #####  END ...load from 03A_individuals_h_18270.rb  #####
-#####  03A_individuals_h_18270.rb  #####
-... load from db/seeds/osoba_h_18270.csv... start...
-IndividualHistory all: 9300
-IndividualHistory all where user=DB18270_USER_ID: 9206
-#####  END ...load from 03A_individuals_h_18270.rb  #####
-#####  03A_individuals_h_18270.rb  #####
-... load from db/seeds/osoba_h_18270.csv... start...
-IndividualHistory all: 9300
-IndividualHistory all where user=DB18270_USER_ID: 9206
-#####  END ...load from 03A_individuals_h_18270.rb  #####
-#####  03A_individuals_h_18270.rb  #####
-... load from db/seeds/osoba_h_18270.csv... start...
-IndividualHistory all: 9300
-IndividualHistory all where user=DB18270_USER_ID: 9206
-#####  END ...load from 03A_individuals_h_18270.rb  #####
-#####  03A_individuals_h_18270.rb  #####
-... load from db/seeds/osoba_h_18270.csv... start...
-IndividualHistory all: 9300
-IndividualHistory all where user=DB18270_USER_ID: 9206
-#####  END ...load from 03A_individuals_h_18270.rb  #####
-#####  03A_individuals_h_18270.rb  #####
-... load from db/seeds/osoba_h_18270.csv... start...
-IndividualHistory all: 9300
-IndividualHistory all where user=DB18270_USER_ID: 9206
-#####  END ...load from 03A_individuals_h_18270.rb  #####
-#####  03A_individuals_h_18270.rb  #####
-... load from db/seeds/osoba_h_18270.csv... start...
-IndividualHistory all: 9300
-IndividualHistory all where user=DB18270_USER_ID: 9206
-#####  END ...load from 03A_individuals_h_18270.rb  #####

@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     get 'export_coverages_add_remove', on: :member
     get 'duplicate', on: :member
     patch 'numbering_groups', on: :member
+    patch 'lock', on: :member
+    patch 'unlock', on: :member
     get 'pdf_list_benefits_nnw1', on: :member
     get 'pdf_list_insureds_nnw2', on: :member
     get 'pdf_groups_with_insureds_add', on: :member

@@ -80,11 +80,11 @@
         </div>
 
         <div class="form-group col-sm-4">
-          <br><%= f.label :discounts_lock, class: "control-label" %><br>
-          <%= f.radio_button(:discounts_lock, false, disabled: input_disabled) %>
-          <%= f.label(:discounts_lock_f, "Nie" ) %>
-          <%= f.radio_button(:discounts_lock, true, disabled: input_disabled) %>
-          <%= f.label(:discounts_lock_t, "Tak" ) %>
+          <br><%= f.label :insurance_lock, class: "control-label" %><br>
+          <%= f.radio_button(:insurance_lock, false, disabled: input_disabled) %>
+          <%= f.label(:insurance_lock_f, "Nie" ) %>
+          <%= f.radio_button(:insurance_lock, true, disabled: input_disabled) %>
+          <%= f.label(:insurance_lock_t, "Tak" ) %>
         </div>
 
       </div>
@@ -117,8 +117,19 @@
         <%= link_to t('Edit', default: t("helpers.links.edit")), edit_insurance_path(@insurance), 
                             :class => "btn btn-primary glyphicon glyphicon-edit" %>  
 
+        <% if @insurance.insurance_lock %>
+          <%= link_to t('Unlock insurance', default: t("helpers.links.unlocking_insurance")), unlock_insurance_path(@insurance),
+                              method: :patch,
+                              data: { confirm: t('helpers.links.confirm_unlocking_insurance', data: @insurance.number) }, 
+                              :class => "btn btn-default glyphicon glyphicon-unlock" %>
+        <% else %>
+          <%= link_to t('Lock insurance', default: t("helpers.links.locking_insurance")), lock_insurance_path(@insurance),
+                              method: :patch,
+                              data: { confirm: t('helpers.links.confirm_locking_insurance', data: @insurance.number) }, 
+                              :class => "btn btn-default glyphicon glyphicon-lock" %>
+        <% end %>
 
-         <%= link_to t('Duplicate', default: t("helpers.links.duplicate_insurance")), duplicate_insurance_path(@insurance), 
+        <%= link_to t('Duplicate', default: t("helpers.links.duplicate_insurance")), duplicate_insurance_path(@insurance), 
                         method: :get,
                         data: { confirm: t('helpers.links.confirm_duplicate_insurance', data: @insurance.number) }, 
                         :class => "btn btn-default glyphicon glyphicon-duplicate" %>

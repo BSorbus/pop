@@ -17,7 +17,7 @@ class InsuranceDatatable < AjaxDatatablesRails::Base
                               Insurance.valid_from 
                               Insurance.applies_to 
                               Insurance.pay 
-                              Insurance.discounts_lock 
+                              Insurance.insurance_lock 
                               Insurance.note
                             )
   end
@@ -32,7 +32,7 @@ class InsuranceDatatable < AjaxDatatablesRails::Base
                               Insurance.valid_from 
                               Insurance.applies_to 
                               Insurance.pay 
-                              Insurance.discounts_lock 
+                              Insurance.insurance_lock 
                               Insurance.note
                             )
   end
@@ -51,7 +51,8 @@ class InsuranceDatatable < AjaxDatatablesRails::Base
         record.valid_from,
         record.applies_to,
         record.pay,
-        record.discounts_lock? ? 'Tak' : 'Nie',
+        #record.insurance_lock? ? 'Tak' : 'Nie',
+        record.insurance_lock? ? '<div style="text-align: center"><div class="glyphicon glyphicon-lock"></div></div>' : ' ', 
         record.note
       ]
     end

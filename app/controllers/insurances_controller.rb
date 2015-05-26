@@ -265,7 +265,7 @@ class InsurancesController < ApplicationController
     @insurance.concluded = Time.zone.today
     @insurance.valid_from = Time.zone.today
     @insurance.applies_to = Time.zone.today + 1.year
-    @insurance.discounts_lock = false
+    @insurance.insurance_lock = false
 
     respond_to do |format|
      flash.now[:notice] = t('activerecord.messages.notice.insurance_duplicate', data: @for_duplicate.fullname)
@@ -281,7 +281,7 @@ class InsurancesController < ApplicationController
 
     respond_to do |format|
       if @insurance.save
-        @insurance.duplicate_all_data_from_last_rotation(params[:duplicate_insurance]) if !(params[:duplicate_insurance]).nil? # dodaj ostatnią rotację jezeli wykonujesz duplikat
+        @insurance.duplicate_all_data_from_last_rotation(params[:duplicate_insurance]) if (params[:duplicate_insurance]).present? # dodaj ostatnią rotację jezeli wykonujesz duplikat
 
         format.html { redirect_to @insurance, success: t('activerecord.messages.successfull.created', data: @insurance.number) }
         format.json { render :show, status: :created, location: @insurance }
@@ -377,6 +377,28 @@ class InsurancesController < ApplicationController
     #render :nothing => true and return
   end
 
+  def lock
+    @insurance = load_insurance
+
+    if @insurance.lock
+      redirect_to insurance_path(@insurance), success: t('activerecord.messages.successfull.locking_insurance', data: @insurance.number)
+    else 
+      flash.now[:error] = t('activerecord.messages.error.locking_insurance', data: @insurance.number)
+      render :show 
+    end         
+  end
+
+  def unlock
+    @insurance = load_insurance
+
+    if @insurance.unlock
+      redirect_to insurance_path(@insurance), success: t('activerecord.messages.successfull.unlocking_insurance', data: @insurance.number)
+    else 
+      flash.now[:error] = t('activerecord.messages.error.unlocking_insurance', data: @insurance.number)
+      render :show 
+    end         
+  end
+
   private
     def load_insurance
       Insurance.by_user(current_user.id).find(params[:id])
@@ -388,6 +410,6 @@ class InsurancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def insurance_params
-      params.require(:insurance).permit(:number, :concluded, :valid_from, :applies_to, :pay, :discounts_lock, :note, :company_id, :inputWalls)
+      params.require(:insurance).permit(:number, :concluded, :valid_from, :applies_to, :pay, :insurance_lock, :note, :company_id, :inputWalls)
     end
 end

@@ -8,28 +8,3 @@ InsuranceHistory all where user=DB00718_USER_ID: 26
 InsuranceHistory all: 26
 InsuranceHistory all where user=DB00718_USER_ID: 26
 #####  END ...load from 04A_insurances_h_00718.rb  #####
-#####  04A_insurances_h_00718.rb  #####
-... load from db/seeds/polisa_h_00718.csv... start...
-InsuranceHistory all: 26
-InsuranceHistory all where user=DB00718_USER_ID: 26
-#####  END ...load from 04A_insurances_h_00718.rb  #####
-#####  04A_insurances_h_00718.rb  #####
-... load from db/seeds/polisa_h_00718.csv... start...
-InsuranceHistory all: 26
-InsuranceHistory all where user=DB00718_USER_ID: 26
-#####  END ...load from 04A_insurances_h_00718.rb  #####
-#####  04A_insurances_h_00718.rb  #####
-... load from db/seeds/polisa_h_00718.csv... start...
-InsuranceHistory all: 26
-InsuranceHistory all where user=DB00718_USER_ID: 26
-#####  END ...load from 04A_insurances_h_00718.rb  #####
-#####  04A_insurances_h_00718.rb  #####
-... load from db/seeds/polisa_h_00718.csv... start...
-InsuranceHistory all: 26
-InsuranceHistory all where user=DB00718_USER_ID: 26
-#####  END ...load from 04A_insurances_h_00718.rb  #####
-#####  04A_insurances_h_00718.rb  #####
-... load from db/seeds/polisa_h_00718.csv... start...
-InsuranceHistory all: 26
-InsuranceHistory all where user=DB00718_USER_ID: 26
-#####  END ...load from 04A_insurances_h_00718.rb  #####

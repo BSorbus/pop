@@ -25,11 +25,16 @@
         </div>
         <div id="collapse_data" class="panel-collapse collapse in"> <!-- id="collapse_data" -->
           <div class="panel-body">
-            <div class="col-sm-11 col-sm-offset-1">
+            <div class="col-sm-1">
+              <% if @insurance.insurance_lock %>
+                <h1><span class="glyphicon glyphicon-lock"></span></h1>
+              <% end %>
+            </div>
+            <div class="col-sm-11">
 
               <%= render 'form_show', input_disabled: true %>
-
-            </div> <!--/col-sm-11 col-sm-offset-1-->    
+              
+            </div> <!--/col-sm-11-->
           </div>
         </div> <!-- /id="collapse_data" -->
       </div> <!-- /panel -->

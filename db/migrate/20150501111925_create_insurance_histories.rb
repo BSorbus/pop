@@ -7,7 +7,7 @@ class CreateInsuranceHistories < ActiveRecord::Migration
       t.date :valid_from
       t.date :applies_to
       t.string :pay
-      t.boolean :discounts_lock
+      t.boolean :insurance_lock
       t.text :note
       t.integer :company_id
       t.integer :user_id

@@ -7,7 +7,7 @@ FactoryGirl.define do
     valid_from "2014-11-15"
     applies_to "2014-11-15"
     pay "MyString"
-    discounts_lock false
+    insurance_lock false
     note "MyText"
     company nil
   end

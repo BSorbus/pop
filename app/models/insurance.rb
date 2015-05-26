@@ -26,7 +26,7 @@ class Insurance < ActiveRecord::Base
 
 
 #  def insurance_is_locked
-#    if discounts_lock? 
+#    if insurance_lock? 
 #      errors[:base] << "Polisa jest zablokowana!"
 #      false
 #    end
@@ -157,6 +157,20 @@ class Insurance < ActiveRecord::Base
     #self.reorganize_group_numbers ???
 
   end 
+
+
+  def lock
+    self.insurance_lock = true
+    self.save!
+    true
+  end
+
+  def unlock
+    self.insurance_lock = false
+    self.save!
+    true
+  end
+
 
 end
 
