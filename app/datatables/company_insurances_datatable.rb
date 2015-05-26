@@ -48,7 +48,8 @@ class CompanyInsurancesDatatable < AjaxDatatablesRails::Base
         record.valid_from,
         record.applies_to,
         record.pay,
-        record.insurance_lock? ? 'Tak' : 'Nie',
+        #record.insurance_lock? ? 'Tak' : 'Nie',
+        record.insurance_lock? ? '<div style="text-align: center"><div class="glyphicon glyphicon-lock"></div></div>' : ' ', 
         record.note
       ]
     end

@@ -1,6 +1,6 @@
 class InsurancesController < ApplicationController
   before_action :authenticate_user!
-
+  before_action :redirect_back_if_dont_can_change_insurance, only: [:edit, :update, :destroy]
 
   # GET /insurances
   # GET /insurances.json
@@ -250,7 +250,7 @@ class InsurancesController < ApplicationController
 
   # GET /insurances/1/edit
   def edit
-    @insurance = load_insurance
+    # @insurance = load_insurance
 
     respond_to do |format|
       format.html
@@ -295,7 +295,7 @@ class InsurancesController < ApplicationController
   # PATCH/PUT /insurances/1
   # PATCH/PUT /insurances/1.json
   def update
-    @insurance = load_insurance
+    # @insurance = load_insurance
 
     respond_to do |format|
       if @insurance.update(insurance_params)
@@ -311,7 +311,7 @@ class InsurancesController < ApplicationController
   # DELETE /insurances/1
   # DELETE /insurances/1.json
   def destroy
-    @insurance = load_insurance 
+    # @insurance = load_insurance 
 
     if @insurance.destroy
       redirect_to insurances_url, success: t('activerecord.messages.successfull.destroyed', data: @insurance.number)
@@ -406,6 +406,11 @@ class InsurancesController < ApplicationController
 
     def load_company
       Company.find(params[:company_id]) if !(params[:company_id]).nil?
+    end
+
+    def redirect_back_if_dont_can_change_insurance
+      @insurance ||= load_insurance
+      redirect_to insurance_path(@insurance), alert: "Polisa jest zablokowana!" if @insurance.insurance_lock?      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -9,9 +9,9 @@ class Insurance < ActiveRecord::Base
 
   belongs_to :company
   belongs_to :user
-  has_many :groups, dependent: :destroy
   has_many :rotations, dependent: :destroy
   has_many :discounts, through: :groups
+  has_many :groups, dependent: :destroy
   has_many :coverages, through: :groups
   has_many :coverages, through: :rotations
   has_many :insurance_histories
@@ -21,32 +21,22 @@ class Insurance < ActiveRecord::Base
   scope :by_user, ->(current_login_user_id) { where(user_id: current_login_user_id) }
   scope :by_company, ->(current_company_id) { where(company_id: current_company_id) }
 
-  before_destroy :insurance_has_rotations_or_groups, prepend: true
-  #####before_destroy :insurance_is_locked, prepend: true
+  before_destroy :insurance_is_locked_or_has_locked_rotation, prepend: true
 
 
-#  def insurance_is_locked
-#    if insurance_lock? 
-#      errors[:base] << "Polisa jest zablokowana!"
-#      false
-#    end
-#  end
-
-  def insurance_has_rotations_or_groups
+  def insurance_is_locked_or_has_locked_rotation
     analize_value = true
-    #if Rotation.where(insurance_id: id).any? 
-    if rotations.any? 
-      errors[:base] << "Nie można usunąć Polisy, która ma przypisane Rotacje"
+    if insurance_lock? 
+      errors[:base] << "Polisa jest zablokowana!"
       analize_value = false
     end
-    #if Group.where(insurance_id: id).any? 
-    if groups.any? 
-      errors[:base] << "Nie można usunąć Polisy, która ma przypisane Grupy"
+    #if Rotation.where(insurance_id: id).any? 
+    if rotations.where(rotation_lock: true).any? 
+      errors[:base] << "Nie można usunąć Polisy, która ma zablokowane Rotacje"
       analize_value = false
     end
     return analize_value
   end
-  
 
   def fullname
     "NNW #{number}, z #{concluded}"

@@ -17,14 +17,20 @@ class Coverage < ActiveRecord::Base
   scope :by_payer, ->(only_for_payer_id) { where(payer_id: only_for_payer_id) }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  before_save :coverage_in_locked_rotation
-  before_destroy :coverage_in_locked_rotation, prepend: true
+  before_save :insurance_or_rotation_is_locked
+  before_destroy :insurance_or_rotation_is_locked, prepend: true
 
-  def coverage_in_locked_rotation
-    if rotation.rotation_lock? 
-      errors[:base] << "Nie można usunąć Ochrony, która jest użyta w zablokowanej Rotacji"
-      false
+  def insurance_or_rotation_is_locked
+    analize_value = true
+    if rotation.insurance.insurance_lock? 
+      errors[:base] << "Polisa jest zablokowana!"
+      analize_value = false
     end
+    if rotation.rotation_lock? 
+      errors[:base] << "Rotacja jest zablokowana!"
+      analize_value = false
+    end
+    return analize_value
   end
 
   def fullname

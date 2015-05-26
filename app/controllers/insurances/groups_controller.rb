@@ -1,6 +1,8 @@
 class Insurances::GroupsController < ApplicationController
   before_action :authenticate_user!
   before_action :redirect_back_if_dont_can_edit_group, only: [:edit, :destroy]
+  #before_action :redirect_back_if_dont_can_change_rotation, only: [:edit, :update, :destroy]
+  before_action :redirect_back_if_dont_can_add_group, only: [:new, :create, :duplicate]
 
   # POST
   def datatables_index
@@ -12,7 +14,7 @@ class Insurances::GroupsController < ApplicationController
   # GET /insurances/:insurance_id/groups/1
   # GET /insurances/:insurance_id/groups/1.json
   def show
-    @insurance = load_insurance
+    @insurance ||= load_insurance
     @group = load_group
 
     respond_to do |format|
@@ -31,7 +33,7 @@ class Insurances::GroupsController < ApplicationController
   # GET /insurances/:insurance_id/groups/new
   def new
     @group = Group.new
-    @insurance = load_insurance
+    @insurance ||= load_insurance
     @group.insurance = @insurance
 
     respond_to do |format|
@@ -41,7 +43,7 @@ class Insurances::GroupsController < ApplicationController
 
   # GET /insurances/:insurance_id/groups/1/edit
   def edit
-    @insurance = load_insurance
+    @insurance ||= load_insurance
     @group ||= load_group # "||=" a nie "=" ponieważ ładuję w czasie "redirect_back_if_dont_can_edit"
 
     respond_to do |format|
@@ -51,9 +53,9 @@ class Insurances::GroupsController < ApplicationController
 
   # GET /insurances/:insurance_id/groups/1/edit
   def duplicate
-    @for_duplicate = load_group
+    @for_duplicate ||= load_group
     @group = Group.new(@for_duplicate.attributes)
-    @insurance = load_insurance
+    @insurance ||= load_insurance
     @group.insurance = @insurance
 
     respond_to do |format|
@@ -65,7 +67,7 @@ class Insurances::GroupsController < ApplicationController
   # POST /insurances/:insurance_id/groups
   # POST /insurances/:insurance_id/groups.json
   def create
-    @insurance = load_insurance
+    #@insurance = load_insurance
     @group = Group.new(group_params)
     @group.insurance = @insurance
 
@@ -86,7 +88,7 @@ class Insurances::GroupsController < ApplicationController
   # PATCH/PUT /insurances/:insurance_id/groups/1
   # PATCH/PUT /insurances/:insurance_id/groups/1.json
   def update
-    @insurance = load_insurance
+    @insurance ||= load_insurance
     @group = load_group
 
     respond_to do |format|
@@ -107,7 +109,7 @@ class Insurances::GroupsController < ApplicationController
   # DELETE /insurances/:insurance_id/groups/1
   # DELETE /insurances/:insurance_id/groups/1.json
   def destroy
-    @insurance = load_insurance
+    @insurance ||= load_insurance
     @group ||= load_group # "||=" a nie "=" ponieważ ładuję w czasie "redirect_back_if_dont_can_edit"
 
     if @group.destroy
@@ -131,6 +133,18 @@ class Insurances::GroupsController < ApplicationController
     def redirect_back_if_dont_can_edit_group
       @group ||= load_group
       redirect_to :back, alert: "Grupa użyta w zablokowanej Rotacji!" if @group.group_used_in_locked_rotation 
+    end
+
+#    def redirect_back_if_dont_can_change_rotation
+#      @insurance ||= load_insurance
+#      @rotation ||= load_rotation
+#      redirect_to insurance_rotation_path(@insurance, @rotation), alert: "Polisa lub Rotacja jest zablokowana!" if (@rotation.rotation_lock? or @rotation.insurance.insurance_lock?)      
+#    end
+
+
+    def redirect_back_if_dont_can_add_group
+      @insurance ||= load_insurance
+      redirect_to insurance_path(@insurance), alert: "Polisa jest zablokowana!" if @insurance.insurance_lock?      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

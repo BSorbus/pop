@@ -1,6 +1,7 @@
 class Insurances::RotationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :redirect_back_if_dont_can_edit_rotation, only: [:edit, :destroy]
+  before_action :redirect_back_if_dont_can_change_rotation, only: [:edit, :update, :destroy]
+  before_action :redirect_back_if_dont_can_add_rotation, only: [:new, :create, :duplicate]
 
   # POST
   def datatables_index
@@ -226,7 +227,7 @@ class Insurances::RotationsController < ApplicationController
   # GET /rotations/new
   def new
     @rotation = Rotation.new
-    @insurance = load_insurance
+    @insurance ||= load_insurance
     @rotation.insurance = @insurance
 
     respond_to do |format|
@@ -236,11 +237,8 @@ class Insurances::RotationsController < ApplicationController
 
   # GET /insurances/:insurance_id/rotations/1/edit
   def edit
-    @insurance = load_insurance
-    @rotation ||= load_rotation # "||=" a nie "=" ponieważ ładuję w czasie "redirect_back_if_dont_can_edit"
-
-    # wariant II bez użycia before_action
-    #redirect_back_if_dont_can_edit_rotation and return
+    #@insurance ||= load_insurance
+    #@rotation ||= load_rotation # "||=" a nie "=" ponieważ ładuję w czasie "redirect_back_if_dont_can_edit"
 
     respond_to do |format|
       format.html 
@@ -249,11 +247,11 @@ class Insurances::RotationsController < ApplicationController
 
   # GET /insurances/:insurance_id/rotations/1/edit
   def duplicate
-    @for_duplicate = load_rotation
+    @for_duplicate ||= load_rotation
     @rotation = Rotation.new(@for_duplicate.attributes)
     @rotation.rotation_lock = false
     @rotation.rotation_date = Time.zone.today
-    @insurance = load_insurance
+    @insurance ||= load_insurance
     @rotation.insurance = @insurance
 
     respond_to do |format|
@@ -265,7 +263,7 @@ class Insurances::RotationsController < ApplicationController
   # POST /insurances/:insurance_id/rotations
   # POST /insurances/:insurance_id/rotations.json
   def create
-    @insurance = load_insurance
+    #@insurance ||= load_insurance
     @rotation = Rotation.new(rotation_params)
     @rotation.insurance = @insurance
     
@@ -285,8 +283,8 @@ class Insurances::RotationsController < ApplicationController
   # PATCH/PUT /insurances/:insurance_id/rotations/1
   # PATCH/PUT /insurances/:insurance_id/rotations/1.json
   def update
-    @insurance = load_insurance
-    @rotation = load_rotation
+    #@insurance = load_insurance
+    #@rotation = load_rotation
 
     respond_to do |format|
       if @rotation.update(rotation_params)
@@ -302,11 +300,8 @@ class Insurances::RotationsController < ApplicationController
   # DELETE /insurances/:insurance_id/rotations/1
   # DELETE /insurances/:insurance_id/rotations/1.json
   def destroy
-    @insurance = load_insurance
-    @rotation ||= load_rotation # "||=" a nie "=" ponieważ ładuję w czasie "redirect_back_if_dont_can_edit"
-
-    # wariant II bez użycia before_action
-    #redirect_back_if_dont_can_edit_rotation and return
+    #@insurance = load_insurance
+    #@rotation ||= load_rotation # "||=" a nie "=" ponieważ ładuję w czasie "redirect_back_if_dont_can_edit"
 
     if @rotation.destroy
       redirect_to insurance_path(@insurance), success: t('activerecord.messages.successfull.destroyed', data: @rotation.fullname)
@@ -388,12 +383,15 @@ class Insurances::RotationsController < ApplicationController
       Insurance.find(params[:insurance_id])
     end
 
-    def redirect_back_if_dont_can_edit_rotation
-      @rotation = load_rotation
-      redirect_to :back, alert: "Rotacja jest zablokowana!" if @rotation.rotation_lock?      
-      # wariant II 
-      # wyłącz filtr before_action i odkomentuj redirect_back.... w akcji :edit
-      #redirect_to :back, alert: "Akcja zabroniona - Rotacja jest zablokowana!" and return true if @rotation.rotation_lock?      
+    def redirect_back_if_dont_can_change_rotation
+      @insurance ||= load_insurance
+      @rotation ||= load_rotation
+      redirect_to insurance_rotation_path(@insurance, @rotation), alert: "Polisa lub Rotacja jest zablokowana!" if (@rotation.rotation_lock? or @rotation.insurance.insurance_lock?)      
+    end
+
+    def redirect_back_if_dont_can_add_rotation
+      @insurance ||= load_insurance
+      redirect_to insurance_path(@insurance), alert: "Polisa jest zablokowana!" if @insurance.insurance_lock?      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

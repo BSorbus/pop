@@ -12,7 +12,7 @@ class Rotation < ActiveRecord::Base
   scope :by_rotation_date, -> { order(:rotation_date) }
 
 
-  before_destroy :rotation_is_locked, prepend: true
+  before_destroy :insurance_or_rotation_is_locked, prepend: true
   # KONIECZNIE zostaw w czasie ładowania
   after_save :push_event
   after_destroy :clean_event
@@ -38,12 +38,19 @@ class Rotation < ActiveRecord::Base
     end
   end
 
-  def rotation_is_locked
+  def insurance_or_rotation_is_locked
+    analize_value = true
+    if insurance.insurance_lock? 
+      errors[:base] << "Polisa jest zablokowana!"
+      analize_value = false
+    end
     if rotation_lock? 
       errors[:base] << "Rotacja jest zablokowana!"
-      false
+      analize_value = false
     end
+    return analize_value
   end
+
 
   def coverages_add
     current_insurance_id = insurance.id
@@ -99,28 +106,39 @@ class Rotation < ActiveRecord::Base
 
 
   def lock
-    if Rotation.where(insurance: insurance, rotation_lock: false).where("rotation_date < :this_rotation", this_rotation: rotation_date).any?
-      errors[:base] << "Nie można zablokować Rotacji jeżeli występuje wcześniejsza Rotacja bez blokady"
-      false
-    else
-      self.rotation_lock = true
-      self.save
-      true
-    end
+# Pozwól jednak zblokować rotację    
+#    if self.insurance.insurance_lock?
+#      errors[:base] << "Polisa jest zablokowana!"
+#      false      
+#    else
+      if Rotation.where(insurance: insurance, rotation_lock: false).where("rotation_date < :this_rotation", this_rotation: rotation_date).any?
+        errors[:base] << "Nie można zablokować Rotacji jeżeli występuje wcześniejsza Rotacja bez blokady"
+        false
+      else
+        self.rotation_lock = true
+        self.save
+        true
+      end      
+#    end
   end
 
   def unlock
-    if Rotation.where(insurance: insurance, rotation_lock: false).where("id <> :this_rotation", this_rotation: id).any?
-      errors[:base] << "Nie można odblokowywać wielu Rotacji"
-      false
+    if self.insurance.insurance_lock?
+      errors[:base] << "Polisa jest zablokowana!"
+      false      
     else
-      if Rotation.where(insurance: insurance, rotation_lock: true).where("rotation_date > :this_rotation", this_rotation: rotation_date).any?
-        errors[:base] << "Nie można odblokować Rotacji jeżeli występuje późniejsza Rotacja z nałożoną blokadą"
+      if Rotation.where(insurance: insurance, rotation_lock: false).where("id <> :this_rotation", this_rotation: id).any?
+        errors[:base] << "Nie można odblokowywać wielu Rotacji"
         false
       else
-        self.rotation_lock = false
-        self.save
-        true
+        if Rotation.where(insurance: insurance, rotation_lock: true).where("rotation_date > :this_rotation", this_rotation: rotation_date).any?
+          errors[:base] << "Nie można odblokować Rotacji jeżeli występuje późniejsza Rotacja z nałożoną blokadą"
+          false
+        else
+          self.rotation_lock = false
+          self.save
+          true
+        end
       end
     end
   end
