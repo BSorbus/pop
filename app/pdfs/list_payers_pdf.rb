@@ -12,7 +12,6 @@ class ListPayersPdf < Prawn::Document
     @insurance_pay = @rotation.insurance.pay
     @company = rotation.insurance.company
 
-
     font_families.update("DejaVu Sans" => {
       :normal => "#{Rails.root}/app/assets/fonts/DejaVuSans.ttf", 
       :bold  => "#{Rails.root}/app/assets/fonts/DejaVuSans-Bold.ttf",

@@ -10,6 +10,7 @@ class ListInsuredsPdf < Prawn::Document
     @rotation = rotation
     @view = view
     @insurance_pay = @rotation.insurance.pay
+    @company = rotation.insurance.company
 
     font_families.update("DejaVu Sans" => {
       :normal => "#{Rails.root}/app/assets/fonts/DejaVuSans.ttf", 
@@ -60,7 +61,7 @@ class ListInsuredsPdf < Prawn::Document
       else
         table( table_data,
               :header => true,
-              :column_widths => [23, 127, 127, 60, 87, 36, 138, 45, 127],
+              :column_widths => [23, 127, 127, 60, 87, 36, 138, 60, 112],
               #:row_colors => ["ffffff", "c2ced7"],
               :cell_style => { size: 7, :border_width => 0.5 }
             ) do
@@ -84,7 +85,7 @@ class ListInsuredsPdf < Prawn::Document
                      "Charakter wykonywanej pracy",
                      "Grupa ryzyka",
                      "Zakres ubezp. (według bieżącej polisy)",
-                     "Skł. msc za osobę",
+                     "Składka #{@rotation.insurance.pay_name}",
                      "Nowy zakres",]] + 
                      @coverages.map { |p| [ next_lp, 
                                             p.insured.last_first_name,
@@ -93,7 +94,8 @@ class ListInsuredsPdf < Prawn::Document
                                             p.insured.profession, 
                                             p.group.risk_group,
                                             p.group.fullinfo_for_pdf,
-                                            with_delimiter_and_separator(p.group.sum_after_monthly),
+#                                            with_delimiter_and_separator(p.group.sum_after_monthly),
+                                            with_delimiter_and_separator(contribution_for_pay(p.group)),
                                             ""] }
   end
 
@@ -102,6 +104,21 @@ class ListInsuredsPdf < Prawn::Document
     return @lp 
   end
 
+
+  def contribution_for_pay(current_group)
+    case @insurance_pay
+    when 'K'
+      current_group.sum_after_monthly*3
+    when 'M'
+      current_group.sum_after_monthly
+    when 'P'
+      current_group.sum_after_monthly*6
+    when 'R'
+      current_group.sum_after_monthly*12
+    else
+      'insurance.pay - Error !'
+    end
+  end
 
   def footer
     draw_text "Opis skrótów: KL-koszty leczenia, ZA-zasiłek Ambulatoryjny, ZSZ-zasiłek szpitalny, ZS/UM-zawał serdca/udar muzgu, TNP-trwała niezdolność do pracy", :at => [0, 14], size: 8
