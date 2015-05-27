@@ -1,6 +1,6 @@
 class Insurances::Groups::DiscountsController < ApplicationController
   before_action :authenticate_user!
-  before_action :redirect_back_if_dont_can_edit_discount, only: [:new, :edit, :destroy]
+  before_action :redirect_back_if_dont_can_change_or_add_discount
 
 
   # GET /insurances/:insurance_id/groups/:group_i/discounts/new
@@ -30,7 +30,7 @@ class Insurances::Groups::DiscountsController < ApplicationController
   # POST /insurances/:insurance_id/groups/:group_i/discounts.json
   def create
     @insurance = load_insurance
-    @group = load_group
+    @group ||= load_group
     @discount = Discount.new(discount_params)
     @discount.group = @group
 
@@ -49,7 +49,7 @@ class Insurances::Groups::DiscountsController < ApplicationController
   # PATCH/PUT /insurances/:insurance_id/groups/:group_i/discounts/1.json
   def update
     @insurance = load_insurance
-    @group = load_group
+    @group ||= load_group
     @discount = load_discount
 
    respond_to do |format|
@@ -91,9 +91,9 @@ class Insurances::Groups::DiscountsController < ApplicationController
     end
 
 
-    def redirect_back_if_dont_can_edit_discount
+    def redirect_back_if_dont_can_change_or_add_discount
       @group ||= load_group
-      redirect_to :back, alert: "Grupa użyta w zablokowanej Rotacji!" if @group.group_used_in_locked_rotation
+      redirect_to :back, alert: "Polisa zablokowana lub Grupa użyta w zablokowanej Rotacji!" if (@group.group_used_in_locked_rotation || @group.insurance.insurance_lock)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -35,7 +35,7 @@ class Insurance < ActiveRecord::Base
       errors[:base] << "Nie można usunąć Polisy, która ma zablokowane Rotacje"
       analize_value = false
     end
-    return analize_value
+    analize_value
   end
 
   def fullname
@@ -47,9 +47,9 @@ class Insurance < ActiveRecord::Base
       "brak polisy"
     else
       if rotations.empty?
-        "NU_#{self.number.last(12)}_brak_rotacji.txt"
+        "NU_#{number.last(12)}_brak_rotacji.txt"
       else
-        "NU_#{self.number.last(12)}_#{self.rotations.last.rotation_date.strftime("%Y%m%d").last(6)}.txt"
+        "NU_#{number.last(12)}_#{rotations.last.rotation_date.strftime("%Y%m%d").last(6)}.txt"
       end
     end
   end
@@ -59,9 +59,9 @@ class Insurance < ActiveRecord::Base
       "brak polisy"
     else
       if rotations.empty?
-        "N_#{self.number.last(12)}_brak_rotacji.txt"
+        "N_#{number.last(12)}_brak_rotacji.txt"
       else
-        "N_#{self.number.last(12)}_#{self.rotations.last.rotation_date.strftime("%Y%m%d").last(6)}.txt"
+        "N_#{number.last(12)}_#{rotations.last.rotation_date.strftime("%Y%m%d").last(6)}.txt"
       end
     end
   end
@@ -85,7 +85,8 @@ class Insurance < ActiveRecord::Base
     "z dnia: #{concluded} <br />
     ważna: #{valid_from} <br />
      ... do: #{applies_to} <br />
-    składka: #{pay_name}"
+    składka: #{pay_name} <br />
+    blokada: #{insurance_lock? ? '<div class="glyphicon glyphicon-lock"></div>' : ' '}"
   end
 
   def reorganize_group_numbers

@@ -46,7 +46,7 @@ class Group < ActiveRecord::Base
   scope :by_number, -> { order(:number) }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  before_save {self.number = insurance.groups.size + 1 if (self.number.nil? or self.number == 0) } 
+  before_save {self.number = insurance.groups.size + 1 if (self.number.nil? || self.number == 0) } 
   before_save :used_in_locked_rotation 
   before_destroy :group_has_coverages, prepend: true
 
@@ -91,7 +91,7 @@ class Group < ActiveRecord::Base
     info_result += "ZSZ:#{without_separator_and_zero(hospital)} "   if hospital > 0.00
     info_result += "ZS/UM:#{without_separator_and_zero(infarct)} "  if infarct > 0.00
     info_result += "TNP:#{without_separator_and_zero(inability)}"   if inability > 0.00
-    return info_result
+    info_result
   end
 
   def additional_for_pdf_in_new_line
@@ -101,7 +101,7 @@ class Group < ActiveRecord::Base
     info_result += "ZSZ:#{without_separator_and_zero(hospital)} "  if hospital > 0.00
     info_result += "ZS/UM:#{without_separator_and_zero(infarct)} " if infarct > 0.00
     info_result += "TNP:#{without_separator_and_zero(inability)}"  if inability > 0.00
-    return info_result
+    info_result
   end
 
   def quotation_name

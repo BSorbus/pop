@@ -2,7 +2,7 @@ class CoveragesController < ApplicationController
   before_action :authenticate_user!
   before_action :redirect_back_if_dont_can_edit_coverage, only: [:new, :edit, :destroy]
   #before_action :redirect_back_if_dont_can_change_coverage, only: [:edit, :update, :destroy]
-  #before_action :redirect_back_if_dont_can_add_coverage, only: [:new, :create, :duplicate]
+  #before_action :redirect_back_if_dont_can_add_coverage, only: [:new, :create]
 
   respond_to :html
 
@@ -153,7 +153,7 @@ class CoveragesController < ApplicationController
         @rotation = @coverage.rotation
       end
 
-      redirect_to :back, alert: "Polisa lub Rotacja jest zablokowana!" if (@rotation.rotation_lock? or @rotation.insurance.insurance_lock?)
+      redirect_to :back, alert: "Polisa lub Rotacja jest zablokowana!" if (@rotation.rotation_lock? || @rotation.insurance.insurance_lock?) #   || == 'OR'
     end
 
     def coverage_params

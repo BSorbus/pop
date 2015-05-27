@@ -121,12 +121,12 @@
           <%= link_to t('Unlock insurance', default: t("helpers.links.unlocking_insurance")), unlock_insurance_path(@insurance),
                               method: :patch,
                               data: { confirm: t('helpers.links.confirm_unlocking_insurance', data: @insurance.number) }, 
-                              :class => "btn btn-default glyphicon glyphicon-unlock" %>
+                              :class => "btn btn-warning glyphicon glyphicon-unlock" %>
         <% else %>
           <%= link_to t('Lock insurance', default: t("helpers.links.locking_insurance")), lock_insurance_path(@insurance),
                               method: :patch,
                               data: { confirm: t('helpers.links.confirm_locking_insurance', data: @insurance.number) }, 
-                              :class => "btn btn-default glyphicon glyphicon-lock" %>
+                              :class => "btn btn-success glyphicon glyphicon-lock" %>
         <% end %>
 
         <%= link_to t('Duplicate', default: t("helpers.links.duplicate_insurance")), duplicate_insurance_path(@insurance), 

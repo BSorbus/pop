@@ -53,7 +53,7 @@ class Individual < ActiveRecord::Base
       errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Płatnik"
       analize_value = false
     end
-    return analize_value
+    analize_value
   end
 
 

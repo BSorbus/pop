@@ -386,7 +386,7 @@ class Insurances::RotationsController < ApplicationController
     def redirect_back_if_dont_can_change_rotation
       @insurance ||= load_insurance
       @rotation ||= load_rotation
-      redirect_to insurance_rotation_path(@insurance, @rotation), alert: "Polisa lub Rotacja jest zablokowana!" if (@rotation.rotation_lock? or @rotation.insurance.insurance_lock?)      
+      redirect_to insurance_rotation_path(@insurance, @rotation), alert: "Polisa lub Rotacja jest zablokowana!" if (@rotation.rotation_lock? || @rotation.insurance.insurance_lock?)      
     end
 
     def redirect_back_if_dont_can_add_rotation

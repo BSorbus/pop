@@ -18,8 +18,8 @@ class Rotation < ActiveRecord::Base
   after_destroy :clean_event
 
   def push_event
-    event = Event.find_or_create_by( url_action: "/insurances/#{self.insurance.id}/rotations/#{self.id}", user: self.insurance.user )
-    event.title = "#{self.insurance.company.short} \n #{self.insurance.number}"
+    event = Event.find_or_create_by( url_action: "/insurances/#{insurance.id}/rotations/#{id}", user: self.insurance.user )
+    event.title = "#{insurance.company.short} \n #{insurance.number}"
     event.allday = true
     event.start_date = self.rotation_date + 10.hours   
     event.end_date = self.rotation_date + 10.hours + 15.minutes
@@ -28,7 +28,7 @@ class Rotation < ActiveRecord::Base
   end
 
   def clean_event
-    Event.delete_all(url_action: "/insurances/#{self.insurance.id}/rotations/#{self.id}")
+    Event.delete_all(url_action: "/insurances/#{insurance.id}/rotations/#{id}")
   end
   
   def next_rotation_date
@@ -107,7 +107,7 @@ class Rotation < ActiveRecord::Base
 
   def lock
 # Pozwól jednak zblokować rotację    
-#    if self.insurance.insurance_lock?
+#    if insurance.insurance_lock?
 #      errors[:base] << "Polisa jest zablokowana!"
 #      false      
 #    else
@@ -123,7 +123,7 @@ class Rotation < ActiveRecord::Base
   end
 
   def unlock
-    if self.insurance.insurance_lock?
+    if insurance.insurance_lock?
       errors[:base] << "Polisa jest zablokowana!"
       false      
     else

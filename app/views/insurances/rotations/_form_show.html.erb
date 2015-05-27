@@ -80,12 +80,12 @@
       <%= link_to t('Unlock rotation', default: t("helpers.links.unlocking_rotation")), unlock_insurance_rotation_path(@rotation.insurance_id, @rotation),
                           method: :patch,
                           data: { confirm: t('helpers.links.confirm_unlocking_rotation', data: @rotation.rotation_date) }, 
-                          :class => "btn btn-default glyphicon glyphicon-unlock" %>
+                          :class => "btn btn-warning glyphicon glyphicon-unlock" %>
     <% else %>
       <%= link_to t('Lock rotation', default: t("helpers.links.locking_rotation")), lock_insurance_rotation_path(@rotation.insurance_id, @rotation),
                           method: :patch,
                           data: { confirm: t('helpers.links.confirm_locking_rotation', data: @rotation.rotation_date) }, 
-                          :class => "btn btn-default glyphicon glyphicon-lock" %>
+                          :class => "btn btn-success glyphicon glyphicon-lock" %>
     <% end %>
   <% else %>
     <!-- form "New"/"Edit" -->

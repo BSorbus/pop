@@ -30,7 +30,7 @@ class Coverage < ActiveRecord::Base
       errors[:base] << "Rotacja jest zablokowana!"
       analize_value = false
     end
-    return analize_value
+    analize_value
   end
 
   def fullname
