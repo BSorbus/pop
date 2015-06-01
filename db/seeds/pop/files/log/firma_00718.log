@@ -1,0 +1,5 @@
+#####  02B_companies_00718.rb  #####
+... load from db/seeds/pop/files/firma_00718.csv... start...
+Companies all: 10
+Companies all where user=DB00718_USER_ID: 10
+#####  END ...load from 02B_companies_00718.rb  #####

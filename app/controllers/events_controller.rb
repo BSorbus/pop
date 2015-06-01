@@ -99,6 +99,21 @@ class EventsController < ApplicationController
     end      
   end
 
+  # GET /events/1/pdf_invoice
+  def pdf_invoice
+    @event ||= load_event    
+
+    respond_to do |format|
+      format.pdf do
+        pdf = InvoicePdf.new(@event, view_context)
+        send_data pdf.render,
+        filename: "invoice_#{@event.start_date.strftime("%Y-%m-%d")}.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def load_event
@@ -109,10 +124,10 @@ class EventsController < ApplicationController
       if user_signed_in?
         @event ||= load_event
         if current_user.id != 1 && @event.user != current_user
-          redirect_to @event, alert: "Brak uprawnień!"
+          redirect_to events_url, alert: "Brak uprawnień!"
         end
       else
-        redirect_to root_url, alert: "Musisz się zalogować!"
+        redirect_to events_url, alert: "Musisz się zalogować!"
       end 
     end
 

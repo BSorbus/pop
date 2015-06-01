@@ -1,0 +1,5 @@
+#####  02A_companies_h_00718.rb  #####
+... load from db/seeds/pop/files/firma_h_00718.csv... start...
+CompanyHistory all: 14
+CompanyHistory all where user=DB00718_USER_ID: 14
+#####  END ...load from 02A_companies_00718.rb  #####

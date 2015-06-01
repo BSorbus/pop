@@ -1,0 +1,5 @@
+#####  03A_individuals_h_18270.rb  #####
+... load from db/seeds/pop/files/osoba_h_18270.csv... start...
+IndividualHistory all: 9320
+IndividualHistory all where user=DB18270_USER_ID: 9226
+#####  END ...load from 03A_individuals_h_18270.rb  #####

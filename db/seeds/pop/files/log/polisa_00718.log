@@ -1,0 +1,5 @@
+#####  04B_insurances_00718.rb  #####
+... load from db/seeds/pop/files/polisa_00718.csv... start...
+Insurances all: 11
+Insurances all where user=DB00718_USER_ID: 11
+#####  END ...load from 04B_insurances_00718.rb  #####

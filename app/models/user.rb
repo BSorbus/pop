@@ -10,6 +10,18 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
 
+
+
+
+  after_commit :load_example_data, on: :create, if: "id > 4"
+
+  def load_example_data
+    Rails.application.load_seed
+  end
+
+
+
+
   #def login=(login)
   #  @login = login
   #end

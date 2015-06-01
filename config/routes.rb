@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  resources :users
+  #resources :users
+  resources :users, except: [:show, :index]
 
   resources :insurances do
     resources :rotations, except: [:index], controller: 'insurances/rotations' do
@@ -68,8 +69,10 @@ Rails.application.routes.draw do
     post 'datatables_index_payer', on: :collection
   end
 
+  resources :events do
+    get 'pdf_invoice', on: :member
+  end
 
-  resources :events
   root to: 'events#index'
 
 end
