@@ -48,6 +48,12 @@ $(document).ready(function() {
         "searchable": false,
         "sortable": false } 
     ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_rotation_coverages" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
     order: [[ 1, "asc" ]],
     language: {
       decimal:        ",",
@@ -76,7 +82,15 @@ $(document).ready(function() {
     }
   });
  
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_rotation_coverages').on('shown.bs.collapse', function (){
+    oRotationCoveragesTable.ajax.reload();
+    oRotationCoveragesTable.draw();
+  });
   
+
+
+
 
   var oGroupCoveragesTable = $('#group-coverages').DataTable({
     responsive: true,
@@ -127,6 +141,12 @@ $(document).ready(function() {
         "searchable": false,
         "sortable": false } 
     ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_group_coverages" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
     order: [[ 1, "desc" ]],
     language: {
       decimal:        ",",
@@ -154,6 +174,13 @@ $(document).ready(function() {
       }
     }
   });
+
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_group_coverages').on('shown.bs.collapse', function (){
+    oGroupCoveragesTable.ajax.reload();
+    oGroupCoveragesTable.draw();
+  });
+
 
 
 
@@ -210,6 +237,12 @@ $(document).ready(function() {
         "searchable": false,
         "sortable": false } 
     ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_insurances" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
     order: [[ 2, "desc" ]],
     language: {
       decimal:        ",",
@@ -237,6 +270,13 @@ $(document).ready(function() {
       }
     }
   });
+
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_insurances').on('shown.bs.collapse', function (){
+    oInsuredCoveragesTable.ajax.reload();
+    oInsuredCoveragesTable.draw();
+  });
+
 
 
 
@@ -293,6 +333,12 @@ $(document).ready(function() {
         "searchable": false,
         "sortable": false } 
     ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_insurances" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
     order: [[ 2, "desc" ]],
     language: {
       decimal:        ",",
@@ -321,6 +367,13 @@ $(document).ready(function() {
     }
   });
  
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_insurances').on('shown.bs.collapse', function (){
+    oPayerCoveragesTable.ajax.reload();
+    oPayerCoveragesTable.draw();
+  });
+
+
  
  
 

@@ -110,6 +110,12 @@ $(document).ready(function() {
       { "targets": [7],
         "title": "Uwagi" }
     ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_insurances" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
     order: [[ 4, "desc" ]],
     fnRowCallback: function( nRow, aData ) {
       var applies_date = new Date(aData[4]);
@@ -150,7 +156,15 @@ $(document).ready(function() {
       }
     }
   });
- 
+
+
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_insurances').on('shown.bs.collapse', function (){
+    oCompanyInsurancestable.ajax.reload();
+    oCompanyInsurancestable.draw();
+  });
+
+   
   $('#company-insurances tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
     var rowData = oCompanyInsurancestable.row( this ).data()[0];

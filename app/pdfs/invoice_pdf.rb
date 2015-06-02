@@ -56,7 +56,7 @@ class InvoicePdf < Prawn::Document
     draw_text "Nabywca:", :at => [0, 630], size: 12, :style => :bold
     text_box "#{@invoice_customer_address_with_nip}", size: 12, 
       :at => [0, 615], 
-      :width => 170, 
+      :width => 265, 
       :height => 100
   end
 
@@ -76,7 +76,7 @@ class InvoicePdf < Prawn::Document
 
     #move_down 80
 
-    current_row = 545
+    current_row = 525
     stroke_line [0, current_row], [525,current_row], self.line_width = 0.5
 
     draw_text "Lp.",                      :at => [  4, current_row-10], size: 9
@@ -122,7 +122,7 @@ class InvoicePdf < Prawn::Document
 
     stroke_line [0, current_row-95], [525,current_row-95], self.line_width = 0.5
 
-    current_row = 400
+    current_row = current_row - 145
     draw_text "Abonament za okres",               :at => [ 15, current_row], size: 10
     draw_text "Data płatności do",                :at => [ 15, current_row-15], size: 10
     draw_text "Forma płatności",                  :at => [ 15, current_row-30], size: 10
@@ -133,7 +133,7 @@ class InvoicePdf < Prawn::Document
     draw_text "przelew",                          :at => [ 200, current_row-30], size: 10
     draw_text "05 1020 1462 0000 7002 0128 4637", :at => [ 200, current_row-45], size: 10
 
-    image "#{Rails.root}/app/assets/images/signature.png", :at => [300, 320], :height => 68
+    image "#{Rails.root}/app/assets/images/signature.png", :at => [current_row-100, 320], :height => 68
 
   end
 

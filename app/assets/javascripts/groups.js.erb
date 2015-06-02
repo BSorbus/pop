@@ -75,6 +75,12 @@ $(document).ready(function() {
       { "targets": [16],
         "title": "Utworzona" }
     ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_groups" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
     order: [[ 2, "asc" ]],
     language: {
       decimal:        ",",
@@ -102,7 +108,14 @@ $(document).ready(function() {
       }
     }
   });
+
  
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_groups').on('shown.bs.collapse', function (){
+    oInsuranceGroupstable.ajax.reload();
+    oInsuranceGroupstable.draw();
+  });
+
   $('#insurance-groups tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
     var rowDataId = oInsuranceGroupstable.row( this ).data()[0];
@@ -123,7 +136,6 @@ $(document).ready(function() {
     oInsuranceGroupstable.order([2, 'asc']);
     oInsuranceGroupstable.draw();
   });
-
 
 
   if ($("#standard_select").length > 0) {

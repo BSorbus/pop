@@ -33,6 +33,12 @@ $(document).ready(function() {
       { "targets": [5],
         "title": "Uwagi" }
     ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_rotations" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
     order: [[ 2, "desc" ]],
     language: {
       decimal:        ",",
@@ -62,6 +68,12 @@ $(document).ready(function() {
   });
  
   
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_rotations').on('shown.bs.collapse', function (){
+    oInsuranceRotationsTable.ajax.reload();
+    oInsuranceRotationsTable.draw();
+  });
+
   $('#insurance-rotations tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
     var rowDataId = oInsuranceRotationsTable.row( this ).data()[0];
