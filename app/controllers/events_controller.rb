@@ -56,7 +56,7 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
-    @event.user = current_user
+    @event.user = current_user if @event.user_id.blank?
     @event.color = '#5bc0de' if current_user.id != 1 #@brand-info
 
     respond_to do |format|
@@ -97,21 +97,6 @@ class EventsController < ApplicationController
       flash[:alert] = t('activerecord.messages.error.destroyed', data: @event.title)
       render :show
     end      
-  end
-
-  # GET /events/1/pdf_invoice
-  def pdf_invoice
-    @event ||= load_event    
-
-    respond_to do |format|
-      format.pdf do
-        pdf = InvoicePdf.new(@event, view_context)
-        send_data pdf.render,
-        filename: "invoice_#{@event.start_date.strftime("%Y-%m-%d")}.pdf",
-        type: "application/pdf",
-        disposition: "inline"        
-      end
-    end 
   end
 
   private

@@ -55,13 +55,17 @@
 
       <% if user_signed_in? && current_user.id == 1 %>
         <div class="row">
-          <div class="form-group col-sm-8">
+          <div class="form-group col-sm-6">
             <%= f.label :url_action, class: 'control-label' %>
             <h5><%= @event.url_action %></h5>
           </div>
-          <div class="form-group col-sm-4">
+          <div class="form-group col-sm-2">
             <%= f.label :color, class: 'control-label' %>
             <h5><%= @event.color %></h5>
+          </div>         
+          <div class="form-group col-sm-4">
+            <%= f.label 'For User (1 - for all)' %>
+            <h5><%= "#{@event.user_id}, #{@event.user.agent_number}, #{@event.user.name}" %></h5>
           </div>         
         </div>         
       <% end %>

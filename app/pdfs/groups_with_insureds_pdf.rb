@@ -36,7 +36,11 @@ class GroupsWithInsuredsPdf < Prawn::Document
       @groups.each do |group|
         display_data_group(group, add_remove)
       end
+    #move_down 5             
+    #text "Składka miesięczna za polisę wynosi:  #{with_delimiter_and_separator(sum_monthly_contribution_for_all)}", size: 10  
     end
+    #move_down 5             
+    text "Składka miesięczna za polisę wynosi:  #{with_delimiter_and_separator(sum_monthly_contribution_for_all)}", size: 10  
 
 
 
@@ -87,7 +91,7 @@ class GroupsWithInsuredsPdf < Prawn::Document
         ) do
       #columns(0).font_style = :bold
     end
-    move_down 25             
+    move_down 22             
   end
 
   def display_coverages_table(g, ar)
@@ -140,6 +144,11 @@ class GroupsWithInsuredsPdf < Prawn::Document
     @lp = @lp +1
     return @lp 
   end
+
+  def sum_monthly_contribution_for_all
+    Coverage.joins(:group).where(rotation: @rotation.id).references(:group).all.sum(:sum_after_monthly)
+  end
+
 
 
   def footer

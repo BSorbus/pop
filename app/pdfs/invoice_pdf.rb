@@ -1,13 +1,14 @@
 class InvoicePdf < Prawn::Document
   include ApplicationHelper #funkcja with_delimiter_and_separator()
 
-  def initialize(event, view)
+  def initialize(user, invoice_date, view)
     # New document, A4 paper, landscaped
     # pdf = Prawn::Document.new(:page_size => "A4", :page_layout => :landscape)
     # wiec komentuje super() i ...
     super(:page_size => "A4", :page_layout => :portrait)
     #super()
-    @event = event
+    @invoice_user = user
+    @invoice_date = Time.new(invoice_date)
     @view = view
 
     font_families.update("DejaVu Sans" => {
@@ -34,11 +35,13 @@ class InvoicePdf < Prawn::Document
   end
 
   def header_left_corner
-    move_down 5
-    text "Faktura", size: 14, :style => :bold
+    draw_text "Faktura VAT nr:", :at => [0, 760], size: 11
+    draw_text "#{@invoice_user.id}/#{@invoice_date.month}/-#{@invoice_user.agent_number}-/#{@invoice_date.year}", :at => [0, 745], size: 12
   end
 
   def header_right_corner
+    draw_text "Data wystawienia i miejsce:", :at => [330, 760], size: 11
+    draw_text "#{@invoice_date.strftime("%Y-%m-%d")}, Bydgoszcz", :at => [330, 745], size: 12
   end
 
 

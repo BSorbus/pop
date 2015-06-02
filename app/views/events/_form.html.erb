@@ -55,14 +55,21 @@
 
       <% if current_user.id == 1 %>
         <div class="row">
-          <div class="form-group col-sm-8">
+          <div class="form-group col-sm-6">
             <%= f.label :url_action, class: 'control-label' %>
             <%= f.text_field :url_action, autofocus: true, class: 'form-control', disabled: input_disabled %>
           </div>
-          <div class="form-group col-sm-4">
+          <div class="form-group col-sm-2">
             <%= f.label :color, class: 'control-label' %>
             <%= f.text_field :color, autofocus: true, class: 'form-control', disabled: input_disabled %>
-          </div>         
+          </div>  
+          <div class="control-group col-sm-4">
+            <%= f.label :user_id, class: "control-label" %>
+            <%= f.select( :user_id, 
+                  User.order(:id).collect {|p| [ "#{p.id}, #{p.agent_number}, #{p.name}", p.id ]},
+                  { include_blank: false, multiple: false }, class: 'form-control', disabled: input_disabled ) %>
+          </div>
+
         </div>         
       <% end %>
 
