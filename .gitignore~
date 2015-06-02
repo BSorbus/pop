@@ -12,8 +12,9 @@
 /db/*.sqlite3-journal
 
 # Ignore the seeds file database.
-/db/seeds/pop/01_users.rb
-/db/seeds/pop/*.csv
+/db/seeds/pop/files/log/*.*
+/db/seeds/pop/files/01_users.rb
+/db/seeds/pop/files/*.csv
 
 # Ignore all logfiles and tempfiles.
 /log/*.log

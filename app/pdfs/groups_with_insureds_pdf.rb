@@ -36,11 +36,11 @@ class GroupsWithInsuredsPdf < Prawn::Document
       @groups.each do |group|
         display_data_group(group, add_remove)
       end
-    #move_down 5             
-    #text "Składka miesięczna za polisę wynosi:  #{with_delimiter_and_separator(sum_monthly_contribution_for_all)}", size: 10  
+    move_down 5             
+    text "Składka miesięczna za polisę wynosi:  #{with_delimiter_and_separator(sum_monthly_contribution_for_all)}", size: 10  
     end
     #move_down 5             
-    text "Składka miesięczna za polisę wynosi:  #{with_delimiter_and_separator(sum_monthly_contribution_for_all)}", size: 10  
+    #text "Składka miesięczna za polisę wynosi:  #{with_delimiter_and_separator(sum_monthly_contribution_for_all)}", size: 10  
 
 
 

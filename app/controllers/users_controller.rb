@@ -23,15 +23,15 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /events/pdf_invoice?invoice_date=2015-06-01
+  # GET /events/pdf_invoice?invoice_date=2015,06,01
   def pdf_invoice
-    invoice_date = params[:invoice_date]    
+    invoice_date = (params[:invoice_date]).to_date    
 
     respond_to do |format|
       format.pdf do
         pdf = InvoicePdf.new(current_user, invoice_date, view_context)
         send_data pdf.render,
-        filename: "invoice_#{invoice_date}.pdf",
+        filename: "invoice_#{invoice_date.strftime("%Y-%m-%d")}.pdf",
         type: "application/pdf",
         disposition: "inline"        
       end
