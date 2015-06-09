@@ -70,11 +70,15 @@ class Insurances::Groups::DiscountsController < ApplicationController
     @group ||= load_group # "||=" a nie "=" ponieważ ładuję w czasie "redirect_back_if_dont_can_edit"
     @discount = load_discount
 
-    if @discount.destroy
-      redirect_to insurance_group_path(@insurance, @group), success: t('activerecord.messages.successfull.destroyed', data: @discount.fullname)
-    else 
-      redirect_to insurance_group_path(@insurance, @group), error: t('activerecord.messages.error.destroyed', data: @discount.fullname)
-    end      
+    respond_to do |format|
+      if @discount.destroy
+        format.html { redirect_to insurance_group_path(@insurance, @group), success: t('activerecord.messages.successfull.destroyed', data: @discount.fullname) }
+        #format.js
+      else 
+        format.html { redirect_to insurance_group_path(@insurance, @group), error: t('activerecord.messages.error.destroyed', data: @discount.fullname) }
+        #format.js { "alert('error');" }
+      end      
+    end
   end
 
   private

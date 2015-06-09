@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var oInsurancetable = $('#insurances').DataTable({
+  var oInsuranceTable = $('#insurances').DataTable({
     responsive: true,
     processing: true,
     serverSide: true,
@@ -77,7 +77,7 @@ $(document).ready(function() {
 
 
 
-  var oCompanyInsurancestable = $('#company-insurances').DataTable({
+  var oCompanyInsurancesTable = $('#company-insurances').DataTable({
     responsive: true,
     processing: true,
     serverSide: true,
@@ -160,14 +160,14 @@ $(document).ready(function() {
 
   // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
   $('#collapse_insurances').on('shown.bs.collapse', function (){
-    oCompanyInsurancestable.ajax.reload();
-    oCompanyInsurancestable.draw();
+    oCompanyInsurancesTable.ajax.reload();
+    oCompanyInsurancesTable.draw();
   });
 
    
   $('#company-insurances tbody').on('click', 'tr', function () {
     $(this).toggleClass('selected');
-    var rowData = oCompanyInsurancestable.row( this ).data()[0];
+    var rowData = oCompanyInsurancesTable.row( this ).data()[0];
     var newurl = window.location.protocol + '//' + window.location.host + '/insurances/' + rowData;
     window.location.href = newurl;
   });

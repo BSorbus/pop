@@ -1,0 +1,26 @@
+<div class="col-sm-12">
+  <p class="lead">...jako <strong>Płatnik</strong></p>
+  <table id="payer-family_coverages" class="hover cell-border" data-source="<%= datatables_index_payer_family_coverages_path(payer_id: @individual.id, format: :json) %>">
+    <thead>
+      <tr>
+        <th> 0 ID </th>
+        <th> 1 Polisa</th>
+        <th> 2 Rotation</th>
+        <th> 3 Insured</th>
+        <th> 4 Payer</th>
+        <th> 5 Note</th>
+        <th> 6 Akcje</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+<div class="col-sm-12">
+
+  <%#= link_to t('New', default: t("helpers.links.new")), new_coverage_path(rotation_id: @rotation.id), 
+                        :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+</div> <!--/col-sm-12 -->

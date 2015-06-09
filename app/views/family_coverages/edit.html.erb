@@ -1,0 +1,42 @@
+<br>
+
+<ol class="breadcrumb">
+  <li><%= link_to @family_coverage.family_rotation.family.company.short, company_path(@family_coverage.family_rotation.family.company_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@family_coverage.family_rotation.family.company.short}",
+                      :"data-content" => "#{@family_coverage.family_rotation.family.company.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @family_coverage.family_rotation.family.number, family_path(@family_coverage.family_rotation.family_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@family_coverage.family_rotation.family.number}",
+                      :"data-content" => "#{@family_coverage.family_rotation.family.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @family_coverage.family_rotation.fullname, 
+    family_family_rotation_path(@family_coverage.family_rotation.family_id, @family_coverage.family_rotation_id) %></a></li>
+  <li class="active"><%= @family_coverage.fullname %></li>
+</ol> <!-- /breadcrumb -->
+
+
+<!-- Dane -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-coverage">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <span class="glyphicon glyphicon-calenar"><%= @family_coverage.fullname %></span>    
+        </div>
+      </div>
+        <div class="panel-body">
+          <div class="col-sm-1">
+            <h1><span class="glyphicon glyphicon-edit"></span></h1> 
+          </div> <!--/col-sm-1-->
+
+          <div class="col-sm-11">
+            <%= render 'form', back_url: back_url %><!--param from controller-->
+          </div> <!--/col-sm-11 col-sm-offset-1-->
+    
+        </div>
+    </div> <!-- /panel -->
+  </div> <!-- /col-sm-12-->
+</div> <!-- /row -->
+

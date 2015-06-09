@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150521195849) do
+ActiveRecord::Schema.define(version: 20150608164101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,55 @@ ActiveRecord::Schema.define(version: 20150521195849) do
   add_index "events", ["start_date"], name: "index_events_on_start_date", using: :btree
   add_index "events", ["url_action"], name: "index_events_on_url_action", using: :btree
   add_index "events", ["user_id"], name: "index_events_on_user_id", using: :btree
+
+  create_table "families", force: :cascade do |t|
+    t.string   "number",                                       default: "",    null: false
+    t.string   "proposal_number"
+    t.date     "concluded",                                                    null: false
+    t.date     "valid_from",                                                   null: false
+    t.date     "applies_to"
+    t.string   "pay",                                          default: "M",   null: false
+    t.string   "protection_variant",                                           null: false
+    t.decimal  "assurance",           precision: 10, scale: 2, default: 0.0,   null: false
+    t.decimal  "assurance_component", precision: 15, scale: 2, default: 0.0,   null: false
+    t.boolean  "family_lock",                                  default: false, null: false
+    t.text     "note"
+    t.integer  "company_id"
+    t.integer  "user_id"
+    t.datetime "created_at",                                                   null: false
+    t.datetime "updated_at",                                                   null: false
+  end
+
+  add_index "families", ["company_id"], name: "index_families_on_company_id", using: :btree
+  add_index "families", ["number", "user_id"], name: "index_families_on_number_and_user_id", unique: true, using: :btree
+  add_index "families", ["user_id"], name: "index_families_on_user_id", using: :btree
+
+  create_table "family_coverages", force: :cascade do |t|
+    t.integer  "family_rotation_id"
+    t.integer  "insured_id"
+    t.integer  "payer_id"
+    t.text     "note"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "family_coverages", ["family_rotation_id", "insured_id", "payer_id"], name: "index_family_coverages_on_family_rotation_insured_payer", unique: true, using: :btree
+  add_index "family_coverages", ["family_rotation_id"], name: "index_family_coverages_on_family_rotation_id", using: :btree
+  add_index "family_coverages", ["insured_id"], name: "index_family_coverages_on_insured_id", using: :btree
+  add_index "family_coverages", ["payer_id"], name: "index_family_coverages_on_payer_id", using: :btree
+
+  create_table "family_rotations", force: :cascade do |t|
+    t.date     "rotation_date",                  null: false
+    t.boolean  "rotation_lock",  default: false, null: false
+    t.date     "date_file_send"
+    t.text     "note"
+    t.integer  "family_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "family_rotations", ["family_id"], name: "index_family_rotations_on_family_id", using: :btree
+  add_index "family_rotations", ["rotation_date"], name: "index_family_rotations_on_rotation_date", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.integer  "number",                                        default: 0,     null: false
@@ -293,6 +342,12 @@ ActiveRecord::Schema.define(version: 20150521195849) do
   add_foreign_key "coverages", "individuals", column: "payer_id"
   add_foreign_key "coverages", "rotations"
   add_foreign_key "discounts", "groups"
+  add_foreign_key "families", "companies"
+  add_foreign_key "families", "users"
+  add_foreign_key "family_coverages", "family_rotations"
+  add_foreign_key "family_coverages", "individuals", column: "insured_id"
+  add_foreign_key "family_coverages", "individuals", column: "payer_id"
+  add_foreign_key "family_rotations", "families"
   add_foreign_key "groups", "insurances"
   add_foreign_key "individuals", "users"
   add_foreign_key "insurances", "companies"

@@ -7,6 +7,7 @@ $font-size-base: 14px;
 
 @import "fullcalendar";
 
+
 //table.dataTable thead .sorting_asc { background: none }
 //table.dataTable thead .sorting_desc { background: none }
 //table.dataTable thead .sorting { background: none }
@@ -52,7 +53,7 @@ hr {
   border-color: #ddd  
 }
 .panel-individual > .panel-heading {
-  background: #89877a; //#5E703F; 
+  background: #616aa2; //#5E703F; 
   color: white; 
 }
 
@@ -60,7 +61,15 @@ hr {
   border-color: #ddd  
 }
 .panel-insurance > .panel-heading {
-  background: #528394; //#616aa2; 
+  background: #528394;  
+  color: white; 
+}
+
+.panel-family {
+  border-color: #ddd  
+}
+.panel-family > .panel-heading {
+  background: #89877a;
   color: white; 
 }
 
@@ -96,21 +105,14 @@ hr {
   color: white; 
 }
 
-.panel-scan-and-print {
+.panel-print {
   border-color: #ddd  
 }
-.panel-scan-and-print > .panel-heading {
+.panel-print > .panel-heading {
   background: #d3c6c6;
   color: white; 
 }
 
-.panel-history {
-  border-color: #ddd  
-}
-.panel-history > .panel-heading {
-  background: #89877a;
-  color: white; 
-}
 
 .breadcrumb {
   margin-top: -9px;

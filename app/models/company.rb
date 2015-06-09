@@ -17,19 +17,26 @@ class Company < ActiveRecord::Base
   has_many :insurances, dependent: :destroy
   has_many :rotations, through: :insurances
   has_many :groups, through: :insurances
+  has_many :families, dependent: :destroy
   has_many :company_histories
 
   scope :by_short, -> { order(:short) }
   scope :by_user, ->(current_login_user_id) { where(user_id: current_login_user_id) }
 
   before_save { self.short = short.upcase }
-  before_destroy :company_has_insurances, prepend: true
+  before_destroy :company_has_insurances_or_families, prepend: true
 
-  def company_has_insurances
+  def company_has_insurances_or_families
+    analize_value = true
     if Insurance.where(company_id: id).any? 
-      errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy"
-      false
+      errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy NNW"
+      analize_value = false
     end
+    if Family.where(company_id: id).any? 
+      errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy Rodzina"
+      analize_value = false
+    end
+    analize_value
   end
 
 
@@ -61,6 +68,10 @@ class Company < ActiveRecord::Base
 
   def insurances_cached
     @insurances_cached ||= insurances.by_concluded
+  end
+
+  def families_cached
+    @families_cached ||= families.by_concluded
   end
 
 #  def items_cached(has_administrator_privileges)

@@ -1,0 +1,28 @@
+<div class="col-sm-12">
+
+  <table id="family_rotation-family_coverages" class="hover cell-border" data-source="<%= datatables_index_rotation_family_coverages_path(family_rotation_id: @family_rotation.id, format: :json) %>">
+    <thead>
+      <tr>
+        <th> 0 ID </th>
+        <th> 1 Polisa</th>
+        <th> 2 Rotation</th>
+        <th> 3 Insured</th>
+        <th> 4 Payer</th>
+        <th> 5 Note</th>
+        <th> 6 Akcje</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+<div class="col-sm-12">
+
+  <%= link_to t('New', default: t("helpers.links.new")), 
+                new_family_coverage_path(family_rotation_id: @family_rotation.id, back_url: family_family_rotation_path(@family_rotation.family.id, @family_rotation.id)), 
+                :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+
+</div> <!--/col-sm-12 -->

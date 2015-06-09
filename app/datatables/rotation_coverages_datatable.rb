@@ -71,7 +71,7 @@ class RotationCoveragesDatatable < AjaxDatatablesRails::Base
                     title: 'Edycja', rel: 'tooltip') + " " +
         link_to(' ', @view.coverage_path(record.id), 
                             method: :delete, 
-                            data: { confirm: "Czy na pewno chcesz usunąć ten wpis?" }, 
+                            data: { confirm: "Czy na pewno chcesz usunąć ten wpis?" }, remote: true, 
                             class: "glyphicon glyphicon-trash", title: 'Usuń', rel: 'tooltip')      ]
     end
   end

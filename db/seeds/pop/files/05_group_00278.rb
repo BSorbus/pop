@@ -87,41 +87,41 @@ end
 
 
 
-############################################################################################
-#pobierz najwiekszy ID i zwiększ go o 1
-next_id = Group.all.order(:id).last.id + 1
-puts "Groups NEXT_ID: #{next_id}"
-#ustaw generator sekwencji na odpowiednia wartosc
-connection = ActiveRecord::Base.connection()
-connection.execute( "ALTER SEQUENCE groups_id_seq RESTART WITH #{next_id} ;" )
-#wstaw do bazy testowy rekord
-@last_group = Group.create(
-                                  number:               1111,
-                                  quotation:            'A',
-                                  tariff_fixed:         false,
-                                  full_range:           true,
-                                  risk_group:           'A',
-                                  assurance:            0.0,
-                                  assurance_component:  0.0,
-                                  treatment:            0.0,
-                                  treatment_component:  0.0,
-                                  ambulatory:           0.0,
-                                  ambulatory_component: 0.0,
-                                  hospital:             0.0,
-                                  hospital_component:   0.0,
-                                  infarct:              0.0,
-                                  infarct_component:    0.0,
-                                  inability:            0.0,
-                                  inability_component:  0.0,
-                                  death_100_percent:    false,
-                                  sum_component:        0.0,
-                                  sum_after_discounts:  0.0,
-                                  sum_after_increases:  0.0,
-                                  sum_after_monthly:    0.0,
-                                  insurance_id:         Insurance.all.order(:id).last.id)
+#    ############################################################################################
+#    #pobierz najwiekszy ID i zwiększ go o 1
+#    next_id = Group.all.order(:id).last.id + 1
+#    puts "Groups NEXT_ID: #{next_id}"
+#    #ustaw generator sekwencji na odpowiednia wartosc
+#    connection = ActiveRecord::Base.connection()
+#    connection.execute( "ALTER SEQUENCE groups_id_seq RESTART WITH #{next_id} ;" )
+#    #wstaw do bazy testowy rekord
+#    @last_group = Group.create(
+#                                      number:               1111,
+#                                      quotation:            'A',
+#                                      tariff_fixed:         false,
+#                                      full_range:           true,
+#                                      risk_group:           'A',
+#                                      assurance:            0.0,
+#                                      assurance_component:  0.0,
+#                                      treatment:            0.0,
+#                                      treatment_component:  0.0,
+#                                      ambulatory:           0.0,
+#                                      ambulatory_component: 0.0,
+#                                      hospital:             0.0,
+#                                      hospital_component:   0.0,
+#                                      infarct:              0.0,
+#                                      infarct_component:    0.0,
+#                                      inability:            0.0,
+#                                      inability_component:  0.0,
+#                                      death_100_percent:    false,
+#                                      sum_component:        0.0,
+#                                      sum_after_discounts:  0.0,
+#                                      sum_after_increases:  0.0,
+#                                      sum_after_monthly:    0.0,
+#                                      insurance_id:         Insurance.all.order(:id).last.id)
+#
+#    @last_group.destroy
 
-@last_group.destroy
-
-puts "#####  END OF 05_group_00278.rb  #####"
-puts ""
+    puts "#####  END OF 05_group_00278.rb  #####"
+    puts ""
 

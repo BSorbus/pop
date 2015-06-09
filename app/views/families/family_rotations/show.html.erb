@@ -1,0 +1,102 @@
+<br>
+
+<ol class="breadcrumb">
+  <li><%= link_to @family_rotation.family.company.short, company_path(@family_rotation.family.company_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@family.company.short}",
+                      :"data-content" => "#{@family.company.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @family_rotation.family.number, family_path(@family_rotation.family_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@family.number}",
+                      :"data-content" => "#{@family.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li class="active"><%= @family_rotation.fullname %></li>
+</ol> <!-- /breadcrumb -->
+
+<div class="panel-group" id="myaccordion">
+
+  <!-- Dane -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-rotation">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion" href="#collapse_data" >
+              <span class="glyphicon glyphicon-retweet">  <%= @family_rotation.fullname %></span>   
+              <i class="indicator glyphicon glyphicon-chevron-down  pull-right"></i>
+            </a>
+          </div>
+        </div>
+        <div id="collapse_data" class="panel-collapse collapse in"> <!-- id="collapse_data" -->
+          <div class="panel-body">
+            <div class="col-sm-1">
+              <% if @family_rotation.rotation_lock %>
+                <h1><span class="glyphicon glyphicon-lock"></span></h1>
+              <% end %>
+            </div>
+            <div class="col-sm-11">
+
+              <%= render 'form_show', input_disabled: true %>
+              
+            </div> <!--/col-sm-11-->
+          </div>
+        </div> <!-- /id="collapse_data" -->
+      </div> <!-- /panel -->
+    </div> <!-- /col-sm-12-->
+  </div> <!-- /row -->
+
+  <!-- Osoby -->
+  <div class="row">
+    <div class="col-sm-11 col-sm-offset-1">
+      <div class="panel panel-coverage">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion" href="#collapse_family_rotation_family_coverages" >
+              <span class="glyphicon glyphicon-calendar"> Ochrona (Osoby ubezpieczone) </span>    
+              <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+            </a>
+          </div>
+        </div>
+        <div id="collapse_family_rotation_family_coverages" class="panel-collapse collapse"> <!-- id="collapse_individuals" -->
+          <div class="panel-body">
+            <div class="col-sm-12">
+
+              <%= render 'families/family_rotations/family_coverages' %>
+
+            </div> <!--/class="col-sm-11 col-sm-offset-1" -->
+          </div> <!-- /panel-body -->
+        </div> <!-- /id="collapse_family_rotation_family_coverages" -->
+      </div> <!-- /panel -->
+    </div> <!-- /col-sm-11 col-sm-offset-1 -->
+  </div> <!-- /row -->
+
+
+  <!-- Wydruki -->
+  <% if @family_rotation.family_coverages.present? %>
+    <div class="row">
+      <div class="col-sm-11 col-sm-offset-1">
+        <div class="panel panel-print">
+          <div class="panel-heading">
+            <div class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#myaccordion" href="#collapse_scan_and_print" >
+                <span class="glyphicon glyphicon-print"> Wydruki</span>    
+                <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+              </a>
+            </div>
+          </div>
+          <div id="collapse_scan_and_print" class="panel-collapse collapse"> <!-- id="collapse_scan_and_print" -->
+            <div class="panel-body">
+              <div class="col-sm-12">
+
+                <%#= render 'scan_and_print' %>
+
+              </div> <!--/class="col-sm-12" -->
+            </div> <!-- /panel-body -->
+          </div> <!-- /id="collapse_scan_and_print" -->
+        </div> <!-- /panel -->
+      </div> <!-- /col-sm-11 col-sm-offset-1 -->
+    </div> <!-- /row -->
+  <% end %>  
+
+</div> <!-- /class="panel-group" id="myaccordion" -->

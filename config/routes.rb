@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   devise_for :users
   #resources :users
   resources :users, except: [:show, :index] do
@@ -52,6 +53,19 @@ Rails.application.routes.draw do
     get 'pdf_dispositions_insureds', on: :member
   end
 
+  resources :families do
+    resources :family_rotations, except: [:index], controller: 'families/family_rotations' do
+      post 'datatables_index', on: :collection
+      get 'duplicate', on: :member
+      patch 'lock', on: :member
+      patch 'unlock', on: :member
+    end
+    post 'datatables_index', on: :collection
+    post 'datatables_index_company', on: :collection # for Company
+    patch 'lock', on: :member
+    patch 'unlock', on: :member
+  end
+
   resources :companies do
     post 'datatables_index', on: :collection
     get 'select_his', on: :collection
@@ -67,6 +81,12 @@ Rails.application.routes.draw do
   resources :coverages, except: [:index, :show] do
     post 'datatables_index_rotation', on: :collection
     post 'datatables_index_group', on: :collection
+    post 'datatables_index_insured', on: :collection
+    post 'datatables_index_payer', on: :collection
+  end
+
+  resources :family_coverages, except: [:index, :show] do
+    post 'datatables_index_rotation', on: :collection
     post 'datatables_index_insured', on: :collection
     post 'datatables_index_payer', on: :collection
   end

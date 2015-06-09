@@ -1,4 +1,4 @@
-<%= form_for [@coverage], :html => { :role => 'form rotation' } do |f| %>
+<%= form_for [@coverage], :html => { :role => 'form coverage' } do |f| %>
 
   <% input_disabled ||= false  
      #if input_disabled is not passed to the partial it doesn't crash. 
@@ -17,7 +17,8 @@
     </div>
   <% end %>
 
-  <%= hidden_field_tag :back_url, params[:back_url] %>
+<!--  <%= hidden_field_tag :back_url, params[:back_url] %> -->
+  <%= hidden_field_tag :back_url, back_url %> 
 
   <div class="row">
     <div class="col-sm-12">
@@ -93,7 +94,7 @@
     <!-- for "Show" -->
   <% else %>
     <!-- form "New"/"Edit" -->
-    <%= link_to t('Back', default: t("helpers.links.back")), params[:back_url], :class => 'btn btn-default' %>
+    <%= link_to t('Back', default: t("helpers.links.back")), back_url, :class => 'btn btn-default' %>
     <%= f.submit nil, :class => 'btn btn-primary' %>
   <% end %>
   

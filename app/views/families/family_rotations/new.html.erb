@@ -1,0 +1,40 @@
+<br>
+
+
+<ol class="breadcrumb">
+  <li><%= link_to @family_rotation.family.company.short, company_path(@family_rotation.family.company_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@family_rotation.family.company.short}",
+                      :"data-content" => "#{@family_rotation.family.company.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li><%= link_to @family_rotation.family.fullname, family_path(@family_rotation.family_id), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@family_rotation.family.number}",
+                      :"data-content" => "#{@family_rotation.family.for_popover_data}",
+                      :"data-placement" => "bottom" %></a></li>
+  <li class="active"><%= t(' New Rotation', default: t("pages.family_rotation_new")) %></li>
+</ol> <!-- /breadcrumb -->
+
+<!-- Dane -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-rotation">
+      <div class="panel-heading">
+        <div class="panel-title">
+	        <span class="glyphicon glyphicon-retweet"><%= t(' New Rotation for', default: t("pages.rotation_new_for", data: @family.fullname)) %></span>  
+        </div>
+      </div>
+        <div class="panel-body">
+          <div class="col-sm-1">
+	        	<h1><span class="glyphicon glyphicon-plus"></span></h1> 
+          </div> <!--/col-sm-1-->
+
+          <div class="col-sm-11">
+            <%= render 'form', duplicate_family_rotation: duplicate_family_rotation %> <!--param from controller-->
+          </div> <!--/col-sm-11 col-sm-offset-1-->
+    
+        </div>
+    </div> <!-- /panel -->
+  </div> <!-- /col-sm-12-->
+</div> <!-- /row -->
+

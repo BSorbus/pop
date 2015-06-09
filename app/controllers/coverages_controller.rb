@@ -1,8 +1,6 @@
 class CoveragesController < ApplicationController
   before_action :authenticate_user!
   before_action :redirect_back_if_dont_can_edit_coverage, only: [:new, :edit, :destroy]
-  #before_action :redirect_back_if_dont_can_change_coverage, only: [:edit, :update, :destroy]
-  #before_action :redirect_back_if_dont_can_add_coverage, only: [:new, :create]
 
   respond_to :html
 
@@ -70,6 +68,7 @@ class CoveragesController < ApplicationController
     #@coverage.save
     #respond_with(@coverage)
 
+    params[:back_url] = root_url if (params[:back_url]).blank? 
     @coverage = Coverage.new(coverage_params)
 
     respond_to do |format|
@@ -87,6 +86,7 @@ class CoveragesController < ApplicationController
   #  respond_with(@coverage)
   #end
   def update
+    params[:back_url] = root_url if (params[:back_url]).blank? 
     @coverage ||= load_coverage
 
     respond_to do |format|
@@ -104,11 +104,16 @@ class CoveragesController < ApplicationController
 
     @coverage ||= load_coverage
 
-    if @coverage.destroy
-      redirect_to :back, success: t('activerecord.messages.successfull.destroyed', data: @coverage.fullname)
-    else 
-      redirect_to :back, error: t('activerecord.messages.error.destroyed', data: @coverage.fullname)
-    end      
+    respond_to do |format|
+      if @coverage.destroy
+        format.html { redirect_to :back, success: t('activerecord.messages.successfull.destroyed', data: @coverage.fullname) }
+        format.js { }
+      else
+        format.html { redirect_to :back, error: t('activerecord.messages.error.destroyed', data: @coverage.fullname) }
+        format.js 
+        #format.js { flash.now[:notice] = t('activerecord.messages.error.destroyed', data: @coverage.fullname) }
+      end
+    end
   end
 
 

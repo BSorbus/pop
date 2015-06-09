@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   has_many :companies  
   has_many :individuals
   has_many :insurances
+  has_many :families
 
   has_many :events
 end

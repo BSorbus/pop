@@ -2,7 +2,7 @@ require 'csv'
 
 
 puts ""
-puts "#####  07_coverage_00278.rb  #####"
+puts "#####  08_coverage_00278.rb  #####"
 
 ############################################################################################
 puts "... load from db/seeds/pop/files/polisa_rotacja_osoba_00278.csv... start..."
@@ -27,7 +27,10 @@ CSV.foreach("db/seeds/pop/files/polisa_rotacja_osoba_00278.csv", {  encoding: "W
                                   rotation_id:  id_with_offset( row[:polisa_rotacja], DB00278_OFFSET_POLISA_ROTACJA ),
                                   insured_id:   id_with_offset( row[:ubezpieczony], DB00278_OFFSET_OSOBA ),
                                   payer_id:     id_with_offset( row[:platnik], DB00278_OFFSET_OSOBA ),
-                                  note:         row[:uwagi])
+                                  note:         row[:uwagi],
+                                  created_at:   row[:change_date],
+                                  updated_at:   row[:change_date]
+                                  )
 
   if @coverage.valid?
     puts row[:id_pro]
@@ -79,11 +82,28 @@ connection.execute( "ALTER SEQUENCE coverages_id_seq RESTART WITH #{next_id} ;" 
                                   group_id:     Group.all.order(:id).last.id,
                                   rotation_id:  Rotation.all.order(:id).last.id,
                                   insured_id:   Individual.all.order(:id).last.id,
-                                  payer_id:     Individual.all.order(:id).last.id,
+                                  payer_id:     Individual.all.order(:id).last.id
                                   )
 
 @last_coverage.destroy
 
-puts "#####  END OF 07_coverage_00278.rb  #####"
+
+############################################################################################
+#uporządkuj daty wpisania grupy
+
+#@groups = Group.all
+#
+#@groups.each do |group|
+#  first_used = Coverage.where(group: group).order(:rotation_id).first #rotation.rotation_date
+#
+#  group.created_at = first_used.created_at if first_used.present?
+#  group.updated_at = first_used.created_at if first_used.present?
+#  group.save
+#
+#end # ./ @groups.each
+
+
+
+puts "#####  END OF 08_coverage_00278.rb  #####"
 puts ""
 

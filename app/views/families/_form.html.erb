@@ -1,0 +1,135 @@
+<%= form_for [@family], :html => { :role => 'form family' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @family.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @family.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+
+        <div class="form-group col-sm-3">
+          <%= f.label :number, class: 'control-label' %>
+          <%= f.text_field :number, autofocus: true, class: 'form-control', disabled: input_disabled %>
+        </div>
+
+        <div class="control-group col-sm-9">
+          <%= f.label :company_id, class: "control-label" %>
+          <%= f.select( :company_id, 
+                Company.by_user(current_user.id).by_short.collect {|p| [ "#{p.short}, #{p.address_city}, #{p.name}", p.id ]},
+                { include_blank: false, multiple: false }, class: 'form-control', disabled: input_disabled ) %>
+        </div>
+
+      </div>  <!-- /row -->
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :concluded, class: 'control-label' %>
+          <%= f.text_field :concluded, class: 'datepicker form-control', disabled: input_disabled %>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <%= f.label :valid_from, class: 'control-label' %>
+          <%= f.text_field :valid_from, class: 'datepicker form-control', disabled: input_disabled %>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <%= f.label :applies_to, class: 'control-label' %>
+          <%= f.text_field :applies_to, class: 'datepicker form-control', disabled: input_disabled %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-7">
+
+          <br><%= f.label :pay, class: "control-label" %><br>
+          <%= f.radio_button(:pay, 'M', disabled: input_disabled) %>
+          <%= f.label(:pay_m, 'Miesięczna') %>
+          <%= f.radio_button(:pay, 'K', disabled: input_disabled) %>
+          <%= f.label(:pay_k, 'Kwartalna') %>
+          <%= f.radio_button(:pay, 'P', disabled: input_disabled) %>
+          <%= f.label(:pay_p, 'Półroczna') %>
+          <%= f.radio_button(:pay, 'R', disabled: input_disabled) %>
+          <%= f.label(:pay_r, 'Roczna') %>
+        </div>
+
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+
+    <div class="col-sm-6">
+
+      <div class="form-group">
+        <%= f.label :note, class: 'control-label' %>
+        <%= f.text_area :note, :rows => 4, :cols => 50, class: 'form-control', disabled: input_disabled %>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+  </div> <!-- /row -->
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="row">
+        <div class="form-group col-sm-3">
+          <%= f.label :proposal_number, class: 'control-label' %>
+          <%= f.text_field :proposal_number, class: 'form-control', disabled: input_disabled %>
+        </div>
+
+        <div class="form-group col-sm-3">
+          <%= f.label :protection_variant, class: 'control-label' %>
+          <%= f.text_field :protection_variant, class: 'form-control', disabled: input_disabled %>
+        </div>
+
+        <div class="form-group col-sm-3">
+          <%= f.label :assurance, class: 'control-label' %>
+          <%= f.text_field :assurance, class: 'form-control', disabled: input_disabled %>
+        </div>
+        <div class="form-group col-sm-3">
+          <%= f.label :assurance_component, class: 'control-label' %>
+          <%= f.text_field :assurance_component, class: 'form-control', disabled: input_disabled %>
+        </div>
+      </div>
+
+    </div> <!-- /col-sm-12 -->
+  </div> <!-- /row -->
+
+  <hr>
+
+
+  <% if input_disabled %>
+    <!-- for "Show" -->
+    <%= link_to t('Delete', default: t("helpers.links.destroy")), family_path(@family),
+                        method: :delete,
+                        data: { confirm: t('helpers.links.confirm_destroy', data: @family.fullname) }, 
+                        :class => "btn btn-danger glyphicon glyphicon-trash" %>
+    <%= link_to t('Edit', default: t("helpers.links.edit")), edit_family_path(@family), 
+                        :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+  
+<% end %>

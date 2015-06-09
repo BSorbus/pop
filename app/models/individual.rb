@@ -6,12 +6,12 @@ class Individual < ActiveRecord::Base
                     length: { in: 1..80 }
   validates :address_city, presence: true,
                     length: { in: 1..50 }
-  validates :pesel, length: { is: 11 }, numericality: true, 
-                    :uniqueness => { :scope => [:user_id] }, allow_blank: true
+#  validates :pesel, length: { is: 11 }, numericality: true, 
+#                    :uniqueness => { :scope => [:user_id] }, allow_blank: true
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  validates :birth_date, presence: true
-  validate :check_pesel_and_birth_date, unless: "pesel.blank?"
+  #validates :birth_date, presence: true
+  #validate :check_pesel_and_birth_date, unless: "pesel.blank?"
 
   require 'pesel'
 

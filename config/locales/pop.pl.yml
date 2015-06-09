@@ -5,17 +5,21 @@ pl:
     companies: "Firmy"
     individuals: "Osoby"
     insurances: "Polisy NNW"
+    families: "Polisy Rodzina"
     users: "Użytkownicy"
   activerecord:
     models:
       user: 'Użytkownik'
       company: 'Firma'
       individual: 'Osoba'
-      insurance: 'Polisa'
+      insurance: 'Polisa NNW'
+      family: 'Polisa Rodzina'
+      family_rotation: 'Rotacja'
       rotation: 'Rotacja'
       group: 'Grupa'
       discount: 'Zniżka/Zwyżka'
       coverage: 'Ochrona'
+      family_coverage: 'Ochrona'
       event: 'Wydarzenie'
     messages:
       successfull:
@@ -27,6 +31,8 @@ pl:
         unlocking_rotation: 'Pomyślnie odblokowano rotację z dnia "%{data}".'
         locking_insurance: 'Pomyślnie zablokowano polisę "%{data}".'
         unlocking_insurance: 'Pomyślnie odblokowano polisę "%{data}".'
+        locking_family: 'Pomyślnie zablokowano polisę "%{data}".'
+        unlocking_family: 'Pomyślnie odblokowano polisę "%{data}".'
       error:
         destroyed: 'Wystąpił błąd w czasie usuwania wpisu "%{data}".'
         numbering: 'Wystąpił błąd w czasie numerowania grup dla polisy "%{data}".'
@@ -34,6 +40,8 @@ pl:
         unlocking_rotation: 'Wystąpił błąd w czasie odblokowywania rotacji z dnia "%{data}".'
         locking_insurance: 'Wystąpił błąd w czasie blokowania polisy "%{data}".'
         unlocking_insurance: 'Wystąpił błąd w czasie odblokowywania polisy "%{data}".'
+        locking_family: 'Wystąpił błąd w czasie blokowania polisy "%{data}".'
+        unlocking_family: 'Wystąpił błąd w czasie odblokowywania polisy "%{data}".'
       notice:
         group_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o zwyżkach/zniżkach.'
         rotation_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o osobach ubezpieczonych/płatnikach.'
@@ -76,6 +84,25 @@ pl:
         insurance_lock: 'Blokada'
         note: 'Uwagi'
         company_id: 'Firma'
+      family:
+        number: 'Numer'
+        proposal_number: 'Wniosek'
+        concluded: 'Zawarta'
+        valid_from: 'Obowiązuje od'
+        applies_to: '...do'
+        pay: 'Składka'
+        protection_variant: 'Wariant ochrony'
+        assurance: 'Ubezpieczenie'
+        assurance_component: 'Składka'
+        family_lock: 'Blokada'
+        note: 'Uwagi'
+        company_id: 'Firma'
+      family_rotation:
+        rotation_date: 'Data rotacji'
+        rotation_lock: 'Blokada'
+        date_file_send: 'Data wysłania pliku'
+        note: 'Uwagi'
+        family_id: 'Polisa'
       group:
         number: 'Nr'
         quotation: 'Kwotacja'
@@ -114,6 +141,11 @@ pl:
       coverage:
         rotation_id: 'Rotacja'
         group_id: 'Grupa'
+        insured_id: 'Ubezpieczony'
+        payer_id: 'Płatnik'
+        note: 'Uwagi'
+      family_coverage:
+        family_rotation_id: 'Rotacja'
         insured_id: 'Ubezpieczony'
         payer_id: 'Płatnik'
         note: 'Uwagi'

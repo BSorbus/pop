@@ -1,10 +1,13 @@
 class Group < ActiveRecord::Base
 
+  include ApplicationHelper
+
   validates :quotation,  presence: true, inclusion: { in: ['A', 'B', 'C', 'D'] }
   validates :assurance, numericality: { greater_than: 0 } 
 
   validate  :check_modulo
   validate  :check_unique
+
   
   def check_modulo
     if (['A', 'B']).include? quotation 
@@ -356,7 +359,6 @@ class Group < ActiveRecord::Base
     end
   end
 
-  include ApplicationHelper
   def for_popover_data
     "Kowatcja: #{quotation_name} <br />
     System świadczeń: #{tariff_fixed_name} <br />

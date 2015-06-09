@@ -17,7 +17,7 @@ class InsurancesController < ApplicationController
     end
   end
 
-  # POST /insurances
+
   def datatables_index_company
     respond_to do |format|
       format.json{ render json: CompanyInsurancesDatatable.new(view_context, { only_for_current_company_id: params[:company_id] }) }

@@ -1,0 +1,35 @@
+<div class="col-sm-12">
+  <table id="family-family_rotations" class="hover cell-border" data-source="<%= datatables_index_family_family_rotations_path(@family.id, format: :json) %>">
+    <thead>
+      <tr>
+        <th>0 id</th>
+        <th>1 family_id</th>
+        <th>2 data rotacji </th>
+        <th>3 blokada </th>
+        <th>4 data wysłania pliku</th>
+        <th>5 uwagi</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!--data from JSON -->
+    </tbody>
+  </table>
+</div> <!--/col-sm-12 -->
+
+
+<div class="col-sm-12">
+
+  <% if @family.family_rotations.empty? %>
+
+    <%= link_to t('New', default: t("helpers.links.new")), new_family_family_rotation_path(@family), 
+                          :class => 'btn btn-primary glyphicon glyphicon-plus' %> 
+  <% else %>
+
+    <%= link_to t('Duplicate', default: t("helpers.links.duplicate_rotation")), duplicate_family_family_rotation_path(@family, @family.family_rotations.last), 
+                          method: :get,
+                          data: { confirm: t('helpers.links.confirm_duplicate_rotation', data: @family.fullname) }, 
+                          :class => "btn btn-primary glyphicon glyphicon-plus" %>
+  <% end %>
+
+</div> <!--/col-sm-12 -->

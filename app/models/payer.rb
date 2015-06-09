@@ -3,6 +3,7 @@ class Payer < ActiveRecord::Base
  
   #has_many :coverages zmiana 14.05.2015
   has_many :coverages, foreign_key: :payer_id, class_name: "Coverage", dependent: :destroy 
+  has_many :family_coverages, foreign_key: :payer_id, class_name: "FamilyCoverage", dependent: :destroy 
 
   def fullname
     "#{last_name} #{first_name}, #{address_city}, #{pesel}"

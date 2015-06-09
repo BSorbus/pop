@@ -17,8 +17,8 @@ class Coverage < ActiveRecord::Base
   scope :by_payer, ->(only_for_payer_id) { where(payer_id: only_for_payer_id) }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  before_save :insurance_or_rotation_is_locked
-  before_destroy :insurance_or_rotation_is_locked, prepend: true
+  #before_save :insurance_or_rotation_is_locked
+  #before_destroy :insurance_or_rotation_is_locked, prepend: true
 
   def insurance_or_rotation_is_locked
     analize_value = true

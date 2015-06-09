@@ -14,6 +14,8 @@ pl:
     individual_new: " Nowa Osoba"
     insurances: "Polisy NNW"
     insurance_new: " Nowa Polisa NNW"
+    families: "Polisy Rodzina"
+    family_new: " Nowa Polisa Rodzina"
     group_new: " Nowa Grupa"
     group_new_for: ' Nowa Grupa dla: "%{data}"'
     rotation_new: ' Nowa Rotacja'
@@ -37,8 +39,10 @@ pl:
       confirm_duplicate_rotation: 'Czy chcesz dodać kolejną rotację do polisy: "%{data}"? Poprzednia rotacja zostanie automatycznie zablokowana (jeżeli jeszcze nie jest).'
       confirm_locking_rotation: 'Na pewno chcesz zablokować rotację z dnia: "%{data}"?'
       confirm_locking_insurance: 'Na pewno chcesz zablokować polisę: "%{data}"?'
+      confirm_locking_family: 'Na pewno chcesz zablokować polisę: "%{data}"?'
       confirm_unlocking_rotation: 'Na pewno chcesz odblokować rotację z dnia: "%{data}"?'
       confirm_unlocking_insurance: 'Na pewno chcesz odblokować polisę: "%{data}"?'
+      confirm_unlocking_family: 'Na pewno chcesz odblokować polisę: "%{data}"?'
       confirm_duplicate_group: 'Czy chcesz dodać duplikat Grupy: "%{data}"? Parametry grupy zostaną skopiowane do nowej pozycji.'
       confirm_numbering_group: 'Na pewno chcesz wykonać numerowanie grup dla polisy: "%{data}"?'
       destroy: " Usuń"
@@ -50,6 +54,8 @@ pl:
       unlocking_rotation: " Odblokuj rotację"
       locking_insurance: " Zablokuj polisę"
       unlocking_insurance: " Odblokuj polisę"
+      locking_family: " Zablokuj polisę"
+      unlocking_family: " Odblokuj polisę"
       duplicate: " Duplikat"
       duplicate_rotation: " Kolejna rotacja"
       duplicate_insurance: " Kontynuacja polisy"

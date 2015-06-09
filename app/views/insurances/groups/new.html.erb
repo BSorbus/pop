@@ -1,7 +1,7 @@
 <br>
 
 <ol class="breadcrumb">
-  <li><%= link_to @group.insurance.company.fullname, company_path(@group.insurance.company_id), 
+  <li><%= link_to @group.insurance.company.short, company_path(@group.insurance.company_id), 
                       :"data-toggle" => "popover_info",
                       :"title" => "#{@group.insurance.company.short}",
                       :"data-content" => "#{@group.insurance.company.for_popover_data}",

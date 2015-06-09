@@ -20,7 +20,11 @@ class InvoicePdf < Prawn::Document
       @invoice_customer_address_with_nip = "#{@invoice_customer.address} \n NIP: 816-134-07-80"  # Maniecki           
       @invoice_netto = 129.00       
     when 4
-      @invoice_customer_address_with_nip = "#{@invoice_customer.address} \n NIP: 554-153-36-50"  # Tyburski        
+      @invoice_customer_address_with_nip =  "Ubezpieczenia Szkolenia i Usługi" + "\n" +
+                                            "Finansowe Kazimierz Tyburski" + "\n" +
+                                            "ul. Igrzyskowa 3/54" + "\n" +
+                                            "85-796 Bydgoszcz" + "\n" +
+                                            "NIP: 554-153-36-50"  # Tyburski        
       @invoice_netto = 129.00       
     else
       @invoice_customer_address_with_nip = "#{@invoice_customer.address} \n NIP:?"          

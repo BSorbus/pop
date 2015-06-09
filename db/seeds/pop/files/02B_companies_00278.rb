@@ -1,22 +1,26 @@
 require 'csv'
 
+def company_created_at_first_rec(seek_id)
+  CompanyHistory.where(company_id: seek_id).order(:created_at).first.created_at
+end
+
 
 puts ""
-puts "#####  02_companies_00278.rb  #####"
+puts "#####  02B_companies_00278.rb  #####"
 
 ############################################################################################
 puts "... load from db/seeds/pop/files/firma_00278.csv... start..."
 
 File.open(File.join("db/seeds/pop/files/log", 'firma_00278.log'), 'a+') do |f|
-  f.puts "#####  02_companies_00278.rb  #####"
+  f.puts "#####  02B_companies_00278.rb  #####"
   f.puts "... load from db/seeds/pop/files/firma_00278.csv... start..."
 end 
 
 CSV.foreach("db/seeds/pop/files/firma_00278.csv", { encoding: "WINDOWS-1250:UTF-8", 
-                                    headers: true, 
-                                    header_converters: :symbol, 
-                                    col_sep: ';'}
-            ) do |row|
+                                          headers: true, 
+                                          header_converters: :symbol, 
+                                          col_sep: ';'}
+                  ) do |row|
 
   ## jezeli plik csv ma strukture zgodna, to wystarczy wywolac wiersz ponizej
   #Company.create(row.to_hash)
@@ -36,7 +40,9 @@ CSV.foreach("db/seeds/pop/files/firma_00278.csv", { encoding: "WINDOWS-1250:UTF-
                                   pesel:                row[:pesel],
                                   informal_group:       row[:gr_nieformalna],
                                   note:                 row[:uwagi],
-                                  user_id:              DB00278_USER_ID )
+                                  user_id:              DB00278_USER_ID,
+                                  created_at:           company_created_at_first_rec(id_with_offset(row[:id_firma], DB00278_OFFSET_FIRMA)),
+                                  updated_at:           row[:change_date] )
 
   if @company.valid?
     # Jezeli OK, to wyświetl ID na ekranie
@@ -80,8 +86,8 @@ puts "Companies all: #{Company.all.size}"
 
 File.open(File.join("db/seeds/pop/files/log", 'firma_00278.log'), 'a+') do |f|
   f.puts "Companies all: #{Company.all.size}"
-  f.puts "Companies all where user=2: #{Company.all.where(user: 2).size}"
-  f.puts "#####  END ...load from 02_companies_00278.rb  #####"
+  f.puts "Companies all where user=DB00278_USER_ID: #{Company.all.where(user: DB00278_USER_ID).size}"
+  f.puts "#####  END ...load from 02B_companies_00278.rb  #####"
 end 
 ############################################################################################
 
@@ -89,31 +95,31 @@ end
 
 
 
-############################################################################################
-#pobierz najwiekszy ID i zwiększ go o 1
-next_id = Company.all.order(:id).last.id + 1
-puts "Company NEXT_ID: #{next_id}"
-#ustaw generator sekwencji na odpowiednia wartosc
-connection = ActiveRecord::Base.connection()
-connection.execute( "ALTER SEQUENCE companies_id_seq RESTART WITH #{next_id} ;" )
-#wstaw do bazy testowy rekord
-@last_company = Company.create(   short:                'AAA-TEST', 
-                                  name:                 'AAA-Test nazwa',
-                                  address_city:         'AAA-Miejscowosc',
-                                  address_street:       'AAA-Ulica',
-                                  address_house:        'AAA-Dom',
-                                  address_number:       'AAA-Numer',
-                                  address_postal_code:  '00-000',
-                                  phone:                'AAA-601-602-603',
-                                  email:                'artex.soft@gmail.com',
-                                  nip:                  nil,
-                                  regon:                nil,
-                                  pesel:                nil,
-                                  informal_group:       false,
-                                  note:                 'AAA-Uwagi',
-                                  user_id:              1 )
-
-@last_company.destroy
-
-puts "#####  END OF 02_companies_00278.rb  #####"
-puts ""
+#    ############################################################################################
+#    #pobierz najwiekszy ID i zwiększ go o 1
+#    next_id = Company.all.order(:id).last.id + 1
+#    puts "Company NEXT_ID: #{next_id}"
+#    #ustaw generator sekwencji na odpowiednia wartosc
+#    connection = ActiveRecord::Base.connection()
+#    connection.execute( "ALTER SEQUENCE companies_id_seq RESTART WITH #{next_id} ;" )
+#    #wstaw do bazy testowy rekord
+#    @last_company = Company.create(   short:                'AAA-TEST', 
+#                                      name:                 'AAA-Test nazwa',
+#                                      address_city:         'AAA-Miejscowosc',
+#                                      address_street:       'AAA-Ulica',
+#                                      address_house:        'AAA-Dom',
+#                                      address_number:       'AAA-Numer',
+#                                      address_postal_code:  '00-000',
+#                                      phone:                'AAA-601-602-603',
+#                                      email:                'artex.soft@gmail.com',
+#                                      nip:                  nil,
+#                                      regon:                nil,
+#                                      pesel:                nil,
+#                                      informal_group:       false,
+#                                      note:                 'AAA-Uwagi',
+#                                      user_id:              1 )
+#
+#    @last_company.destroy
+#
+    puts "#####  END OF 02B_companies_00278.rb  #####"
+    puts ""

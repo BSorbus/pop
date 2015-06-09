@@ -1,0 +1,95 @@
+<%= form_for [@family_coverage], :html => { :role => 'form family_coverage' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @family_coverage.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @family_coverage.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+<!--  <%= hidden_field_tag :back_url, params[:back_url] %> -->
+  <%= hidden_field_tag :back_url, back_url %> 
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="row">
+
+        <div class="form-group col-sm-12">
+          <%= f.label :family_rotation_id, class: "control-label" %>
+          <%= f.select( :family_rotation_id, 
+                FamilyRotation.by_family(@family_coverage.family_rotation.family_id).by_rotation_date.collect {|p| [ "#{p.fullname}", p.id ]},
+                { include_blank: false, multiple: false }, class: 'form-control', disabled: input_disabled ) %>
+        </div>
+
+      </div>  <!-- /row -->
+
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <br>
+
+  <div class="row">
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <%= f.label :insured_id, class: "control-label" %>
+          <%= f.hidden_field :insured_id,
+                            class: "form-control individual_select", autofocus: true, 
+                            placeholder: "Wybierz ubezpieczaną osobę",
+                            style: "width:100%" %>
+        </div>
+      </div> <!-- /row -->
+
+      <div class="col-sm-12">
+      </div>
+
+      <div class="row">
+        <div class="control-group col-sm-12">
+          <%= f.label :payer_id, class: "control-label" %>
+          <%= f.hidden_field :payer_id, 
+                            class: "form-control individual_select", 
+                            placeholder: "Wybierz płatnika",
+                            style: "width:100%" %>
+        </div>
+      </div> <!-- /row -->
+
+    </div> <!-- /col-sm-6 -->
+
+    <div class="col-sm-6">
+
+      <div class="form-group">
+        <%= f.label :note, class: 'control-label' %>
+        <%= f.text_area :note, :rows => 4, :cols => 50, class: 'form-control', disabled: input_disabled %>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+  </div>  <!-- /row -->
+
+<!--
+    <input type ="hidden" class="form-control individual_select" style="width:350px" placeholder="Aaaaa" </input>
+-->
+
+  <hr>
+
+
+  <% if input_disabled %>
+    <!-- for "Show" -->
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), back_url, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+  
+<% end %>

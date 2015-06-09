@@ -1,0 +1,297 @@
+$(document).ready(function() {
+  var oFamilyRotationFamilyCoveragesTable = $('#family_rotation-family_coverages').DataTable({
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    deferRender: true,
+    ajax: { 
+      url: $('#family_rotation-family_coverages').data('source'),
+      type: "POST"
+    },
+    pagingType: "full_numbers",
+    lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Wszystkie"]],
+    //paging: false,
+    //searching: false,
+    //info: false,
+    columns: [
+      { "targets": [0],
+        "title": "ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [1],
+        "title": "Polisa", 
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [2],
+        "title": "Rotacja", 
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [3],
+        "title": "Ubezpieczony",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[3] != oData[4]) {
+            $(nTd).css('background-color', '#FFFFE0'); //LightYellow  #FFFFE0
+          }
+        }
+      }, 
+      { "targets": [4],
+        "title": "Płatnik",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[4] != oData[3]) {
+            $(nTd).css('background-color', '#FFFACD'); //LemonChiffon   #FFFACD
+          }
+        }
+      }, 
+      { "targets": [5],
+        "title": "Uwagi" }, 
+      { "targets": [6],
+        "title": "Akcje",
+        "searchable": false,
+        "sortable": false } 
+    ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_family_rotation_family_coverages" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
+    order: [[ 3, "asc" ]],
+    language: {
+      decimal:        ",",
+      thousands:      " ",
+      //processing: "<img src='/assets/spinner.gif'>",
+      processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+      lengthMenu:     "Pokaż _MENU_ pozycji",
+      info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+      infoEmpty:      "Pozycji 0 z 0 dostępnych",
+      infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+      infoPostFix:    "",
+      search:         "Szukaj&nbsp;:",
+      loadingRecords: "Wczytywanie...",
+      zeroRecords:    "Nie znaleziono pasujących pozycji",
+      emptyTable:     "Brak danych",
+      paginate: {
+        first:      "<<",
+        previous:   "<",
+        next:       ">",
+        last:       ">>"
+      },
+      aria: {
+        sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+        sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+      }
+    }
+  });
+ 
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_family_rotation_family_coverages').on('shown.bs.collapse', function (){
+    oFamilyRotationFamilyCoveragesTable.ajax.reload();
+    oFamilyRotationFamilyCoveragesTable.draw();
+  });
+  
+
+
+
+
+
+
+
+
+  var oInsuredFamilyCoveragesTable = $('#insured-family_coverages').DataTable({
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    deferRender: true,
+    ajax: { 
+      url: $('#insured-family_coverages').data('source'),
+      type: "POST"
+    },
+    pagingType: "full_numbers",
+    lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Wszystkie"]],
+    //paging: false,
+    //searching: false,
+    //info: false,
+    columns: [
+      { "targets": [0],
+        "title": "ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [1],
+        "title": "Polisa"}, 
+      { "targets": [2],
+        "title": "Rotacja"}, 
+      { "targets": [3],
+        "title": "Ubezpieczony",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[3] != oData[4]) {
+            $(nTd).css('background-color', '#FFFFE0'); //LightYellow  #FFFFE0
+          }
+        }
+      }, 
+      { "targets": [4],
+        "title": "Płatnik",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[4] != oData[3]) {
+            $(nTd).css('background-color', '#FFFACD'); //LemonChiffon   #FFFACD
+          }
+        }
+      }, 
+      { "targets": [5],
+        "title": "Uwagi" }, 
+      { "targets": [6],
+        "title": "Akcje",
+        "searchable": false,
+        "sortable": false } 
+    ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_families" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
+    order: [[ 2, "desc" ]],
+    language: {
+      decimal:        ",",
+      thousands:      " ",
+      //processing: "<img src='/assets/spinner.gif'>",
+      processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+      lengthMenu:     "Pokaż _MENU_ pozycji",
+      info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+      infoEmpty:      "Pozycji 0 z 0 dostępnych",
+      infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+      infoPostFix:    "",
+      search:         "Szukaj&nbsp;:",
+      loadingRecords: "Wczytywanie...",
+      zeroRecords:    "Nie znaleziono pasujących pozycji",
+      emptyTable:     "Brak danych",
+      paginate: {
+        first:      "<<",
+        previous:   "<",
+        next:       ">",
+        last:       ">>"
+      },
+      aria: {
+        sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+        sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+      }
+    }
+  });
+
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_families').on('shown.bs.collapse', function (){
+    oInsuredFamilyCoveragesTable.ajax.reload();
+    oInsuredFamilyCoveragesTable.draw();
+  });
+
+
+
+
+  var oPayerFamilyCoveragesTable = $('#payer-family_coverages').DataTable({
+    responsive: true,
+    processing: true,
+    serverSide: true,
+    deferRender: true,
+    ajax: { 
+      url: $('#payer-family_coverages').data('source'),
+      type: "POST"
+    },
+    pagingType: "full_numbers",
+    lengthMenu: [[10, 15, 25, 50, 100, -1], [10, 15, 25, 50, 100, "Wszystkie"]],
+    //paging: false,
+    //searching: false,
+    //info: false,
+    columns: [
+      { "targets": [0],
+        "title": "ID",
+        "visible": false,
+        "searchable": false,
+        "sortable": false }, 
+      { "targets": [1],
+        "title": "Polisa"}, 
+      { "targets": [2],
+        "title": "Rotacja"}, 
+      { "targets": [3],
+        "title": "Ubezpieczony",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[3] != oData[4]) {
+            $(nTd).css('background-color', '#FFFFE0'); //LightYellow  #FFFFE0
+          }
+        }
+      }, 
+      { "targets": [4],
+        "title": "Płatnik",
+        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+          // sData - wartosc celi, oData - wiersza
+          // porownaj, czy ubezpieczony == płatnik
+          if (oData[4] != oData[3]) {
+            $(nTd).css('background-color', '#FFFACD'); //LemonChiffon   #FFFACD
+          }
+        }
+      }, 
+      { "targets": [5],
+        "title": "Uwagi" }, 
+      { "targets": [6],
+        "title": "Akcje",
+        "searchable": false,
+        "sortable": false } 
+    ],
+    preDrawCallback: function( settings ) {
+      // jezeli panel nie jest widoczny, to przerwij ładowanie danych
+      if ( $( "#collapse_families" ).is( ":hidden" ) ) {
+        return false;
+      }
+    },
+    order: [[ 2, "desc" ]],
+    language: {
+      decimal:        ",",
+      thousands:      " ",
+      //processing: "<img src='/assets/spinner.gif'>",
+      processing:     "<img src='<%= asset_path('spinner.gif') %>'>",
+      lengthMenu:     "Pokaż _MENU_ pozycji",
+      info:           "Pozycje od _START_ do _END_ z _TOTAL_ łącznie",
+      infoEmpty:      "Pozycji 0 z 0 dostępnych",
+      infoFiltered:   "(filtrowanie spośród _MAX_ dostępnych pozycji)",
+      infoPostFix:    "",
+      search:         "Szukaj&nbsp;:",
+      loadingRecords: "Wczytywanie...",
+      zeroRecords:    "Nie znaleziono pasujących pozycji",
+      emptyTable:     "Brak danych",
+      paginate: {
+        first:      "<<",
+        previous:   "<",
+        next:       ">",
+        last:       ">>"
+      },
+      aria: {
+        sortAscending:  ": aktywuj, by posortować kolumnę rosnąco",
+        sortDescending: ": aktywuj, by posortować kolumnę malejąco"
+      }
+    }
+  });
+ 
+  // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
+  $('#collapse_families').on('shown.bs.collapse', function (){
+    oPayerFamilyCoveragesTable.ajax.reload();
+    oPayerFamilyCoveragesTable.draw();
+  });
+
+
+ 
+ 
+
+});
+

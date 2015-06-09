@@ -1,0 +1,187 @@
+<%= form_for [@family], :html => { :role => 'form family' } do |f| %>
+
+  <% input_disabled ||= false  
+     #if input_disabled is not passed to the partial it doesn't crash. 
+     # We default it to false 
+  %>
+
+  <% if @family.errors.any? %>
+    <div id="error_explanation" class="panel panel-danger">
+      <div class="panel-body">
+        <ul>
+        <% @family.errors.full_messages.each do |msg| %>
+          <li><h5><%= msg %></h5></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+
+        <div class="form-group col-sm-3">
+          <%= f.label :number, class: 'control-label' %>
+          <h5><%= @family.number %></h5>
+          <h5><div class="text-success history collapse" id="history[number]"> </div>
+        </div>
+
+        <div class="control-group col-sm-9">
+          <%= f.label :company_id, class: "control-label" %><br>
+          <h5><%= link_to @family.company.fullname, company_path(@family.company), 
+                      :"data-toggle" => "popover_info",
+                      :"title" => "#{@family.company.short}",
+                      :"data-content" => "#{@family.company.for_popover_data}",
+                      :"data-placement" => "right" %></h5>
+        </div>
+
+      </div>  <!-- /row -->
+    </div>  <!-- /col-sm-12 -->
+  </div>  <!-- /row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-sm-6">
+
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <%= f.label :concluded, class: 'control-label' %>
+          <h5><%= @family.concluded %></h5>
+          <h5><div class="text-success history collapse" id="history[concluded]"> </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <%= f.label :valid_from, class: 'control-label' %>
+          <h5><%= @family.valid_from %></h5>
+          <h5><div class="text-success history collapse" id="history[valid_from]"> </div>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <%= f.label :applies_to, class: 'control-label' %>
+          <h5><%= @family.applies_to %></h5>
+          <h5><div class="text-success history collapse" id="history[applies_to]"> </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-7">
+
+          <br><%= f.label :pay, class: "control-label" %><br>
+          <%= f.radio_button(:pay, 'M', disabled: input_disabled) %>
+          <%= f.label(:pay_m, 'Miesięczna') %>
+          <%= f.radio_button(:pay, 'K', disabled: input_disabled) %>
+          <%= f.label(:pay_k, 'Kwartalna') %>
+          <%= f.radio_button(:pay, 'P', disabled: input_disabled) %>
+          <%= f.label(:pay_p, 'Półroczna') %>
+          <%= f.radio_button(:pay, 'R', disabled: input_disabled) %>
+          <%= f.label(:pay_r, 'Roczna') %>
+        </div>
+
+        <div class="form-group col-sm-4">
+          <br><%= f.label :family_lock, class: "control-label" %><br>
+          <%= f.radio_button(:family_lock, false, disabled: input_disabled) %>
+          <%= f.label(:family_lock_f, "Nie" ) %>
+          <%= f.radio_button(:family_lock, true, disabled: input_disabled) %>
+          <%= f.label(:family_lock_t, "Tak" ) %>
+        </div>
+
+      </div>
+
+
+    </div> <!-- /col-sm-6 -->
+
+    <div class="col-sm-6">
+
+      <div class="form-group">
+        <%= f.label :note, class: 'control-label' %>
+        <h5><%= @family.note %></h5>
+        <h5><div class="text-success history collapse" id="history[note]"> </div>
+      </div>
+
+    </div> <!-- /col-sm-6 -->
+  </div> <!-- /row -->
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="row">
+        <div class="form-group col-sm-3">
+          <%= f.label :proposal_number, class: 'control-label' %>
+          <h5><%= @family.proposal_number %></h5>
+          <h5><div class="text-success history collapse" id="history[proposal_number]"> </div>
+        </div>
+
+        <div class="form-group col-sm-3">
+          <%= f.label :protection_variant, class: 'control-label' %>
+          <h5><%= @family.protection_variant %></h5>
+          <h5><div class="text-success history collapse" id="history[protection_variant]"> </div>
+        </div>
+
+        <div class="form-group col-sm-3">
+          <%= f.label :assurance, class: 'control-label' %>
+          <h5><%= @family.assurance %></h5>
+          <h5><div class="text-success history collapse" id="history[assurance]"> </div>
+        </div>
+        <div class="form-group col-sm-3">
+          <%= f.label :assurance_component, class: 'control-label' %>
+          <h5><%= @family.assurance_component %></h5>
+          <h5><div class="text-success history collapse" id="history[assurance_component]"> </div>
+        </div>
+      </div>
+
+    </div> <!-- /col-sm-12 -->
+  </div> <!-- /row -->
+
+
+
+  <hr>
+
+  <% if input_disabled %>
+    <!-- for "Show" -->
+    <div class="row">
+
+      <div class="col-sm-9 pull-left">
+        <%= link_to t('Delete', default: t("helpers.links.destroy")), family_path(@family),
+                            method: :delete,
+                            data: { confirm: t('helpers.links.confirm_destroy', data: @family.fullname) }, 
+                            :class => "btn btn-danger glyphicon glyphicon-trash" %>
+        <%= link_to t('Edit', default: t("helpers.links.edit")), edit_family_path(@family), 
+                            :class => "btn btn-primary glyphicon glyphicon-edit" %>  
+
+        <% if @family.family_lock %>
+          <%= link_to t('Unlock family', default: t("helpers.links.unlocking_family")), unlock_family_path(@family),
+                              method: :patch,
+                              data: { confirm: t('helpers.links.confirm_unlocking_family', data: @family.number) }, 
+                              :class => "btn btn-warning glyphicon glyphicon-unlock" %>
+        <% else %>
+          <%= link_to t('Lock family', default: t("helpers.links.locking_family")), lock_family_path(@family),
+                              method: :patch,
+                              data: { confirm: t('helpers.links.confirm_locking_family', data: @family.number) }, 
+                              :class => "btn btn-success glyphicon glyphicon-lock" %>
+        <% end %>
+
+<!--
+        <button class="btn btn-default glyphicon glyphicon-saved pull-right" type="button" data-toggle="collapse" data-target=".history" aria-expanded="false" id="button_show_history"> Historia
+        </button>
+-->
+      </div>
+
+      <div class="col-sm-3">
+<!-- 
+                  @family.family_histories.order(updated_at: :desc)
+                  .collect {|p| [ p.updated_at.strftime("%Y-%m-%d %H:%M:%S"), 
+                                  p.attributes, :selected => nil ]  },
+                  { include_blank: true, multiple: false, :selected => nil }, class: 'form-control history collapse', id: 'family_histories_list' ) %>
+-->
+      </div>
+
+    </div>
+  <% else %>
+    <!-- form "New"/"Edit" -->
+    <%= link_to t('Back', default: t("helpers.links.back")), :back, :class => 'btn btn-default' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  <% end %>
+  
+<% end %>

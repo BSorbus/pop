@@ -11,7 +11,6 @@ class Rotation < ActiveRecord::Base
   scope :by_insurance, ->(current_insurance_id) { where(insurance_id: current_insurance_id) }
   scope :by_rotation_date, -> { order(:rotation_date) }
 
-
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
   before_destroy :insurance_or_rotation_is_locked, prepend: true
   # KONIECZNIE zostaw w czasie ładowania
