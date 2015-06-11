@@ -13,6 +13,7 @@ class Family < ActiveRecord::Base
   belongs_to :user
   has_many :family_rotations, dependent: :destroy
   has_many :family_coverages, through: :family_rotations
+  has_many :family_histories
 
   scope :by_concluded, -> { order(:concluded) }
   

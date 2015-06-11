@@ -1,16 +1,17 @@
-class ListPayersPdf < Prawn::Document
+class ListFamilyPayersPdf < Prawn::Document
   include ApplicationHelper #funkcja with_delimiter_and_separator()
 
-  def initialize(rotation, view)
+  def initialize(family_rotation, view)
     # New document, A4 paper, landscaped
     # pdf = Prawn::Document.new(:page_size => "A4", :page_layout => :landscape)
     # wiec komentuje super() i ...
     super(:page_size => "A4", :page_layout => :portrait)
     #super()
-    @rotation = rotation
+    @family_rotation = family_rotation
     @view = view
-    @insurance_pay = @rotation.insurance.pay
-    @company = rotation.insurance.company
+    @family_pay = @family_rotation.family.pay
+    @family_assurance_component = @family_rotation.family.assurance_component
+    @company = family_rotation.family.company
 
     font_families.update("DejaVu Sans" => {
       :normal => "#{Rails.root}/app/assets/fonts/DejaVuSans.ttf", 
@@ -20,14 +21,10 @@ class ListPayersPdf < Prawn::Document
     })
     font "DejaVu Sans", size: 10
 
-    #@coverages = Coverage.joins(:rotation, :payer, :group).by_rotation(@rotation.id).references(:rotation, :payer, :group).order("individuals.last_name, individuals.last_name, individuals.address_city").all
-
-    #@coverages = Coverage.select('"coverages"."payer_id", count("coverages"."payer_id") AS ilosc').joins(:payer)
-    # powyższe działa ale chcąc zliczać "ilość" zrezygnowałem z tego
-    @coverages = Coverage.select('"coverages"."payer_id"').joins(:payer)
+    @family_coverages = FamilyCoverage.select('"family_coverages"."payer_id"').joins(:payer)
       .select('"individuals"."last_name", "individuals"."first_name", "individuals"."address_city"')
-      .by_rotation(@rotation.id)
-      .group('"coverages"."payer_id", "individuals"."last_name", "individuals"."first_name", "individuals"."address_city"')
+      .by_family_rotation(@family_rotation.id)
+      .group('"family_coverages"."payer_id", "individuals"."last_name", "individuals"."first_name", "individuals"."address_city"')
       .order('"individuals"."last_name", "individuals"."first_name", "individuals"."address_city"').all
 
 
@@ -44,8 +41,6 @@ class ListPayersPdf < Prawn::Document
 
 
   def logo
-    #logopath =  "#{Rails.root}/app/assets/images/pop_logo.png"
-    #image logopath, :width => 197, :height => 91
     image "#{Rails.root}/app/assets/images/allianz_logo.png", :at => [390, 780], :height => 34
   end
 
@@ -53,10 +48,10 @@ class ListPayersPdf < Prawn::Document
     draw_text "Lista płatników", :at => [0, 775]
     draw_text "#{@company.name}", :at => [0, 760], :style => :bold
     draw_text "Ubezpieczający (nazwa firma)", :at => [0, 749], size: 7
-    draw_text "Nr polisy #{@rotation.insurance.number}", :at => [0, 719], size: 15
+    draw_text "Nr polisy #{@family_rotation.family.number}", :at => [0, 719], size: 15
 
-    text_box "#{@rotation.insurance.user.name}" +
-             " - #{@rotation.insurance.user.agent_number}" , size: 11, :style => :bold, 
+    text_box "#{@family_rotation.family.user.name}" +
+             " - #{@family_rotation.family.user.agent_number}" , size: 11, :style => :bold, 
       :at => [290, 729], 
       :width => 250, 
       :height => 25
@@ -95,13 +90,13 @@ class ListPayersPdf < Prawn::Document
                      "Adres",
                      "PESEL",
                      "Liczba osób za które jest opłacana skł.",
-                     "Składka #{@rotation.insurance.pay_name}"]] + 
-                     @coverages.map { |p| [ next_lp, 
-                                            p.payer.last_first_name,
-                                            p.payer.street_house_number + "\n" + p.payer.postal_code_city, 
-                                            p.payer.pesel, 
-                                            sum_insureds_for_current_payer(p.payer.id),
-                                            with_delimiter_and_separator(sum_monthly_contribution_for_current_payer(p.payer.id))] }
+                     "Składka #{@family_rotation.family.pay_name}"]] + 
+                     @family_coverages.map { |p| [ next_lp, 
+                                    p.payer.last_first_name,
+                                    p.payer.street_house_number + "\n" + p.payer.postal_code_city, 
+                                    p.payer.pesel, 
+                                    sum_insureds_for_current_payer(p.payer.id),
+                                    with_delimiter_and_separator(sum_monthly_contribution_for_current_payer(p.payer.id))] }
   end
 
   def next_lp
@@ -110,29 +105,17 @@ class ListPayersPdf < Prawn::Document
   end
 
   def sum_insureds_for_current_payer(id_payer)
-    sum_current_insureds = Coverage.where(rotation_id: @rotation.id, payer_id: id_payer).all.size
+    sum_current_insureds =  FamilyCoverage.where(family_rotation_id: @family_rotation.id, payer_id: id_payer).all.size
 
     @sum_all_insureds += sum_current_insureds
     return sum_current_insureds
   end
 
   def sum_monthly_contribution_for_current_payer(id_payer)
-    @coverage_contribution = Coverage.joins(:rotation, :payer, :group).where(rotation: @rotation.id, payer: id_payer).references(:rotation, :payer, :group).all
+    sum_current_contribution = @family_assurance_component * FamilyCoverage.where(family_rotation_id: @family_rotation.id, payer_id: id_payer).all.size
 
-    case @insurance_pay
-    when 'K'
-      sum_current = @coverage_contribution.sum(:sum_after_monthly)*3
-    when 'M'
-      sum_current = @coverage_contribution.sum(:sum_after_monthly)
-    when 'P'
-      sum_current = @coverage_contribution.sum(:sum_after_monthly)*6
-    when 'R'
-      sum_current = @coverage_contribution.sum(:sum_after_monthly)*12
-    else
-      sum_current = 'insurance.pay - Error !'
-    end
-    @sum_all_contributions += sum_current
-    return sum_current
+    @sum_all_contributions += sum_current_contribution
+    return sum_current_contribution
   end
 
   def display_total_table

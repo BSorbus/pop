@@ -1,5 +1,0 @@
-#####  04B_insurances_18270.rb  #####
-... load from db/seeds/pop/files/polisa_18270.csv... start...
-Insurances all: 256
-Insurances all where user=DB18270_USER_ID: 245
-#####  END ...load from 04B_insurances_18270.rb  #####

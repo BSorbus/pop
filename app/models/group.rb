@@ -49,9 +49,9 @@ class Group < ActiveRecord::Base
   scope :by_number, -> { order(:number) }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  before_save {self.number = insurance.groups.size + 1 if (self.number.nil? || self.number == 0) } 
-  before_save :used_in_locked_rotation 
-  before_destroy :group_has_coverages, prepend: true
+  #before_save {self.number = insurance.groups.size + 1 if (self.number.nil? || self.number == 0) } 
+  #before_save :used_in_locked_rotation 
+  #before_destroy :group_has_coverages, prepend: true
 
   def used_in_locked_rotation
     if group_used_in_locked_rotation 

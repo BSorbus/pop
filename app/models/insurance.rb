@@ -21,7 +21,8 @@ class Insurance < ActiveRecord::Base
   scope :by_user, ->(current_login_user_id) { where(user_id: current_login_user_id) }
   scope :by_company, ->(current_company_id) { where(company_id: current_company_id) }
 
-  before_destroy :insurance_is_locked_or_has_locked_rotation, prepend: true
+  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
+  #before_destroy :insurance_is_locked_or_has_locked_rotation, prepend: true
 
 
   def insurance_is_locked_or_has_locked_rotation

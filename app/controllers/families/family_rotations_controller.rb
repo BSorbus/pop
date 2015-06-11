@@ -10,6 +10,56 @@ class Families::FamilyRotationsController < ApplicationController
     end
   end
 
+
+  # dla agenta
+  # GET /insurances/:insurance_id/rotations/1/pdf_list_insureds
+  def pdf_list_insureds
+    @family = load_family
+    @family_rotation = load_family_rotation
+
+    respond_to do |format|
+      format.pdf do
+        pdf = ListFamilyInsuredsPdf.new(@family_rotation, view_context)
+        send_data pdf.render,
+        filename: "#{@family.number}_rotation_#{@family_rotation.rotation_date.strftime("%Y-%m-%d")}_list_insureds.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
+  # dla firmy
+  # GET /insurances/:insurance_id/rotations/1/pdf_list_payers
+  def pdf_list_payers
+    @family = load_family
+    @family_rotation = load_family_rotation
+
+    respond_to do |format|
+      format.pdf do
+        pdf = ListFamilyPayersPdf.new(@family_rotation, view_context)
+        send_data pdf.render,
+        filename: "#{@family.number}_rotation_#{@family_rotation.rotation_date.strftime("%Y-%m-%d")}_list_payers.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
+  def pdf_declarations_payers
+    @family = load_family
+    @family_rotation = load_family_rotation
+
+    respond_to do |format|
+      format.pdf do
+        pdf = DeclarationsFamilyPayersPdf.new(@family_rotation, view_context)
+        send_data pdf.render,
+        filename: "#{@family.number}_rotation_#{@family_rotation.rotation_date.strftime("%Y-%m-%d")}_declarations_payers.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
   # GET /families/:family_id/family_rotations/1
   # GET /families/:family_id/family_rotations/1.json
   def show
@@ -78,7 +128,7 @@ class Families::FamilyRotationsController < ApplicationController
     #@family_rotation = load_family_rotation
 
     respond_to do |format|
-      if @rotation.update(family_rotation_params)
+      if @family_rotation.update(family_rotation_params)
         format.html { redirect_to family_family_rotation_path(@family, @family_rotation), success: t('activerecord.messages.successfull.updated', data: @family_rotation.fullname) }
         format.json { render :show, status: :ok, location: @family_rotation }
       else

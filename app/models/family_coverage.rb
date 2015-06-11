@@ -14,8 +14,8 @@ class FamilyCoverage < ActiveRecord::Base
   scope :by_payer, ->(only_for_payer_id) { where(payer_id: only_for_payer_id) }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  before_save :family_or_family_rotation_is_locked
-  before_destroy :family_or_family_rotation_is_locked, prepend: true
+  #before_save :family_or_family_rotation_is_locked
+  #before_destroy :family_or_family_rotation_is_locked, prepend: true
 
   def family_or_family_rotation_is_locked
     analize_value = true

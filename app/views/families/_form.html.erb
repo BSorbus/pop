@@ -61,8 +61,7 @@
       </div>
 
       <div class="row">
-        <div class="form-group col-sm-7">
-
+        <div class="form-group col-sm-8">
           <br><%= f.label :pay, class: "control-label" %><br>
           <%= f.radio_button(:pay, 'M', disabled: input_disabled) %>
           <%= f.label(:pay_m, 'Miesięczna') %>
@@ -73,19 +72,17 @@
           <%= f.radio_button(:pay, 'R', disabled: input_disabled) %>
           <%= f.label(:pay_r, 'Roczna') %>
         </div>
-
       </div>
 
     </div> <!-- /col-sm-6 -->
 
     <div class="col-sm-6">
-
       <div class="form-group">
         <%= f.label :note, class: 'control-label' %>
         <%= f.text_area :note, :rows => 4, :cols => 50, class: 'form-control', disabled: input_disabled %>
       </div>
-
     </div> <!-- /col-sm-6 -->
+
   </div> <!-- /row -->
 
   <div class="row">

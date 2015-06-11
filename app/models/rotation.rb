@@ -2,17 +2,19 @@ class Rotation < ActiveRecord::Base
 
   validates :insurance_id,  presence: true
   validates :rotation_date,  presence: true
-  validate :next_rotation_date, on: :create
+  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
+  #validate :next_rotation_date, on: :create
 
 
   belongs_to :insurance
   has_many :coverages, dependent: :destroy
+  has_many :rotation_histories
 
   scope :by_insurance, ->(current_insurance_id) { where(insurance_id: current_insurance_id) }
   scope :by_rotation_date, -> { order(:rotation_date) }
 
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  before_destroy :insurance_or_rotation_is_locked, prepend: true
+  #before_destroy :insurance_or_rotation_is_locked, prepend: true
   # KONIECZNIE zostaw w czasie ładowania
   after_save :push_event
   after_destroy :clean_event

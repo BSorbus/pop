@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.0'
+ruby '2.2.0' 
 
 # poprawia pracę turbolinka
 gem 'jquery-turbolinks'
@@ -62,7 +62,7 @@ gem 'json'
 
 gem 'select2-rails'
 gem 'kaminari'
-gem 'jquery-datatables-rails',  github: 'rweng/jquery-datatables-rails'
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'ajax-datatables-rails', git: 'git://github.com/antillas21/ajax-datatables-rails.git', branch: 'master'
 
 gem 'prawn'

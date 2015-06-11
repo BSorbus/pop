@@ -44,7 +44,7 @@ class ListInsuredsPdf < Prawn::Document
   end
 
   def header_left_corner
-    draw_text "#{@rotation.insurance.company.name}", :at => [0, 525], :style => :bold
+    draw_text "#{@company.name}", :at => [0, 525], :style => :bold
     draw_text "Ubezpieczający (nazwa firma)", :at => [0, 515], size: 7
 
     draw_text "Nr polisy #{@rotation.insurance.number}", :at => [0, 494], size: 15

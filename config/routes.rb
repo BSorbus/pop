@@ -59,6 +59,9 @@ Rails.application.routes.draw do
       get 'duplicate', on: :member
       patch 'lock', on: :member
       patch 'unlock', on: :member
+      get 'pdf_list_insureds', on: :member
+      get 'pdf_list_payers', on: :member
+      get 'pdf_declarations_payers', on: :member
     end
     post 'datatables_index', on: :collection
     post 'datatables_index_company', on: :collection # for Company

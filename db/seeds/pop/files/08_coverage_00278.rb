@@ -70,22 +70,22 @@ end
 
 
 
-############################################################################################
-#pobierz najwiekszy ID i zwiększ go o 1
-next_id = Coverage.all.order(:id).last.id + 1
-puts "Coverages NEXT_ID: #{next_id}"
-#ustaw generator sekwencji na odpowiednia wartosc
-connection = ActiveRecord::Base.connection()
-connection.execute( "ALTER SEQUENCE coverages_id_seq RESTART WITH #{next_id} ;" )
-#wstaw do bazy testowy rekord
-@last_coverage = Coverage.create(
-                                  group_id:     Group.all.order(:id).last.id,
-                                  rotation_id:  Rotation.all.order(:id).last.id,
-                                  insured_id:   Individual.all.order(:id).last.id,
-                                  payer_id:     Individual.all.order(:id).last.id
-                                  )
-
-@last_coverage.destroy
+#    ############################################################################################
+#    #pobierz najwiekszy ID i zwiększ go o 1
+#    next_id = Coverage.all.order(:id).last.id + 1
+#    puts "Coverages NEXT_ID: #{next_id}"
+#    #ustaw generator sekwencji na odpowiednia wartosc
+#    connection = ActiveRecord::Base.connection()
+#    connection.execute( "ALTER SEQUENCE coverages_id_seq RESTART WITH #{next_id} ;" )
+#    #wstaw do bazy testowy rekord
+#    @last_coverage = Coverage.create(
+#                                      group_id:     Group.all.order(:id).last.id,
+#                                      rotation_id:  Rotation.all.order(:id).last.id,
+#                                      insured_id:   Individual.all.order(:id).last.id,
+#                                      payer_id:     Individual.all.order(:id).last.id
+#                                      )
+#
+#    @last_coverage.destroy
 
 
 ############################################################################################

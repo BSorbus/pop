@@ -2,17 +2,18 @@ class FamilyRotation < ActiveRecord::Base
 
   validates :family_id,  presence: true
   validates :rotation_date,  presence: true
-  validate :next_rotation_date, on: :create
+  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
+  #validate :next_rotation_date, on: :create
 
 
   belongs_to :family
   has_many :family_coverages, dependent: :destroy
+  has_many :family_rotation_histories
 
   scope :by_family, ->(current_family_id) { where(family_id: current_family_id) }
   scope :by_rotation_date, -> { order(:rotation_date) }
 
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  before_destroy :family_or_family_rotation_is_locked, prepend: true
+  #before_destroy :family_or_family_rotation_is_locked, prepend: true
   # KONIECZNIE zostaw w czasie ładowania
   after_save :push_event
   after_destroy :clean_event

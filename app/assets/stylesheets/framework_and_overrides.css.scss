@@ -13,13 +13,27 @@ $font-size-base: 14px;
 //table.dataTable thead .sorting { background: none }
 
 // blokuje wyswietlanie icon 
-.dataTable > thead > tr > th[class*="sort"]:after{
-    content: "" !important;
-}
+//.dataTable > thead > tr > th[class*="sort"]:after{
+//    content: "" !important;
+//}
 
+.dataTable > thead > tr > th[class*="sorting_asc"]:after{
+  color: #337ab7 !important;
+  opacity: 1;
+}
+.dataTable > thead > tr > th[class*="sorting_desc"]:after{
+  color: #337ab7 !important;
+  opacity: 1;
+}
 
 body {
   background-color: #eee;
+  line-height: 1em;
+}
+
+h5 {
+  margin-top: 0em;
+  margin-bottom: 1.1em;
 }
 
 // make all images responsive by default

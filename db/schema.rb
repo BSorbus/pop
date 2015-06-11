@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608164101) do
+ActiveRecord::Schema.define(version: 20150610164101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,40 @@ ActiveRecord::Schema.define(version: 20150608164101) do
   add_index "family_coverages", ["family_rotation_id"], name: "index_family_coverages_on_family_rotation_id", using: :btree
   add_index "family_coverages", ["insured_id"], name: "index_family_coverages_on_insured_id", using: :btree
   add_index "family_coverages", ["payer_id"], name: "index_family_coverages_on_payer_id", using: :btree
+
+  create_table "family_histories", force: :cascade do |t|
+    t.integer  "family_id"
+    t.string   "number"
+    t.string   "proposal_number"
+    t.date     "concluded"
+    t.date     "valid_from"
+    t.date     "applies_to"
+    t.string   "pay"
+    t.string   "protection_variant"
+    t.decimal  "assurance",           precision: 15, scale: 2
+    t.decimal  "assurance_component", precision: 15, scale: 2
+    t.boolean  "family_lock"
+    t.text     "note"
+    t.integer  "company_id"
+    t.integer  "user_id"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "family_histories", ["family_id"], name: "index_family_histories_on_family_id", using: :btree
+
+  create_table "family_rotation_histories", force: :cascade do |t|
+    t.integer  "family_rotation_id"
+    t.date     "rotation_date"
+    t.boolean  "rotation_lock"
+    t.date     "date_file_send"
+    t.text     "note"
+    t.integer  "family_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "family_rotation_histories", ["family_rotation_id"], name: "index_family_rotation_histories_on_family_rotation_id", using: :btree
 
   create_table "family_rotations", force: :cascade do |t|
     t.date     "rotation_date",                  null: false
