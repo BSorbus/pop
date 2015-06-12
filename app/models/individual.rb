@@ -1,5 +1,7 @@
 class Individual < ActiveRecord::Base
 
+  validates :user,  presence: true
+
   validates :first_name, presence: true,
                     length: { in: 1..30 }
   validates :last_name, presence: true,
@@ -42,17 +44,20 @@ class Individual < ActiveRecord::Base
     { id: id, last_name: last_name, first_name: first_name, pesel: pesel, fullname: fullname }
   end
 
-  before_destroy :individual_has_coverages, prepend: true
+  before_destroy :individual_has_coverages_or_family_coverages, prepend: true
 
-  def individual_has_coverages
+  def individual_has_coverages_or_family_coverages
     analize_value = true
-    if Coverage.where(insured_id: id).any? 
-      errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Ubezpieczony"
-      analize_value = false
-    end
-    if Coverage.where(payer_id: id).any? 
-      errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Płatnik"
-      analize_value = false
+    if self.user.approved?
+      if Coverage.where(insured_id: id).any? || FamilyCoverage.where(insured_id: id).any? 
+        errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Ubezpieczony"
+        analize_value = false
+      end
+      if Coverage.where(payer_id: id).any? || FamilyCoverage.where(payer_id: id).any? 
+        errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Płatnik"
+        analize_value = false
+      end
+      analize_value
     end
     analize_value
   end

@@ -1,5 +1,8 @@
 class Insurance < ActiveRecord::Base
 
+  validates :user,  presence: true
+  validates :company,  presence: true
+
   validates :number, presence: true,
                     length: { in: 1..19 },
                     :uniqueness => { :case_sensitive => false, :scope => [:user_id] }

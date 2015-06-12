@@ -1,5 +1,7 @@
 class Company < ActiveRecord::Base
 
+  validates :user,  presence: true
+
   validates :short, presence: true,
                     length: { in: 1..10 },
                     :uniqueness => { :case_sensitive => false, :scope => [:user_id] }
@@ -16,8 +18,12 @@ class Company < ActiveRecord::Base
   belongs_to :user
   has_many :insurances, dependent: :destroy
   has_many :rotations, through: :insurances
+  has_many :coverages, through: :rotations
   has_many :groups, through: :insurances
+  has_many :discounts, through: :groups
   has_many :families, dependent: :destroy
+  has_many :family_rotations, through: :families
+  has_many :family_coverages, through: :family_rotations
   has_many :company_histories
 
   scope :by_short, -> { order(:short) }
@@ -28,13 +34,17 @@ class Company < ActiveRecord::Base
 
   def company_has_insurances_or_families
     analize_value = true
-    if Insurance.where(company_id: id).any? 
-      errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy NNW"
-      analize_value = false
-    end
-    if Family.where(company_id: id).any? 
-      errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy Rodzina"
-      analize_value = false
+    if self.user.approved?
+      if Insurance.where(company_id: id).any? 
+        errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy NNW"
+        analize_value = false
+      end
+      if Family.where(company_id: id).any? 
+        errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy Rodzina"
+        analize_value = false
+      end
+    else
+      analize_value = true
     end
     analize_value
   end

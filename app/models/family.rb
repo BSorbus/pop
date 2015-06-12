@@ -2,12 +2,17 @@ class Family < ActiveRecord::Base
 
   include ApplicationHelper
 
+  validates :user,  presence: true
+  validates :company,  presence: true
+
   validates :number, presence: true,
                     length: { in: 1..19 },
                     :uniqueness => { :case_sensitive => false, :scope => [:user_id] }
   validates :concluded, presence: true
   validates :valid_from, presence: true
   validates :pay, inclusion: { in: %w(K M P R) }
+  validates :assurance, numericality: { greater_than: 0 } 
+  validates :assurance_component, numericality: { greater_than: 0 } 
 
   belongs_to :company
   belongs_to :user

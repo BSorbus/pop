@@ -52,10 +52,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  has_many :companies  
-  has_many :individuals
-  has_many :insurances
-  has_many :families
+  has_many :companies, dependent: :destroy  
+  has_many :individuals, dependent: :destroy
+  has_many :insurances, dependent: :destroy
+  has_many :rotations, through: :insurances
+  has_many :families, dependent: :destroy
+  has_many :family_rotations, through: :families
 
   has_many :events
 end

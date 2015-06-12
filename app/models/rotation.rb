@@ -1,6 +1,7 @@
 class Rotation < ActiveRecord::Base
 
-  validates :insurance_id,  presence: true
+  validates :insurance,  presence: true
+
   validates :rotation_date,  presence: true
   # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
   #validate :next_rotation_date, on: :create

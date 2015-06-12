@@ -2,6 +2,8 @@ class Group < ActiveRecord::Base
 
   include ApplicationHelper
 
+  validates :insurance,  presence: true
+
   validates :quotation,  presence: true, inclusion: { in: ['A', 'B', 'C', 'D'] }
   validates :assurance, numericality: { greater_than: 0 } 
 
@@ -9,6 +11,18 @@ class Group < ActiveRecord::Base
   validate  :check_unique
 
   
+  belongs_to :insurance
+  has_many :discounts, dependent: :destroy, autosave: true
+  has_many :coverages, dependent: :destroy
+
+  scope :by_insurance, ->(current_insurance_id) { where(insurance_id: current_insurance_id) }
+  scope :by_number, -> { order(:number) }
+
+  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
+  #before_save {self.number = insurance.groups.size + 1 if (self.number.nil? || self.number == 0) } 
+  #before_save :used_in_locked_rotation 
+  #before_destroy :group_has_coverages, prepend: true
+
   def check_modulo
     if (['A', 'B']).include? quotation 
       errors.add(:assurance, ' - Wartość musi być wielokrotnością "5000"') if ((assurance % 5000) != 0)
@@ -40,18 +54,6 @@ class Group < ActiveRecord::Base
                   inability: inability,
                   death_100_percent: death_100_percent ).where.not(id: id).any?
   end
-
-  belongs_to :insurance
-  has_many :discounts, dependent: :destroy, autosave: true
-  has_many :coverages, dependent: :destroy
-
-  scope :by_insurance, ->(current_insurance_id) { where(insurance_id: current_insurance_id) }
-  scope :by_number, -> { order(:number) }
-
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_save {self.number = insurance.groups.size + 1 if (self.number.nil? || self.number == 0) } 
-  #before_save :used_in_locked_rotation 
-  #before_destroy :group_has_coverages, prepend: true
 
   def used_in_locked_rotation
     if group_used_in_locked_rotation 
