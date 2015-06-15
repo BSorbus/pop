@@ -180,7 +180,8 @@ pl:
   button_text:
     item:
       form:
-        button_special_edit: 'Edycja dodatkowych parametrów'
+        button_show_as_insured: '...jako Ubezpieczony'
+        button_show_as_payer: '...jako Płatnik'
   tooltip:
     show: 'Pokaż'
     edit: 'Edycja'

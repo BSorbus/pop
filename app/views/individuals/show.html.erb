@@ -43,17 +43,50 @@
           <div class="panel-body">
             <div class="col-sm-12">
 
-              <%= render 'nnw_as_insured' %>
 
-            </div> <!--/class="col-sm-12" -->
 
-            <div class="row"></div>
-              <hr>
-            <div class="row"></div>
+              <div class="panel panel-insurance">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#collapse_nnw_as_insured" >
+                      <span class="glyphicon glyphicon-gift"> ...jako Ubezpieczony</span>    
+                      <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+                    </a>
+                  </div>
+                </div>
+                <div id="collapse_nnw_as_insured" class="panel-collapse collapse"> <!-- id="collapse_nnw_as_insured" -->
+                  <div class="panel-body">
+                    <div class="col-sm-12">
 
-            <div class="col-sm-12">
+                      <%= render 'nnw_as_insured' %>
 
-              <%= render 'nnw_as_payer' %>
+                    </div> <!--/class="col-sm-12" -->
+                  </div> <!-- /panel-body -->
+                </div> <!-- /id="collapse_nnw_as_insured" -->
+              </div> <!-- /panel -->
+
+
+              <div class="panel panel-insurance">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#collapse_nnw_as_payer" >
+                      <span class="glyphicon glyphicon-piggy-bank"> ...jako Płatnik</span>    
+                      <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+                    </a>
+                  </div>
+                </div>
+                <div id="collapse_nnw_as_payer" class="panel-collapse collapse"> <!-- id="collapse_nnw_as_payer" -->
+                  <div class="panel-body">
+                    <div class="col-sm-12">
+
+                      <%= render 'nnw_as_payer' %>
+
+                    </div> <!--/class="col-sm-12" -->
+                  </div> <!-- /panel-body -->
+                </div> <!-- /id="collapse_nnw_as_payer" -->
+              </div> <!-- /panel -->
+
+
 
             </div> <!--/class="col-sm-12" -->
           </div> <!-- /panel-body -->
@@ -105,17 +138,50 @@
           <div class="panel-body">
             <div class="col-sm-12">
 
-              <%= render 'family_as_insured' %>
 
-            </div> <!--/class="col-sm-12" -->
 
-            <div class="row"></div>
-              <hr>
-            <div class="row"></div>
+              <div class="panel panel-family">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#collapse_family_as_insured" >
+                      <span class="glyphicon glyphicon-gift"> ...jako Ubezpieczony</span>    
+                      <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+                    </a>
+                  </div>
+                </div>
+                <div id="collapse_family_as_insured" class="panel-collapse collapse"> <!-- id="collapse_family_as_insured" -->
+                  <div class="panel-body">
+                    <div class="col-sm-12">
 
-            <div class="col-sm-12">
+                      <%= render 'family_as_insured' %>
 
-              <%= render 'family_as_payer' %>
+                    </div> <!--/class="col-sm-12" -->
+                  </div> <!-- /panel-body -->
+                </div> <!-- /id="collapse_family_as_insured" -->
+              </div> <!-- /panel -->
+
+
+              <div class="panel panel-family">
+                <div class="panel-heading">
+                  <div class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#collapse_family_as_payer" >
+                      <span class="glyphicon glyphicon-piggy-bank"> ...jako Płatnik</span>    
+                      <i class="indicator glyphicon glyphicon-chevron-right  pull-right"></i>
+                    </a>
+                  </div>
+                </div>
+                <div id="collapse_family_as_payer" class="panel-collapse collapse"> <!-- id="collapse_family_as_payer" -->
+                  <div class="panel-body">
+                    <div class="col-sm-12">
+
+                      <%= render 'family_as_payer' %>
+
+                    </div> <!--/class="col-sm-12" -->
+                  </div> <!-- /panel-body -->
+                </div> <!-- /id="collapse_family_as_payer" -->
+              </div> <!-- /panel -->
+
+
 
             </div> <!--/class="col-sm-12" -->
           </div> <!-- /panel-body -->

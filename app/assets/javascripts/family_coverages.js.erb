@@ -157,7 +157,7 @@ $(document).ready(function() {
     ],
     preDrawCallback: function( settings ) {
       // jezeli panel nie jest widoczny, to przerwij ładowanie danych
-      if ( $( "#collapse_families" ).is( ":hidden" ) ) {
+      if ( $( "#collapse_family_as_insured" ).is( ":hidden" ) ) {
         return false;
       }
     },
@@ -190,7 +190,7 @@ $(document).ready(function() {
   });
 
   // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
-  $('#collapse_families').on('shown.bs.collapse', function (){
+  $('#collapse_family_as_insured').on('shown.bs.collapse', function (){
     oInsuredFamilyCoveragesTable.ajax.reload();
     oInsuredFamilyCoveragesTable.draw();
   });
@@ -251,7 +251,7 @@ $(document).ready(function() {
     ],
     preDrawCallback: function( settings ) {
       // jezeli panel nie jest widoczny, to przerwij ładowanie danych
-      if ( $( "#collapse_families" ).is( ":hidden" ) ) {
+      if ( $( "#collapse_family_as_payer" ).is( ":hidden" ) ) {
         return false;
       }
     },
@@ -284,7 +284,7 @@ $(document).ready(function() {
   });
  
   // jezeli nastepuje wyswietlenie panelu, to zaladuj dane
-  $('#collapse_families').on('shown.bs.collapse', function (){
+  $('#collapse_family_as_payer').on('shown.bs.collapse', function (){
     oPayerFamilyCoveragesTable.ajax.reload();
     oPayerFamilyCoveragesTable.draw();
   });
