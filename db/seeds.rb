@@ -397,7 +397,7 @@ Individual.transaction do
       address_postal_code:  '85-630',
       pesel:                '84020416610',
       birth_date:           '1984-02-04',
-      profession:           'student',
+      profession:           'mechanik',
       note:                 'Przykładowa osoba 22.',
       user_id:              DB_USER_ID }
     )
@@ -412,7 +412,7 @@ Individual.transaction do
       address_postal_code:  '85-630',
       pesel:                '85110108310',
       birth_date:           '1985-11-01',
-      profession:           'student',
+      profession:           'diagnosta',
       note:                 'Przykładowa osoba 23.',
       user_id:              DB_USER_ID }
     )
@@ -428,7 +428,7 @@ Individual.transaction do
       address_postal_code:  '85-815',
       pesel:                '73112306928',
       birth_date:           '1973-11-23',
-      profession:           'student',
+      profession:           'sprzedawca',
       note:                 'Przykładowa osoba 24.',
       user_id:              DB_USER_ID }
     )
@@ -1269,3 +1269,219 @@ Coverage.transaction do
                     insured_id:     @company_1_individual_51.id,
                     payer_id:       @company_1_individual_51.id })
 end
+
+
+
+##########################################################################################
+##########################################################################################
+
+
+date_family_1 = Time.new() - 1.year - 8.month
+date_family_2 = Time.new() - 1.year + 1.month - 10.day
+
+
+families = Family.create([
+    { #id: 1,
+      number:               "750/0000-#{next_nr_1}1",
+      proposal_number:      "1111111",
+      concluded:            date_family_1,
+      valid_from:           date_family_1,
+      applies_to:           nil,
+      pay:                  'M',
+      family_lock:          false,
+      protection_variant:   'GZ10',
+      assurance:            45000.00,
+      assurance_component:  36.00, 
+      created_at:           date_family_1,
+      updated_at:           date_family_1 + 1.year,
+      note:                 'Przykładowa polisa 1. Widoczna "Kłódka" oznacza, że polisa jest zablokowana i nie można jej ani edytować, ani dodawać lub zmieniać jej rotacji i ochrony.',
+      company_id:           @company_1.id,
+      user_id:              DB_USER_ID },
+    { #id: 2,
+      number:               "750/0000-#{next_nr_2}2",
+      proposal_number:      "2222222",
+      concluded:            date_family_2,
+      valid_from:           date_family_2,
+      applies_to:           nil,
+      pay:                  'M',
+      family_lock:          false,
+      protection_variant:   'GZ08',
+      assurance:            50000.00,
+      assurance_component:  40.00, 
+      created_at:           date_family_2,
+      updated_at:           date_family_2 + 1.year,
+      note:                 '',
+      company_id:           @company_3.id,
+      user_id:              DB_USER_ID }
+])
+
+@company_1_family_1 = Family.find_by(proposal_number: "1111111")
+@company_3_family_1 = Family.find_by(proposal_number: "2222222")
+
+
+@company_1_family_1_rotation_1 = FamilyRotation.create(
+  #date_family_1 = Time.new() - 1.year - 6.month
+  { #id: 11,
+      rotation_date:        date_family_1,
+      rotation_lock:        false,
+      date_file_send:       date_family_1,
+      created_at:           date_family_1,
+      updated_at:           date_family_1, 
+      note:                 'Przykładowa rotacja 1. Widoczna "Kłódka" oznacza, że rotacja jest zablokowana i nie można jej ani edytować, ani dodawać lub zmieniać chronionych osób.',
+      family_id:            @company_1_family_1.id }
+)
+@company_1_family_1_rotation_2 = FamilyRotation.create(    
+  { #id: 12,
+      rotation_date:        date_family_1 + 2.month,
+      rotation_lock:        false,
+      date_file_send:       date_family_1 + 2.month,
+      created_at:           date_family_1 + 2.month,
+      updated_at:           date_family_1 + 2.month, 
+      note:                 'Przykładowa rotacja 2. Widoczna "Kłódka" oznacza, że rotacja jest zablokowana i nie można jej ani edytować, ani dodawać lub zmieniać chronionych osób.',
+      family_id:            @company_1_family_1.id }
+)
+@company_1_family_1_rotation_3 = FamilyRotation.create(    
+  { #id: 13,
+      rotation_date:        date_family_1 + 3.month,
+      rotation_lock:        false,
+      date_file_send:       date_family_1 + 3.month,
+      created_at:           date_family_1 + 3.month,
+      updated_at:           date_family_1 + 3.month, 
+      note:                 'Przykładowa rotacja 3. Widoczna "Kłódka" oznacza, że rotacja jest zablokowana i nie można jej ani edytować, ani dodawać lub zmieniać chronionych osób.',
+      family_id:            @company_1_family_1.id }
+)
+
+@company_3_family_1_rotation_1 = FamilyRotation.create(    
+    #date_family_2 = Time.new() - 1.year + 1.month - 10.day
+    { #id: 21,
+      rotation_date:        date_family_2,
+      rotation_lock:        false,
+      date_file_send:       date_family_2,
+      created_at:           date_family_2,
+      updated_at:           date_family_2, 
+      note:                 'Przykładowa rotacja 1. Widoczna "Kłódka" oznacza, że rotacja jest zablokowana i nie można jej ani edytować, ani dodawać lub zmieniać chronionych osób.',
+      family_id:            @company_3_family_1.id }
+)
+@company_3_family_1_rotation_2 = FamilyRotation.create(    
+    { #id: 22,
+      rotation_date:        date_family_2 + 1.month,
+      rotation_lock:        false,
+      date_file_send:       date_family_2 + 1.month,
+      created_at:           date_family_2 + 1.month,
+      updated_at:           date_family_2 + 1.month, 
+      note:                 'Przykładowa rotacja 2.',
+      family_id:            @company_3_family_1.id }
+)
+
+
+
+
+FamilyCoverage.transaction do
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_1.id, 
+                          insured_id:           @company_1_individual_11.id,
+                          payer_id:             @company_1_individual_11.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_1.id, 
+                          insured_id:           @company_1_individual_21.id,
+                          payer_id:             @company_1_individual_21.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_1.id, 
+                          insured_id:           @company_1_individual_31.id,
+                          payer_id:             @company_1_individual_31.id })
+end
+
+@company_1_family_1_rotation_1.rotation_lock = true
+@company_1_family_1_rotation_1.save!
+
+FamilyCoverage.transaction do
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_2.id, 
+                          insured_id:           @company_1_individual_11.id,
+                          payer_id:             @company_1_individual_11.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_2.id, 
+                          insured_id:           @company_1_individual_21.id,
+                          payer_id:             @company_1_individual_21.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_2.id, 
+                          insured_id:           @company_1_individual_31.id,
+                          payer_id:             @company_1_individual_31.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_2.id, 
+                          insured_id:           @company_1_individual_51.id,
+                          payer_id:             @company_1_individual_51.id })
+end
+
+@company_1_family_1_rotation_2.rotation_lock = true
+@company_1_family_1_rotation_2.save!
+
+FamilyCoverage.transaction do
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_3.id, 
+                          insured_id:           @company_1_individual_11.id,
+                          payer_id:             @company_1_individual_11.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_3.id, 
+                          insured_id:           @company_1_individual_21.id,
+                          payer_id:             @company_1_individual_21.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_3.id, 
+                          insured_id:           @company_1_individual_31.id,
+                          payer_id:             @company_1_individual_31.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_3.id, 
+                          insured_id:           @company_1_individual_41.id,
+                          payer_id:             @company_1_individual_41.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_1_family_1_rotation_3.id, 
+                          insured_id:           @company_1_individual_51.id,
+                          payer_id:             @company_1_individual_51.id })
+end
+
+@company_1_family_1_rotation_3.rotation_lock = true
+@company_1_family_1_rotation_3.save!
+
+@company_1_family_1.family_lock = true
+@company_1_family_1.save!
+
+
+###  END @company_1_family_1
+#####################################################
+
+FamilyCoverage.transaction do
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_1.id, 
+                          insured_id:           @company_3_individual_11.id,
+                          payer_id:             @company_3_individual_11.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_1.id, 
+                          insured_id:           @company_3_individual_21.id,
+                          payer_id:             @company_3_individual_21.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_1.id, 
+                          insured_id:           @company_3_individual_31.id,
+                          payer_id:             @company_3_individual_31.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_1.id, 
+                          insured_id:           @company_3_individual_41.id,
+                          payer_id:             @company_3_individual_41.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_1.id, 
+                          insured_id:           @company_3_individual_51.id,
+                          payer_id:             @company_3_individual_51.id })
+end
+
+@company_3_family_1_rotation_1.rotation_lock = true
+@company_3_family_1_rotation_1.save!
+
+FamilyCoverage.transaction do
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_2.id, 
+                          insured_id:           @company_3_individual_11.id,
+                          payer_id:             @company_3_individual_11.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_2.id, 
+                          insured_id:           @company_3_individual_21.id,
+                          payer_id:             @company_3_individual_21.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_2.id, 
+                          insured_id:           @company_3_individual_31.id,
+                          payer_id:             @company_3_individual_31.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_2.id, 
+                          insured_id:           @company_3_individual_41.id,
+                          payer_id:             @company_3_individual_41.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_2.id, 
+                          insured_id:           @company_3_individual_51.id,
+                          payer_id:             @company_3_individual_51.id })
+  FamilyCoverage.create({ family_rotation_id:   @company_3_family_1_rotation_2.id, 
+                          insured_id:           @company_3_individual_61.id,
+                          payer_id:             @company_3_individual_61.id })
+end
+
+#@company_3_family_1_rotation_2.rotation_lock = true
+#@company_3_family_1_rotation_2.save!
+
+###  END @company_3_family_1
+#####################################################
+
