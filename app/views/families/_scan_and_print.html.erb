@@ -31,22 +31,22 @@
 
     <div class="col-sm-2">
       <%= link_to image_tag("list_insureds_nnw2.png", :class => "img-thumbnail" ), 
-            pdf_list_insureds_family_family_rotation_path(@family, @family_rotation, :format => "pdf"), 
+            pdf_list_insureds_family_path(@family, :format => "pdf"), 
             :target => "_blank" %>  
 
       <h5>Lista ubezpieczonych</h5>
-      <h5><span class="text-muted"><%= "- rotacja #{@family_rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+      <h5><span class="text-muted">- ostatnia rotacja</span></h5>
     </div><!-- /.col-sm-2 -->
 
 
     <div class="col-sm-2" id="checked-scope-prn">
       <div class="folded"><h3>Włączenia</h3></div>
       <%= link_to image_tag("declarations_family_accession.png", :class => "img-thumbnail" ), 
-            pdf_declarations_accession_family_family_rotation_path(@family, @family_rotation, :format => "pdf"), 
+            pdf_declarations_accession_family_path(@family, :format => "pdf"), 
             :target => "_blank" %>  
 
       <h5>Deklaracje przystąpienia do ubezpieczenia</h5>
-      <h5><span class="text-muted"><%= "- rotacja #{@family_rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+      <h5><span class="text-muted">- ostatnia rotacja</span></h5>
     </div><!-- /.col-sm-2 -->
 
 
@@ -63,20 +63,20 @@
 
     <div class="col-sm-2">
       <%= link_to image_tag("list_payers.png", :class => "img-thumbnail" ), 
-            pdf_list_payers_family_family_rotation_path(@family, @family_rotation, :format => "pdf"), 
+            pdf_list_payers_family_path(@family, :format => "pdf"), 
             :target => "_blank" %>  
 
       <h5>Lista płatników</h5>
-      <h5><span class="text-muted"><%= "- rotacja #{@family_rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+      <h5><span class="text-muted">- ostatnia rotacja</span></h5>
     </div><!-- /.col-sm-2 -->
 
     <div class="col-sm-2">
       <%= link_to image_tag("declarations_payers.png", :class => "img-thumbnail" ), 
-            pdf_declarations_payers_family_family_rotation_path(@family, @family_rotation, :format => "pdf"), 
+            pdf_declarations_payers_family_path(@family, :format => "pdf"), 
             :target => "_blank" %>  
 
       <h5>Oświadczenia płatników o potrącaniu składki</h5>
-      <h5><span class="text-muted"><%= "- rotacja #{@family_rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
+      <h5><span class="text-muted">- ostatnia rotacja</span></h5>
     </div><!-- /.col-sm-2 -->
   </div class="row">  <!--/dla Firmy -->
 

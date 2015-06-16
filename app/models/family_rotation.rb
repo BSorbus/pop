@@ -54,6 +54,24 @@ class FamilyRotation < ActiveRecord::Base
     return analize_value
   end
 
+  def family_coverages_add
+    current_family_id = family.id
+    current_family_rotation_id = id
+    @prior_rotation = FamilyRotation.where("id < :r_id AND family_id = :i_id", r_id: current_family_rotation_id, i_id: current_family_id).order(:id).all
+    prior_rotation_id = @prior_rotation.empty? ?  0 : @prior_rotation.last.id
+
+    @coverages_add = FamilyCoverage.where("(family_rotation_id = :c_r) AND (insured_id NOT IN (SELECT insured_id FROM family_coverages WHERE family_rotation_id = :p_r))", c_r: current_family_rotation_id, p_r: prior_rotation_id).all
+  end
+
+  def family_coverages_remove
+    current_family_id = family.id
+    current_family_rotation_id = id
+    @prior_rotation = FamilyRotation.where("id < :r_id AND family_id = :i_id", r_id: current_family_rotation_id, i_id: current_family_id).order(:id).all
+    prior_rotation_id = @prior_rotation.empty? ? 0 : @prior_rotation.last.id
+
+    @coverages_remove = FamilyCoverage.where("(family_rotation_id = :p_r) AND (insured_id NOT IN (SELECT insured_id FROM family_coverages WHERE family_rotation_id = :c_r))", c_r: current_family_rotation_id, p_r: prior_rotation_id).all
+  end
+
   def fullname
     "Rotacja z dnia #{rotation_date}"
   end

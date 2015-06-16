@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       patch 'lock', on: :member
       patch 'unlock', on: :member
       get 'pdf_list_insureds', on: :member
+      get 'pdf_declarations_accession', on: :member
       get 'pdf_list_payers', on: :member
       get 'pdf_declarations_payers', on: :member
     end
@@ -67,6 +68,10 @@ Rails.application.routes.draw do
     post 'datatables_index_company', on: :collection # for Company
     patch 'lock', on: :member
     patch 'unlock', on: :member
+    get 'pdf_list_insureds', on: :member
+    get 'pdf_declarations_accession', on: :member
+    get 'pdf_list_payers', on: :member
+    get 'pdf_declarations_payers', on: :member
   end
 
   resources :companies do

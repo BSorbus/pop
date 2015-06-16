@@ -24,6 +24,78 @@ class FamiliesController < ApplicationController
     end
   end
 
+  # dla agenta
+  # GET /insurances/:insurance_id/rotations/1/pdf_list_insureds
+  def pdf_list_insureds
+    @family = load_family
+    @family_rotation = @family.family_rotations.last
+
+    respond_to do |format|
+      format.pdf do
+        pdf = ListFamilyInsuredsPdf.new(@family_rotation, view_context)
+        send_data pdf.render,
+        filename: "#{@family.number}_rotation_#{@family_rotation.rotation_date.strftime("%Y-%m-%d")}_list_insureds.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
+  # GET /insurances/:insurance_id/rotations/1/pdf_declarations_accession
+  def pdf_declarations_accession
+    @family = load_family
+    @family_rotation = @family.family_rotations.last
+    
+    case params[:prnscope]
+    when 'A'  # tylko włączenia
+      @family_coverages = @family_rotation.family_coverages_add.joins(:family_rotation, :insured).references(:family_rotation, :insured).order("individuals.last_name, individuals.last_name, individuals.address_city").all
+    when 'B'  # wszystko
+      @family_coverages = FamilyCoverage.joins(:family_rotation, :insured).by_family_rotation(@family_rotation.id).references(:family_rotation, :insured).order("individuals.last_name, individuals.last_name, individuals.address_city").all
+    end 
+
+    respond_to do |format|
+      format.pdf do
+        pdf = DeclarationsFamilyAccessionPdf.new(@family_coverages, view_context)
+        send_data pdf.render,
+        filename: "#{@family.number}_rotation_#{@family_rotation.rotation_date.strftime("%Y-%m-%d")}_declarations_accession.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
+  # dla firmy
+  # GET /insurances/:insurance_id/rotations/1/pdf_list_payers
+  def pdf_list_payers
+    @family = load_family
+    @family_rotation = @family.family_rotations.last
+
+    respond_to do |format|
+      format.pdf do
+        pdf = ListFamilyPayersPdf.new(@family_rotation, view_context)
+        send_data pdf.render,
+        filename: "#{@family.number}_rotation_#{@family_rotation.rotation_date.strftime("%Y-%m-%d")}_list_payers.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
+  def pdf_declarations_payers
+    @family = load_family
+    @family_rotation = @family.family_rotations.last
+
+    respond_to do |format|
+      format.pdf do
+        pdf = DeclarationsFamilyPayersPdf.new(@family_rotation, view_context)
+        send_data pdf.render,
+        filename: "#{@family.number}_rotation_#{@family_rotation.rotation_date.strftime("%Y-%m-%d")}_declarations_payers.pdf",
+        type: "application/pdf",
+        disposition: "inline"        
+      end
+    end 
+  end
+
   # GET /families/1
   # GET /families/1.json
   def show
