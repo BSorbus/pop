@@ -20,12 +20,28 @@ class Family < ActiveRecord::Base
   has_many :family_coverages, through: :family_rotations
   has_many :family_histories
 
+  before_save { self.protection_variant = protection_variant.upcase }
+  before_destroy :family_is_locked_or_has_locked_rotation, prepend: true
+
   scope :by_concluded, -> { order(:concluded) }
   
   scope :by_user, ->(current_login_user_id) { where(user_id: current_login_user_id) }
   scope :by_company, ->(current_company_id) { where(company_id: current_company_id) }
 
-	before_save { self.protection_variant = protection_variant.upcase }
+
+  def insurance_is_locked_or_has_locked_rotation
+    analize_value = true
+    if family_lock? 
+      errors[:base] << "Polisa jest zablokowana!"
+      analize_value = false
+    end
+    #if Rotation.where(insurance_id: id).any? 
+    if family_rotations.where(rotation_lock: true).any? 
+      errors[:base] << "Nie można usunąć Polisy, która ma zablokowane Rotacje"
+      analize_value = false
+    end
+    analize_value
+  end
 
   def fullname
     "Rodzina #{number}, z #{concluded}"

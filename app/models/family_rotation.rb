@@ -3,22 +3,19 @@ class FamilyRotation < ActiveRecord::Base
   validates :family,  presence: true
 
   validates :rotation_date,  presence: true
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #validate :next_rotation_date, on: :create
-
+  validate :next_rotation_date, on: :create
 
   belongs_to :family
   has_many :family_coverages, dependent: :destroy
   has_many :family_rotation_histories
 
+  before_destroy :family_or_family_rotation_is_locked, prepend: true
+  after_save :push_event
+  after_destroy :clean_event
+
   scope :by_family, ->(current_family_id) { where(family_id: current_family_id) }
   scope :by_rotation_date, -> { order(:rotation_date) }
 
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_destroy :family_or_family_rotation_is_locked, prepend: true
-  # KONIECZNIE zostaw w czasie ładowania
-  after_save :push_event
-  after_destroy :clean_event
 
   def push_event
     event = Event.find_or_create_by( url_action: "/families/#{family.id}/family_rotations/#{id}", user: self.family.user )

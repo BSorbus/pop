@@ -3,22 +3,19 @@ class Rotation < ActiveRecord::Base
   validates :insurance,  presence: true
 
   validates :rotation_date,  presence: true
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #validate :next_rotation_date, on: :create
-
+  validate :next_rotation_date, on: :create
 
   belongs_to :insurance
   has_many :coverages, dependent: :destroy
   has_many :rotation_histories
 
+  before_destroy :insurance_or_rotation_is_locked, prepend: true
+  after_save :push_event
+  after_destroy :clean_event
+
   scope :by_insurance, ->(current_insurance_id) { where(insurance_id: current_insurance_id) }
   scope :by_rotation_date, -> { order(:rotation_date) }
 
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_destroy :insurance_or_rotation_is_locked, prepend: true
-  # KONIECZNIE zostaw w czasie ładowania
-  after_save :push_event
-  after_destroy :clean_event
 
   def push_event
     event = Event.find_or_create_by( url_action: "/insurances/#{insurance.id}/rotations/#{id}", user: self.insurance.user )

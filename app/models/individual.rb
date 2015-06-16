@@ -8,12 +8,10 @@ class Individual < ActiveRecord::Base
                     length: { in: 1..80 }
   validates :address_city, presence: true,
                     length: { in: 1..50 }
-#  validates :pesel, length: { is: 11 }, numericality: true, 
-#                    :uniqueness => { :scope => [:user_id] }, allow_blank: true
-
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #validates :birth_date, presence: true
-  #validate :check_pesel_and_birth_date, unless: "pesel.blank?"
+  validates :pesel, length: { is: 11 }, numericality: true, 
+                    :uniqueness => { :scope => [:user_id] }, allow_blank: true
+  validates :birth_date, presence: true
+  validate :check_pesel_and_birth_date, unless: "pesel.blank?"
 
   require 'pesel'
 
@@ -30,6 +28,8 @@ class Individual < ActiveRecord::Base
   has_many :payers, foreign_key: :payer_id, class_name: "Coverage", dependent: :destroy 
   has_many :individual_histories
 
+  before_destroy :individual_has_coverages_or_family_coverages, prepend: true
+
   scope :by_user, ->(current_login_user_id) { where(user_id: current_login_user_id) }
 
   scope :finder_by_user, ->(q, current_login_user_id) { where("(individuals.last_name ilike :q or individuals.first_name ilike :q 
@@ -43,8 +43,6 @@ class Individual < ActiveRecord::Base
   def as_json(options)
     { id: id, last_name: last_name, first_name: first_name, pesel: pesel, fullname: fullname }
   end
-
-  before_destroy :individual_has_coverages_or_family_coverages, prepend: true
 
   def individual_has_coverages_or_family_coverages
     analize_value = true

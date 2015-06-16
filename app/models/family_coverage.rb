@@ -9,13 +9,13 @@ class FamilyCoverage < ActiveRecord::Base
   belongs_to :insured
   belongs_to :payer
 
+  before_save :family_or_family_rotation_is_locked
+  before_destroy :family_or_family_rotation_is_locked, prepend: true
+
   scope :by_family_rotation, ->(only_for_family_rotation_id) { where(family_rotation_id: only_for_family_rotation_id) }
   scope :by_insured, ->(only_for_insured_id) { where(insured_id: only_for_insured_id) }
   scope :by_payer, ->(only_for_payer_id) { where(payer_id: only_for_payer_id) }
 
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_save :family_or_family_rotation_is_locked
-  #before_destroy :family_or_family_rotation_is_locked, prepend: true
 
   def family_or_family_rotation_is_locked
     analize_value = true

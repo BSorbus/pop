@@ -19,13 +19,11 @@ class Insurance < ActiveRecord::Base
   has_many :coverages, through: :rotations
   has_many :insurance_histories
 
+  before_destroy :insurance_is_locked_or_has_locked_rotation, prepend: true
+
   scope :by_concluded, -> { order(:concluded) }
-  
   scope :by_user, ->(current_login_user_id) { where(user_id: current_login_user_id) }
   scope :by_company, ->(current_company_id) { where(company_id: current_company_id) }
-
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_destroy :insurance_is_locked_or_has_locked_rotation, prepend: true
 
 
   def insurance_is_locked_or_has_locked_rotation

@@ -15,13 +15,13 @@ class Group < ActiveRecord::Base
   has_many :discounts, dependent: :destroy, autosave: true
   has_many :coverages, dependent: :destroy
 
+  before_save {self.number = insurance.groups.size + 1 if (self.number.nil? || self.number == 0) } 
+  before_save :used_in_locked_rotation 
+  before_destroy :group_has_coverages, prepend: true
+
   scope :by_insurance, ->(current_insurance_id) { where(insurance_id: current_insurance_id) }
   scope :by_number, -> { order(:number) }
 
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_save {self.number = insurance.groups.size + 1 if (self.number.nil? || self.number == 0) } 
-  #before_save :used_in_locked_rotation 
-  #before_destroy :group_has_coverages, prepend: true
 
   def check_modulo
     if (['A', 'B']).include? quotation 

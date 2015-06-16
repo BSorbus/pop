@@ -11,14 +11,14 @@ class Coverage < ActiveRecord::Base
   belongs_to :insured
   belongs_to :payer
 
+  before_save :insurance_or_rotation_is_locked
+  before_destroy :insurance_or_rotation_is_locked, prepend: true
+
   scope :by_rotation, ->(only_for_rotation_id) { where(rotation_id: only_for_rotation_id) }
   scope :by_group, ->(only_for_group_id) { where(group_id: only_for_group_id) }
   scope :by_insured, ->(only_for_insured_id) { where(insured_id: only_for_insured_id) }
   scope :by_payer, ->(only_for_payer_id) { where(payer_id: only_for_payer_id) }
 
-  # po zaladowaniu odkomentuj to !!!!!!!!!!!!!!!!!!
-  #before_save :insurance_or_rotation_is_locked
-  #before_destroy :insurance_or_rotation_is_locked, prepend: true
 
   def insurance_or_rotation_is_locked
     analize_value = true
