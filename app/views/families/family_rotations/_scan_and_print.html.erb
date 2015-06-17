@@ -24,9 +24,12 @@
 
   <hr>
 
-  <div class="row">  <!--dla Agenta -->
+
+
+
+  <div class="row">  <!--dla Centrali -->
     <div class="col-sm-2">
-      <p class="lead">dla Agenta</p>
+      <p class="lead">dla Centrali</p>
     </div><!-- /.col-sm-2 -->
 
     <div class="col-sm-2">
@@ -38,6 +41,16 @@
       <h5><span class="text-muted"><%= "- rotacja #{@family_rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
     </div><!-- /.col-sm-2 -->
 
+  </div class="row">  <!--/dla Centrali -->
+
+  <hr>
+
+
+
+  <div class="row">  <!--dla Agenta -->
+    <div class="col-sm-2">
+      <p class="lead">dla Agenta</p>
+    </div><!-- /.col-sm-2 -->
 
     <div class="col-sm-2" id="checked-scope-prn">
       <div class="folded"><h3>Włączenia</h3></div>
@@ -45,7 +58,7 @@
             pdf_declarations_accession_family_family_rotation_path(@family, @family_rotation, :format => "pdf"), 
             :target => "_blank" %>  
 
-      <h5>Deklaracje przystąpienia do ubezpieczenia</h5>
+      <h5>Deklaracje przystąpienia do ubezpieczenia Rodzina</h5>
       <h5><span class="text-muted"><%= "- rotacja #{@family_rotation.rotation_date.strftime("%d.%m.%Y")}" %></span></h5>
     </div><!-- /.col-sm-2 -->
 

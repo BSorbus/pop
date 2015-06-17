@@ -13,6 +13,43 @@
 
   <% has_coverages = Coverage.where(insured_id: @individual.id).any? %>
 
+
+
+  <div class="row">  <!--dla Agenta -->
+    <div class="col-sm-2">
+      <p class="lead">dla Agenta</p>
+    </div><!-- /.col-sm-2 -->
+
+    <% if has_coverages %>
+      <div class="col-sm-2" id="checked-scope-prn">
+        <div class="folded"><h3><%= @individual.lastfirstname %></h3></div>
+        <%= link_to image_tag("declarations_accession1.png", :class => "img-thumbnail" ), 
+              pdf_declarations_accession1_individual_path(@individual, :format => "pdf"), 
+              :target => "_blank" %>  
+
+        <h5>Deklaracje przystąpienia do ubezpieczenia NNW (wariant 1)</h5>
+        <h5><span class="text-muted">- ostatnia rotacja w ostatniej polisie</span></h5>
+      </div><!-- /.col-sm-2 -->
+
+      <div class="col-sm-2" id="checked-scope-prn">
+        <div class="folded"><h3><%= @individual.lastfirstname %></h3></div>
+        <%= link_to image_tag("declarations_accession2.png", :class => "img-thumbnail" ), 
+              pdf_declarations_accession2_individual_path(@individual, :format => "pdf"), 
+              :target => "_blank" %>  
+
+        <h5>Deklaracje przystąpienia do ubezpieczenia NNW (wariant 2)</h5>
+        <h5><span class="text-muted">- ostatnia rotacja w ostatniej polisie</span></h5>
+      </div><!-- /.col-sm-2 -->
+    <% else %>
+      <div class="col-sm-10" >
+        <h4 class="text-center"><span class="text-muted">Osoba nie jest ubezpieczona!</span></h4>
+      </div><!-- /.col-sm-12 -->
+    <% end %>
+
+  </div class="row">  <!--/dla Agenta -->
+
+
+
   <div class="row">  <!--dla Ubezpieczonego -->
     <div class="col-sm-2">
       <p class="lead">dla Ubezpieczonego</p>

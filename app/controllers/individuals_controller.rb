@@ -33,6 +33,53 @@ class IndividualsController < ApplicationController
     end
   end
 
+  # dla agenta
+  def pdf_declarations_accession1
+    @coverages_all = Coverage.joins(:rotation, :insured).by_insured(params[:id]).references(:rotation, :insured).order("rotations.rotation_date").all
+
+    if @coverages_all.empty?
+      redirect_to :back, alert: t('activerecord.messages.notice.no_insured') and return
+    else
+      @rotation = @coverages_all.last.rotation 
+      @insurance = @rotation.insurance
+      # jeden rekord
+      @coverage = Coverage.joins(:rotation, :insured).by_insured(params[:id]).by_rotation(@rotation.id).all
+
+      respond_to do |format|
+        format.pdf do
+          pdf = DeclarationsAccession1Pdf.new(@coverage, view_context)
+          send_data pdf.render,
+          filename: "#{@insurance.number}_rotation_#{@rotation.rotation_date.strftime("%Y-%m-%d")}_declarations_accession1.pdf",
+          type: "application/pdf",
+          disposition: "inline"        
+        end
+      end
+    end 
+  end
+
+  def pdf_declarations_accession2
+    @coverages_all = Coverage.joins(:rotation, :insured).by_insured(params[:id]).references(:rotation, :insured).order("rotations.rotation_date").all
+
+    if @coverages_all.empty?
+      redirect_to :back, alert: t('activerecord.messages.notice.no_insured') and return
+    else
+      @rotation = @coverages_all.last.rotation 
+      @insurance = @rotation.insurance
+      # jeden rekord
+      @coverage = Coverage.joins(:rotation, :insured).by_insured(params[:id]).by_rotation(@rotation.id).all
+
+      respond_to do |format|
+        format.pdf do
+          pdf = DeclarationsAccession2Pdf.new(@coverage, view_context)
+          send_data pdf.render,
+          filename: "#{@insurance.number}_rotation_#{@rotation.rotation_date.strftime("%Y-%m-%d")}_declarations_accession2.pdf",
+          type: "application/pdf",
+          disposition: "inline"        
+        end
+      end
+    end 
+  end
+
   # dla ubezpieczonego
   # GET /individuals/1/pdf_certifications_insureds
   def pdf_certifications_insureds
@@ -80,6 +127,31 @@ class IndividualsController < ApplicationController
         end
       end 
     end
+  end
+
+  # family
+  # dla agenta
+  def pdf_declarations_family_accession
+    @family_coverages_all = FamilyCoverage.joins(:family_rotation, :insured).by_insured(params[:id]).references(:family_rotation, :insured).order("family_rotations.rotation_date").all
+
+    if @family_coverages_all.empty?
+      redirect_to :back, alert: t('activerecord.messages.notice.no_insured') and return
+    else
+      @family_rotation = @family_coverages_all.last.family_rotation 
+      @family = @family_rotation.family
+      # jeden rekord
+      @family_coverage = FamilyCoverage.joins(:family_rotation, :insured).by_insured(params[:id]).by_family_rotation(@family_rotation.id).all
+
+      respond_to do |format|
+        format.pdf do
+          pdf = DeclarationsFamilyAccessionPdf.new(@family_coverage, view_context)
+          send_data pdf.render,
+          filename: "#{@family.number}_rotation_#{@family_rotation.rotation_date.strftime("%Y-%m-%d")}_declarations_accession.pdf",
+          type: "application/pdf",
+          disposition: "inline"        
+        end
+      end
+    end 
   end
 
   # GET /individuals/1

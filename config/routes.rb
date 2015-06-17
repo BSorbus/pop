@@ -82,8 +82,11 @@ Rails.application.routes.draw do
   resources :individuals do
     post 'datatables_index', on: :collection
     get 'select2_index', on: :collection
+    get 'pdf_declarations_accession1', on: :member
+    get 'pdf_declarations_accession2', on: :member
     get 'pdf_certifications_insureds', on: :member
     get 'pdf_dispositions_insureds', on: :member
+    get 'pdf_declarations_family_accession', on: :member
   end
 
   resources :coverages, except: [:index, :show] do

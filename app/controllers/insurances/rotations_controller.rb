@@ -116,13 +116,19 @@ class Insurances::RotationsController < ApplicationController
   end
 
   def pdf_declarations_accession2
-    # zostawiam tak jako przyklad przekazywania parametru. Prawidlowo winno byc jak wyzej
     @insurance = load_insurance
     @rotation = load_rotation
 
+    case params[:prnscope]
+    when 'A'  # tylko włączenia
+      @coverages = @rotation.coverages_add.joins(:rotation, :insured, :group).references(:rotation, :insured, :group).order("individuals.last_name, individuals.last_name, individuals.address_city").all
+    when 'B'  # wszystko
+      @coverages = Coverage.joins(:rotation, :insured, :group).by_rotation(@rotation.id).references(:rotation, :insured, :group).order("individuals.last_name, individuals.last_name, individuals.address_city").all
+    end 
+
     respond_to do |format|
       format.pdf do
-        pdf = DeclarationsAccession2Pdf.new(@rotation, view_context, params[:prnscope])
+        pdf = DeclarationsAccession2Pdf.new(@coverages, view_context)
         send_data pdf.render,
         filename: "#{@insurance.number}_rotation_#{@rotation.rotation_date.strftime("%Y-%m-%d")}_declarations_accession2.pdf",
         type: "application/pdf",
