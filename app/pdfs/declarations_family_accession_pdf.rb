@@ -252,31 +252,31 @@ class DeclarationsFamilyAccessionPdf < Prawn::Document
     draw_text "Liczba dzieci",                                        :at => [  0, 407], size: 8
     draw_text "..............",                                       :at => [ 60, 407], size: 6
       draw_text "Data zatrudnienia (1)",                                :at => [95, 407], size: 8
-      draw_text ".........................",                            :at => [182, 407], size: 6
-        draw_text "Opis stanowiska pracy",                                :at => [235, 407], size: 8
-        draw_text "#{coverage.insured.profession}",                       :at => [335, 407], size: 8, :style => :bold
+      draw_text "...................................",                  :at => [182, 407], size: 6
+    draw_text "Opis stanowiska pracy",                                :at => [  0, 392], size: 8
+    draw_text "#{coverage.insured.profession}",                       :at => [100, 392], size: 8, :style => :bold
 
     left_col = 0
     right_col = 525
-    current_row = 397
-    stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
     current_row = 382
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
     current_row = 367
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
+    current_row = 352
+    stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
 
-    draw_text "Imię i nazwisko Partnera/Współmałżonka(2)",    :at => [130, 387], size: 8
-    draw_text "Data urodzenia (d-m-r)",                       :at => [415, 387], size: 8
+    draw_text "Imię i nazwisko Partnera/Współmałżonka(2)",    :at => [130, 372], size: 8
+    draw_text "Data urodzenia (d-m-r)",                       :at => [415, 372], size: 8
 
     current_col = 0
-    top_row = 397
-    bottom_row = 367
+    top_row = 382
+    bottom_row = 352
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
     current_col = 525
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
  
-    top_row = 382
-    bottom_row = 367
+    top_row = 367
+    bottom_row = 352
     current_col = 510
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
     current_col = 495
@@ -293,11 +293,11 @@ class DeclarationsFamilyAccessionPdf < Prawn::Document
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
 
     current_col = 405
-    top_row = 397
-    bottom_row = 367
+    top_row = 382
+    bottom_row = 352
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
 
-    move_down 93
+    move_down 108
     text "Wskazanie partnera oznacza, że ochroną ubezpieczeniową z tytułu klauzul dodatkowych dotyczącycvh współmałżonka/partnera będą objęte zdarzenia dotyczące wyłącznie " +
          "partnera - również wówczas, gdy Ubezpieczony formalnie pozostaje lub będzie pozostawał na dzień zdarzenia w związku małżeńskim z inną osobą.", size: 6
     move_down 2
@@ -311,30 +311,30 @@ class DeclarationsFamilyAccessionPdf < Prawn::Document
 
     left_col = 0
     right_col = 525
-    current_row = 305
-    stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
     current_row = 290
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
-    draw_text "1.", :at => [  2, 280], size: 8
     current_row = 275
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
-    draw_text "2.", :at => [  2, 265], size: 8
+    draw_text "1.", :at => [  2, 265], size: 8
     current_row = 260
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
-    draw_text "3.", :at => [  2, 250], size: 8
+    draw_text "2.", :at => [  2, 250], size: 8
     current_row = 245
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
-    draw_text "4.", :at => [  2, 235], size: 8
+    draw_text "3.", :at => [  2, 235], size: 8
     current_row = 230
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
+    draw_text "4.", :at => [  2, 220], size: 8
+    current_row = 215
+    stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
 
-    draw_text "Lp",                         :at => [  2, 295], size: 8
-    draw_text "Imię i nazwisko",            :at => [130, 295], size: 8
-    draw_text "Data urodzenia (d-m-r)",     :at => [370, 295], size: 8
-    draw_text "% świadczenia*",             :at => [482, 295], size: 5
+    draw_text "Lp",                         :at => [  2, 280], size: 8
+    draw_text "Imię i nazwisko",            :at => [130, 280], size: 8
+    draw_text "Data urodzenia (d-m-r)",     :at => [370, 280], size: 8
+    draw_text "% świadczenia*",             :at => [482, 280], size: 5
 
-    top_row = 305
-    bottom_row = 230
+    top_row = 290
+    bottom_row = 215
     current_col = 0
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
     current_col = 15
@@ -346,8 +346,8 @@ class DeclarationsFamilyAccessionPdf < Prawn::Document
     current_col = 525
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
 
-    top_row = 290
-    bottom_row = 230
+    top_row = 275
+    bottom_row = 215
     current_col = 510
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
     current_col = 495
@@ -375,24 +375,24 @@ class DeclarationsFamilyAccessionPdf < Prawn::Document
 
     left_col = 0
     right_col = 525
-    current_row = 210
-    stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
     current_row = 195
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
-    draw_text "1.", :at => [  2, 185], size: 8
     current_row = 180
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
     draw_text "1.", :at => [  2, 170], size: 8
     current_row = 165
     stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
+    draw_text "1.", :at => [  2, 155], size: 8
+    current_row = 150
+    stroke_line [left_col, current_row], [right_col, current_row], self.line_width = 0.5
 
-    draw_text "Lp",                         :at => [  2, 200], size: 8
-    draw_text "Imię i nazwisko",            :at => [130, 200], size: 8
-    draw_text "Data urodzenia (d-m-r)",     :at => [370, 200], size: 8
-    draw_text "% świadczenia*",             :at => [482, 200], size: 5
+    draw_text "Lp",                         :at => [  2, 185], size: 8
+    draw_text "Imię i nazwisko",            :at => [130, 185], size: 8
+    draw_text "Data urodzenia (d-m-r)",     :at => [370, 185], size: 8
+    draw_text "% świadczenia*",             :at => [482, 185], size: 5
 
-    top_row = 210
-    bottom_row = 165
+    top_row = 195
+    bottom_row = 150
     current_col = 0
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
     current_col = 15
@@ -405,8 +405,8 @@ class DeclarationsFamilyAccessionPdf < Prawn::Document
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
 
 
-    top_row = 195
-    bottom_row = 165
+    top_row = 180
+    bottom_row = 150
     current_col = 510
     stroke_line [current_col, top_row], [current_col, bottom_row], self.line_width = 0.5
     current_col = 495
@@ -437,16 +437,16 @@ class DeclarationsFamilyAccessionPdf < Prawn::Document
          "lekarskim dłużej niż 4 tygodnie. Nie mam wskazań lekarskich do okresowej kontroli medycznej po leczeniu poważnego zachorowania, ani do leczenia " +
          "operacyjnego. Nic mi nie wiadomo o przesłankach medycznych wskazujących na możliwość pogorszenia się mojego stanu zdrowia.", size: 8
 
-    draw_text "Tak, jest to zgodne z moją najlepszą wiedzą.                             Nie, nie mogę podpisać takiego oświadczenia.", :at => [ 12, 78], size: 8  
+    draw_text "Tak, jest to zgodne z moją najlepszą wiedzą.                             Nie, nie mogę podpisać takiego oświadczenia.", :at => [ 12, 63], size: 8  
 
-    current_row = 85
+    current_row = 70
     current_col = 0
     stroke_line [current_col, current_row], [current_col, current_row-7], self.line_width = 0.5
     stroke_line [current_col, current_row], [current_col+7, current_row], self.line_width = 0.5
     stroke_line [current_col, current_row-7], [current_col+7, current_row-7], self.line_width = 0.5
     stroke_line [current_col+7, current_row], [current_col+7, current_row-7], self.line_width = 0.5
 
-    current_row = 85
+    current_row = 70
     current_col = 250
     stroke_line [current_col, current_row], [current_col, current_row-7], self.line_width = 0.5
     stroke_line [current_col, current_row], [current_col+7, current_row], self.line_width = 0.5
@@ -459,9 +459,9 @@ class DeclarationsFamilyAccessionPdf < Prawn::Document
 
     move_down 10
     text "Polisa nr                                                                            Data końca ochrony", size: 8
-    draw_text "#{@family.number}",                                                                :at => [ 45, 30], size: 11, :style => :bold
+    draw_text "#{@family.number}",                                                                :at => [ 45, 15], size: 11, :style => :bold
     if @family.applies_to.present?
-      draw_text "#{@family.applies_to.strftime("%d.%m.%Y")}",                                       :at => [325, 30], size: 11, :style => :bold
+      draw_text "#{@family.applies_to.strftime("%d.%m.%Y")}",                                       :at => [325, 15], size: 11, :style => :bold
     end
   end
 

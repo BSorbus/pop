@@ -35,17 +35,13 @@ class Company < ActiveRecord::Base
 
   def company_has_insurances_or_families
     analize_value = true
-    if self.user.approved?
-      if Insurance.where(company_id: id).any? 
-        errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy NNW"
-        analize_value = false
-      end
-      if Family.where(company_id: id).any? 
-        errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy Rodzina"
-        analize_value = false
-      end
-    else
-      analize_value = true
+    if Insurance.where(company_id: id).any? 
+      errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy NNW"
+      analize_value = false
+    end
+    if Family.where(company_id: id).any? 
+      errors[:base] << "Nie można usunąć Firmy, która ma przypisane Polisy Rodzina"
+      analize_value = false
     end
     analize_value
   end

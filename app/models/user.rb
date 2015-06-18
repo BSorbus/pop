@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
 
+#  before_destroy :only_if_not_approved, prepend: true
 
 
   after_commit :load_example_data, on: :create, if: "id > 4"
@@ -19,7 +20,16 @@ class User < ActiveRecord::Base
     Rails.application.load_seed
   end
 
-
+  def only_if_not_approved
+    #errors[:base] << "Konto zatwierdzone, użytkownik nie może samodzielnie go usuwać!"
+    @u = User.find(self.id)
+    @u.insurances.skip_callback(:destroy, :insurance_is_locked_or_has_locked_rotation)
+    @u.insurances.destroy_all
+    #@u.families.destroy_all
+    #@u.companies.destroy_all
+    #@u.individuals.destroy_all
+    true   
+  end
 
 
   #def login=(login)

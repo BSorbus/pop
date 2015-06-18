@@ -21,7 +21,7 @@
     </div><!-- /.col-sm-2 -->
 
     <% if has_family_coverages %>
-      <div class="col-sm-2" id="checked-scope-prn">
+      <div class="col-sm-2">
         <div class="folded"><h3><%= @individual.lastfirstname %></h3></div>
         <%= link_to image_tag("declarations_family_accession.png", :class => "img-thumbnail" ), 
               pdf_declarations_family_accession_individual_path(@individual, :format => "pdf"), 

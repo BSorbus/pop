@@ -21,7 +21,7 @@
     </div><!-- /.col-sm-2 -->
 
     <% if has_coverages %>
-      <div class="col-sm-2" id="checked-scope-prn">
+      <div class="col-sm-2">
         <div class="folded"><h3><%= @individual.lastfirstname %></h3></div>
         <%= link_to image_tag("declarations_accession1.png", :class => "img-thumbnail" ), 
               pdf_declarations_accession1_individual_path(@individual, :format => "pdf"), 
@@ -31,7 +31,7 @@
         <h5><span class="text-muted">- ostatnia rotacja w ostatniej polisie</span></h5>
       </div><!-- /.col-sm-2 -->
 
-      <div class="col-sm-2" id="checked-scope-prn">
+      <div class="col-sm-2">
         <div class="folded"><h3><%= @individual.lastfirstname %></h3></div>
         <%= link_to image_tag("declarations_accession2.png", :class => "img-thumbnail" ), 
               pdf_declarations_accession2_individual_path(@individual, :format => "pdf"), 

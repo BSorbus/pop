@@ -46,16 +46,13 @@ class Individual < ActiveRecord::Base
 
   def individual_has_coverages_or_family_coverages
     analize_value = true
-    if self.user.approved?
-      if Coverage.where(insured_id: id).any? || FamilyCoverage.where(insured_id: id).any? 
-        errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Ubezpieczony"
-        analize_value = false
-      end
-      if Coverage.where(payer_id: id).any? || FamilyCoverage.where(payer_id: id).any? 
-        errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Płatnik"
-        analize_value = false
-      end
-      analize_value
+    if Coverage.where(insured_id: id).any? || FamilyCoverage.where(insured_id: id).any? 
+      errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Ubezpieczony"
+      analize_value = false
+    end
+    if Coverage.where(payer_id: id).any? || FamilyCoverage.where(payer_id: id).any? 
+      errors[:base] << "Nie można usunąć Osoby, która jest przypisana jako Płatnik"
+      analize_value = false
     end
     analize_value
   end
