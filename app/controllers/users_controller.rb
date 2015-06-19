@@ -1,13 +1,15 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy, :finish_signup]
 
   def index
-    # authorize! :read, @user
     @users = User.all
+    authorize current_user
   end
 
   # GET /users/:id.:format
   def show
+    authorize @user
     respond_to do |format|
       format.html
 
@@ -39,11 +41,23 @@ class UsersController < ApplicationController
   end
 
 
-  # GET /users/:id/edit
-  #def edit
-  #  # authorize! :update, @user
-  #end
+  def update
+    #@user = User.find(params[:id])
+    authorize @user
+    if @user.update_attributes(secure_params)
+      redirect_to users_path, :notice => "User updated."
+    else
+      redirect_to users_path, :alert => "Unable to update user."
+    end
+  end
 
+
+  def destroy
+    user = User.find(params[:id])
+    authorize user
+    user.destroy
+    redirect_to users_path, :notice => "User deleted."
+  end
   
   private
     def set_user
@@ -55,5 +69,9 @@ class UsersController < ApplicationController
       #accessible = [ :name, :email, :password, :password_confirmation ] # extend with your own params
       accessible << [ :password, :password_confirmation ] unless params[:user][:password].blank?
       params.require(:user).permit(accessible)
+    end
+
+    def secure_params
+      params.require(:user).permit(:role)
     end
 end

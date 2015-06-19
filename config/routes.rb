@@ -2,8 +2,8 @@ Rails.application.routes.draw do
 
 
   devise_for :users
-  #resources :users
-  resources :users, except: [:show, :index] do
+  #resources :users, except: [:show, :index]
+  resources :users do
     get 'pdf_invoice', on: :collection
   end
 

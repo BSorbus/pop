@@ -45,16 +45,7 @@ class InsuredCoveragesDatatable < AjaxDatatablesRails::Base
         #link_to(" #{record.rotation.rotation_date}", @view.insurance_rotation_path(record.rotation.insurance, record.rotation),
         #            class: record.rotation.rotation_lock? ? 'glyphicon glyphicon-lock' : ' '),
 
-        #link_to(record.group.fullname, @view.insurance_group_path(record.group.insurance, record.group)),
-
-
-        link_to(record.group.fullname, @view.insurance_group_path(record.group.insurance, record.group), 
-                      :"data-toggle" => "popover_info",
-                      :"title" => "AAA title",
-                      :"data-content" => "content",
-                      :"data-placement" => "right",
-                      :rel => "popover" ),
-
+        link_to(record.group.fullname, @view.insurance_group_path(record.group.insurance, record.group)),
         link_to(record.insured.fullname, @view.individual_path(record.insured_id)),
         link_to(record.payer.fullname, @view.individual_path(record.payer_id)),
         record.note,

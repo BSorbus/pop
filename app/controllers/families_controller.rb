@@ -12,8 +12,9 @@ class FamiliesController < ApplicationController
 
   # POST /families
   def datatables_index
+    data_scope = current_user.admin? ? -1 : current_user.id
     respond_to do |format|
-      format.json{ render json: FamilyDatatable.new(view_context, { only_for_current_user_id: current_user.id }) }
+      format.json{ render json: FamilyDatatable.new(view_context, { only_for_current_user_id: data_scope }) }
     end
   end
 
@@ -199,7 +200,11 @@ class FamiliesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def load_family
-      Family.by_user(current_user.id).find(params[:id])
+      if current_user.admin?
+        Family.find(params[:id])
+      else
+        Family.by_user(current_user.id).find(params[:id])
+      end
     end
 
     def load_company

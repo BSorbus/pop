@@ -12,9 +12,10 @@ class IndividualsController < ApplicationController
 
   # POST /individuals
   def datatables_index
+    data_scope = current_user.admin? ? -1 : current_user.id
     respond_to do |format|
-      format.json{ render json: IndividualDatatable.new(view_context, { only_for_current_user_id: current_user.id }) } 
-    end   
+      format.json{ render json: IndividualDatatable.new(view_context, { only_for_current_user_id: data_scope }) }
+    end
   end
 
   def select2_index
@@ -232,7 +233,11 @@ class IndividualsController < ApplicationController
 
   private
     def load_individual
-      Individual.by_user(current_user.id).find(params[:id])
+      if current_user.admin?
+        Individual.find(params[:id])
+      else
+        Individual.by_user(current_user.id).find(params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

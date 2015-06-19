@@ -12,11 +12,11 @@ class InsurancesController < ApplicationController
 
   # POST /insurances
   def datatables_index
+    data_scope = current_user.admin? ? -1 : current_user.id
     respond_to do |format|
-      format.json{ render json: InsuranceDatatable.new(view_context, { only_for_current_user_id: current_user.id }) }
+      format.json{ render json: InsuranceDatatable.new(view_context, { only_for_current_user_id: data_scope }) }
     end
   end
-
 
   def datatables_index_company
     respond_to do |format|
@@ -407,7 +407,11 @@ class InsurancesController < ApplicationController
 
   private
     def load_insurance
-      Insurance.by_user(current_user.id).find(params[:id])
+      if current_user.admin?
+        Insurance.find(params[:id])
+      else
+        Insurance.by_user(current_user.id).find(params[:id])
+      end
     end
 
     def load_company

@@ -7,6 +7,7 @@ gem 'therubyracer',  platforms: :ruby
 gem 'rails', '4.2.0'
 gem 'pg'
 gem 'devise'
+gem 'pundit'
 
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'sass-rails', github: 'rails/sass-rails'

@@ -62,8 +62,11 @@ class CompanyDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    # insert query here
-    Company.by_user(options[:only_for_current_user_id]).all
+    if options[:only_for_current_user_id] == -1 # user.admin?
+      Company.all
+    else
+      Company.by_user(options[:only_for_current_user_id]).all
+    end
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

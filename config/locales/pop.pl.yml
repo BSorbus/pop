@@ -1,7 +1,12 @@
 pl:
   #tłumaczenia nazw pól w _form: f.label i obsłudze błędów
   #stosując f.label :name, a nie f.label t(col_title.region.name), po wystąpieniu błędu etykieta też w bootstrapie jest"czerwona"
-  link_to: 
+  pundit:
+    default: ' OCHRONA: Brak uprawnień! Nie można wykonać tej czynności!'
+    user_policy:
+      update?: 'You cannot edit this post!'
+      create?: 'You cannot create posts!'
+  link_to:
     companies: "Firmy"
     individuals: "Osoby"
     insurances: "Polisy NNW"

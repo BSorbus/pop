@@ -62,10 +62,11 @@ class FamilyDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    # insert query here
-    #Family.by_user(options[:only_for_current_user_id])
-
-     Family.joins(:company).by_user(options[:only_for_current_user_id]).all
+    if options[:only_for_current_user_id] == -1 # user.admin?
+      Family.joins(:company).all
+    else
+      Family.joins(:company).by_user(options[:only_for_current_user_id]).all
+    end
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

@@ -1,5 +1,14 @@
 <%# add navigation links to this file %>
-<% if user_signed_in? %>
+<% if user_signed_in? %>  
+	<% if policy(:user).index? %>
+    <li><%= link_to t('link_to.users'), users_path %></li>
+  <% end %>
+<!--  
+  <% if current_user.admin? %>
+    <li><%= link_to t('link_to.users'), users_path %></li>
+  <% end %>
+	tak jest też dobrze. ale przykład zapisu "policy(:model).action?" jest lepszy
+-->
   <li><%= link_to '('+ current_user.agent_number + ') '+ current_user.name, edit_user_registration_path %></li>
   <li><%= link_to t('devise.link_to.sign_out'), destroy_user_session_path, :method=>'delete' %></li>
 <% else %>

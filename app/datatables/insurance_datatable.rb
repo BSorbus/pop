@@ -59,10 +59,11 @@ class InsuranceDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    # insert query here
-    #Insurance.by_user(options[:only_for_current_user_id])
-
-     Insurance.joins(:company).by_user(options[:only_for_current_user_id]).all
+    if options[:only_for_current_user_id] == -1 # user.admin?
+      Insurance.joins(:company).all
+    else
+      Insurance.joins(:company).by_user(options[:only_for_current_user_id]).all
+    end
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

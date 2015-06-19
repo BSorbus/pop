@@ -58,8 +58,11 @@ class IndividualDatatable < AjaxDatatablesRails::Base
   end
 
   def get_raw_records
-    # insert query here
-    Individual.by_user(options[:only_for_current_user_id]).all
+    if options[:only_for_current_user_id] == -1 # user.admin?
+      Individual.all
+    else
+      Individual.by_user(options[:only_for_current_user_id]).all
+    end
   end
 
   # ==== Insert 'presenter'-like methods below if necessary

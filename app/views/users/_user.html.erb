@@ -1,3 +1,19 @@
 <td><%= link_to user.agent_number, user %></td>
 <td><%= link_to user.name, user %></td>
 <td><%= link_to user.email, user %></td>
+<td>
+  <%= form_for(user) do |f| %>
+    <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
+    <%= f.submit 'Change Role', :class => 'btn btn-primary btn-xs' %>
+  <% end %>
+</td>
+<td><%= user.last_sign_in_at.present? ? user.last_sign_in_at.strftime("%Y-%m-%d %H:%M") : '' %></td>
+<td><%= user.last_sign_in_ip %></td>
+<td><%= user.current_sign_in_at.present? ? user.current_sign_in_at.strftime("%Y-%m-%d %H:%M") : '' %></td>
+<td><%= user.current_sign_in_ip %></td>
+<td>
+  <%= link_to("Delete user", user_path(user), 
+  				:data => { :confirm => "Are you sure?" }, 
+  				:method => :delete, 
+  				:class => 'btn btn-danger btn-xs') unless user == current_user %>
+</td>
