@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   after_initialize :set_default_role, :if => :new_record?
 
   # Include default devise modules. Others available are:
-  # :trackable, :rememberable, :lockable and :omniauthable
+  # :lockable and :omniauthable
   devise :database_authenticatable, :confirmable, :registerable, :recoverable, 
   			:timeoutable, :validatable, :trackable, :authentication_keys => [:login]
 
