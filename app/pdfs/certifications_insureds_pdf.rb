@@ -93,6 +93,9 @@ class CertificationsInsuredsPdf < Prawn::Document
       :width => 330, 
       :height => 70
 
+    draw_text "Płatnik: ",                          :at => [0,   546], size: 9
+    draw_text "#{coverage.payer.last_first_name}",  :at => [50, 546], size: 9, :style => :bold
+
     draw_text "Charakter wykonywanej pracy: ",  :at => [0,   535], size: 9
     draw_text "#{coverage.insured.profession}", :at => [150, 535], size: 9, :style => :bold
   end

@@ -8,11 +8,12 @@ $font-size-base: 14px;
 @import "fullcalendar";
 
 
+//blokuje wyswietlanie icon "trojkat"
 //table.dataTable thead .sorting_asc { background: none }
 //table.dataTable thead .sorting_desc { background: none }
 //table.dataTable thead .sorting { background: none }
 
-//blokuje wyswietlanie icon 
+//blokuje wyswietlanie icon "drzewko"
 .dataTable > thead > tr > th[class*="sort"]:after{
     content: "" !important;
 }

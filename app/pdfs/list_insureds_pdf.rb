@@ -121,7 +121,7 @@ class ListInsuredsPdf < Prawn::Document
   end
 
   def footer
-    draw_text "Opis skrótów: KL-koszty leczenia, ZA-zasiłek Ambulatoryjny, ZSZ-zasiłek szpitalny, ZS/UM-zawał serdca/udar muzgu, TNP-trwała niezdolność do pracy", :at => [0, 14], size: 8
+    draw_text "Opis skrótów: KL-koszty leczenia, ZA-zasiłek ambulatoryjny, ZSZ-zasiłek szpitalny, ZS/UM-zawał serca/udar mózgu, TNP-trwała niezdolność do pracy", :at => [0, 14], size: 8
     stroke_line [0, 10], [770,10], self.line_width = 0.1
     text "wygenerowano z programu https://#{Rails.application.secrets.domain_name}  © Artex-Software", size: 6, :style => :italic, :align => :right, :valign => :bottom  
   end

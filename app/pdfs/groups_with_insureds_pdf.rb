@@ -10,10 +10,12 @@ class GroupsWithInsuredsPdf < Prawn::Document
     @rotation = rotation
     if add_remove == "A" # A-dd
       @groups = @rotation.groups_for_coverages_add.order(:number)
+      title_data = "#{@rotation.rotation_date.strftime("%d.%m.%Y")}"
       title1 = "PRZYSTĄPIENIE DO"
       title2 = "włączone"
     else
       @groups = @rotation.groups_for_coverages_remove.order(:number)
+      title_data = "#{(@rotation.rotation_date - 1.day).strftime("%d.%m.%Y")}"
       title1 = "WYSTĄPIENIE Z"
       title2 = "wyłączone"
     end
@@ -46,7 +48,7 @@ class GroupsWithInsuredsPdf < Prawn::Document
 
     repeat(:all, :dynamic => true) do
       logo
-      header_left_corner(title1, title2)
+      header_left_corner(title_data, title1, title2)
       footer
       text "Strona #{page_number} / #{page_count}", size: 7, :align => :left, :valign => :bottom  
     end
@@ -60,7 +62,7 @@ class GroupsWithInsuredsPdf < Prawn::Document
     image "#{Rails.root}/app/assets/images/allianz_logo.png", :at => [390, 780], :height => 34
   end
 
-  def header_left_corner(title_one, title_two)
+  def header_left_corner(title_add_rem, title_one, title_two)
     draw_text "RAPORT O ROTACJI OSÓB UBEZPIECZONYCH POLISĄ GRUPOWEGO",  :at => [0, 775], size: 10
     draw_text "UBEZPIECZENIA NNW W FORMIE IMIENNEJ",                    :at => [0, 760], size: 10
     draw_text " - #{title_one} UBEZPIECZENIA",                          :at => [0, 745], size: 11, :style => :bold
@@ -76,10 +78,14 @@ class GroupsWithInsuredsPdf < Prawn::Document
     draw_text "#{@company.name}",     :at => [  85, 705], size: 10, :style => :bold
 
     draw_text "Okres ubezpieczenia:", :at => [  0, 690], size: 9
-    draw_text "#{@insurance.valid_from.strftime("%d.%m.%Y")} - #{@insurance.applies_to.strftime("%d.%m.%Y")}",:at => [ 115, 690], size: 9, :style => :bold
+    if @insurance.applies_to.blank?
+      draw_text "od #{@insurance.valid_from.strftime("%d.%m.%Y")}",:at => [ 115, 690], size: 9, :style => :bold
+    else
+      draw_text "#{@insurance.valid_from.strftime("%d.%m.%Y")} - #{@insurance.applies_to.strftime("%d.%m.%Y")}",:at => [ 115, 690], size: 9, :style => :bold
+    end
 
     draw_text "Do ww. umowy grupowego ubezpieczenia NNW z dniem                       zostają                        następujące osoby:", :at => [  0, 675], size: 9
-    draw_text "#{@rotation.rotation_date.strftime("%d.%m.%Y")}              #{title_two}", :at => [ 255, 675], size: 9, :style => :bold
+    draw_text "#{title_add_rem}              #{title_two}", :at => [ 255, 675], size: 9, :style => :bold
   end
 
 

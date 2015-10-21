@@ -34,6 +34,7 @@ class Insurances::GroupsController < ApplicationController
     @group = Group.new
     @insurance ||= load_insurance
     @group.insurance = @insurance
+    @group.full_range = true
 
     respond_to do |format|
       format.html { render :new, locals: { duplicate_group: nil} } 

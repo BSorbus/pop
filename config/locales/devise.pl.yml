@@ -74,8 +74,9 @@ pl:
           button_submit: 'Zapisz'
     sessions:
       user:
-        signed_in: "Zostałeś zalogowany."
+        signed_in: "Zostałeś zalogowany."
         signed_out: "Zostałeś wylogowany."
+        already_signed_out: "Zostałeś wylogowany."
       form:
         new: 
           title: 'Zaloguj się'

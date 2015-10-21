@@ -53,7 +53,7 @@ class Coverage < ActiveRecord::Base
                 coverage.rotation.rotation_date.strftime("%d.%m.%Y"), 
                 "*"]
       end
-    end     
+    end.encode('WINDOWS-1250')     
   end
 
   def self.to_csv_add_remove(coverages_add, coverages_remove, date_end_coverage)
@@ -87,7 +87,7 @@ class Coverage < ActiveRecord::Base
                 date_end_coverage.strftime("%d.%m.%Y"), 
                 "-"]
       end
-    end     
+    end.encode('WINDOWS-1250')     
 
   end
 
@@ -119,7 +119,7 @@ class Coverage < ActiveRecord::Base
                 coverage.rotation.rotation_date.strftime("%d.%m.%Y"), 
                 "+"]
       end
-    end
+    end.encode('WINDOWS-1250')
      
   end
 
