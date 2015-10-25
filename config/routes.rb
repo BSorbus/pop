@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     get 'pdf_declarations_payers', on: :member
     get 'pdf_certifications_insureds', on: :member
     get 'pdf_dispositions_insureds', on: :member
+    resources :documents, module: :insurances, only: [:create]
   end
 
   resources :families do
@@ -72,11 +73,13 @@ Rails.application.routes.draw do
     get 'pdf_declarations_accession', on: :member
     get 'pdf_list_payers', on: :member
     get 'pdf_declarations_payers', on: :member
+    resources :documents, module: :families, only: [:create]
   end
 
   resources :companies do
     post 'datatables_index', on: :collection
     get 'select_his', on: :collection
+    resources :documents, module: :companies, only: [:create]
   end
 
   resources :individuals do
@@ -87,6 +90,7 @@ Rails.application.routes.draw do
     get 'pdf_certifications_insureds', on: :member
     get 'pdf_dispositions_insureds', on: :member
     get 'pdf_declarations_family_accession', on: :member
+    resources :documents, module: :individuals, only: [:create]
   end
 
   resources :coverages, except: [:index, :show] do
@@ -102,6 +106,7 @@ Rails.application.routes.draw do
     post 'datatables_index_payer', on: :collection
   end
 
+  resources :documents, only: [:show, :destroy]
   resources :events
 
   root to: 'events#index'

@@ -26,6 +26,8 @@ class Company < ActiveRecord::Base
   has_many :family_coverages, through: :family_rotations
   has_many :company_histories
 
+  has_many :documents, as: :documentable, :source_type => "Company", dependent: :destroy
+
   before_save { self.short = short.upcase }
   before_destroy :company_has_insurances_or_families, prepend: true
 

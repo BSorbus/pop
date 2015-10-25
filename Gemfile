@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # poprawia pracę turbolinka
 gem 'jquery-turbolinks'
 gem 'therubyracer',  platforms: :ruby
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.4'
 gem 'pg'
 gem 'devise'
 gem 'pundit'
@@ -84,3 +84,6 @@ gem 'pesel' #https://github.com/macuk/pesel
 
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
+
+gem "refile", require: ["refile/rails"]
+#gem "refile-mini_magick"

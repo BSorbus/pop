@@ -19,6 +19,8 @@ class Insurance < ActiveRecord::Base
   has_many :coverages, through: :rotations
   has_many :insurance_histories
 
+  has_many :documents, as: :documentable, :source_type => "Insurance", dependent: :destroy
+
   before_destroy :insurance_is_locked_or_has_locked_rotation, prepend: true
 
   scope :by_concluded, -> { order(:concluded) }

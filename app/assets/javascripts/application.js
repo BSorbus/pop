@@ -23,6 +23,7 @@
 //= require select2_locale_pl
 //= require moment
 //= require fullcalendar
+//= require refile
 //= require_tree .
 
 

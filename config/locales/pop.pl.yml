@@ -25,6 +25,7 @@ pl:
       discount: 'Zniżka/Zwyżka'
       coverage: 'Ochrona'
       family_coverage: 'Ochrona'
+      document: 'Załącznik'
       event: 'Wydarzenie'
     messages:
       successfull:
@@ -38,6 +39,8 @@ pl:
         unlocking_insurance: 'Pomyślnie odblokowano polisę "%{data}".'
         locking_family: 'Pomyślnie zablokowano polisę "%{data}".'
         unlocking_family: 'Pomyślnie odblokowano polisę "%{data}".'
+        attach_file: 'Załącznik "%{child}" pomyślnie dołączono do "%{parent}".'
+        remove_attach_file: 'Pomyślnie usunięto "%{child}" załączony do "%{parent}".'
       error:
         destroyed: 'Wystąpił błąd w czasie usuwania wpisu "%{data}".'
         numbering: 'Wystąpił błąd w czasie numerowania grup dla polisy "%{data}".'
@@ -47,6 +50,7 @@ pl:
         unlocking_insurance: 'Wystąpił błąd w czasie odblokowywania polisy "%{data}".'
         locking_family: 'Wystąpił błąd w czasie blokowania polisy "%{data}".'
         unlocking_family: 'Wystąpił błąd w czasie odblokowywania polisy "%{data}".'
+        attach_file: 'Wystąpił błąd w czasie dodawania załącznika "%{child}" do "%{parent}". Pamiętaj, że rozmiar pliku nie może być większy niż 10 MB'
       notice:
         group_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o zwyżkach/zniżkach.'
         rotation_duplicate: 'Pomyślnie pobrano dane z "%{data}". Pamiętaj, by uzupełnić informację o osobach ubezpieczonych/płatnikach.'
@@ -154,6 +158,13 @@ pl:
         insured_id: 'Ubezpieczony'
         payer_id: 'Płatnik'
         note: 'Uwagi'
+      document:
+        fileattach: 'Załącznik'
+        fileattach_filename: 'Nazwa pliku'
+        fileattach_content_type: 'Typ'
+        fileattach_size: 'Rozmiar'
+        remote_fileattach_url: 'Zdalna ścieżka URL'
+        remove_fileattach: 'Usuń załączony plik'
       event:
         title: 'Tytuł'
         allday: 'Wydarzenie całodniowe'
@@ -182,6 +193,9 @@ pl:
         info_other: 'Inne:'
       edit_password:
         need_current_password: 'Potwierdź zmiany wprowadzając aktualne hasło'
+    document:
+      attach_title_small: 'Lista załączników'
+      or_input_remote_url: '...lub wybierz'
   button_text:
     item:
       form:
@@ -191,12 +205,7 @@ pl:
     show: 'Pokaż'
     edit: 'Edycja'
     destroy: 'Usuń'
-    new_assignation: "Przypisanie"
-    destroy_assignation: "Usuń przypisanie"
-    new_reservation: "Rezerwacja"
-    destroy_reservation: "Usuń rezerwację"
-    add_to_suit: "Dodaj do zestawu"
-    remove_from_suit: "Usuń z zestawu"
+    download: 'Zapisz na dysk'
   placeholder_text:
     company:
       show:

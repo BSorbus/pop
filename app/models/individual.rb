@@ -28,6 +28,8 @@ class Individual < ActiveRecord::Base
   has_many :payers, foreign_key: :payer_id, class_name: "Coverage", dependent: :destroy 
   has_many :individual_histories
 
+  has_many :documents, as: :documentable, :source_type => "Individual", dependent: :destroy
+
   before_destroy :individual_has_coverages_or_family_coverages, prepend: true
 
   scope :by_user, ->(current_login_user_id) { where(user_id: current_login_user_id) }

@@ -20,6 +20,8 @@ class Family < ActiveRecord::Base
   has_many :family_coverages, through: :family_rotations
   has_many :family_histories
 
+  has_many :documents, as: :documentable, :source_type => "Family", dependent: :destroy
+
   before_save { self.protection_variant = protection_variant.upcase }
   before_destroy :family_is_locked_or_has_locked_rotation, prepend: true
 
