@@ -156,7 +156,12 @@ class Group < ActiveRecord::Base
   end
 
   def insurance_death_val
-    death_100_percent == true ? assurance : assurance/2
+    if risk_group == 'D'
+      ret_val = death_100_percent == true ? assurance : assurance/2
+      ret_val > 20000.00 ? 20000.00 : ret_val
+    else 
+      death_100_percent == true ? assurance : assurance/2
+    end
   end
 
   def insurance_training_val

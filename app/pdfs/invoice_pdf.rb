@@ -14,7 +14,10 @@ class InvoicePdf < Prawn::Document
 
     case @invoice_customer.id
     when 2
-      @invoice_customer_address_with_nip = "#{@invoice_customer.address} \n NIP: 851-28-18-179"  # Pieciukiewicz 
+      @invoice_customer_address_with_nip =  "MISSAN-POL J. i R. Pieciukiewicz" + "\n" +
+                                            "ul. Królowej Korony Polskiej 26/3" + "\n" +
+                                            "70-486 Szczecin" + "\n" +
+                                            "NIP: 851-28-18-179"  # Pieciukiewicz 
       @invoice_netto = 129.00       
     when 3
       @invoice_customer_address_with_nip = "#{@invoice_customer.address} \n NIP: 816-134-07-80"  # Maniecki           
